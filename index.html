@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BASHI — Films & Photography</title>
 <meta name="description" content="Bashi — Director, editor y fotógrafo. Music videos, comerciales, reels y fotografía. Santo Domingo · Colombia · USA.">
 <meta property="og:title" content="BASHI — Films & Photography">
@@ -191,6 +191,65 @@ main{padding:24px var(--pad) 0;max-width:1600px;margin:0 auto;min-height:60vh}
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   #intro{display:none!important}
 }
+
+/* ================= v2: movil / verticales / menu / precios ================= */
+@supports(padding:max(0px)){
+  .header{padding-left:max(var(--pad),env(safe-area-inset-left));padding-right:max(var(--pad),env(safe-area-inset-right));padding-top:max(20px,env(safe-area-inset-top))}
+  .filters,main,.footer{padding-left:max(var(--pad),env(safe-area-inset-left));padding-right:max(var(--pad),env(safe-area-inset-right))}
+}
+/* tarjetas de video verticales 9:16 */
+.card .frame{aspect-ratio:9/16}
+.card .frame.photo{aspect-ratio:4/5}
+.card .frame.horiz{aspect-ratio:16/9}
+.card .name{font-size:11px}
+.card .meta-top{gap:8px;margin-bottom:7px}
+/* grilla mas contenida */
+.grid{grid-template-columns:repeat(5,1fr);gap:20px 16px}
+@media(max-width:1400px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr);gap:16px 10px}}
+/* menu de filtros fijo/compacto + scroll horizontal en movil */
+.filters{transition:padding .25s ease,box-shadow .25s ease,border-color .25s ease}
+.filters.stuck{padding-top:9px;padding-bottom:9px;box-shadow:0 8px 24px rgba(0,0,0,.55);border-bottom-color:var(--green-dim)}
+.filters.stuck .filter-row + .filter-row{margin-top:6px}
+@media(max-width:760px){
+  .filter-row{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:3px}
+  .filter-row::-webkit-scrollbar{display:none}
+  .chip{padding:9px 14px}
+  main{padding-top:18px}
+}
+.price-chip{border-color:var(--green-dim);color:var(--green)}
+.price-chip.on{background:var(--green);color:#000}
+/* modal: vertical por defecto, horizontal para music videos */
+#box .inner.vert{width:auto}
+#box .stage{aspect-ratio:9/16;height:min(82vh,760px);width:auto;max-width:94vw;margin:0 auto}
+#box .stage.horiz{aspect-ratio:16/9;height:auto;width:min(1100px,94vw)}
+#box .inner.vert .cap{justify-content:center;text-align:center}
+/* ===== Precios ===== */
+.prices{max-width:900px;margin:6px auto 0}
+.prices .phead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin:0 0 8px}
+.prices h2{font-family:var(--disp);font-size:clamp(22px,3.4vw,30px);margin:0;color:var(--ink);font-weight:500}
+.prices .psub{color:var(--dim);font-size:12px;letter-spacing:1px;margin:0 0 20px}
+.curtog{display:flex;gap:6px;flex-shrink:0}
+.pgroup{border-top:1px solid var(--line);padding:16px 0}
+.pgroup h3{font-family:var(--disp);color:var(--green);font-size:14px;letter-spacing:1.5px;margin:0 0 3px;text-transform:uppercase}
+.pgroup .gnote{color:var(--dim);font-size:12px;margin:0 0 12px;line-height:1.5}
+.prow{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid var(--line)}
+.prow:last-child{border-bottom:0}
+.prow .pname{color:var(--ink);font-size:13px;letter-spacing:.5px}
+.prow .pper{color:var(--dim);font-size:11px;margin-left:8px;white-space:nowrap}
+.prow .pprice{color:var(--ink);font-family:var(--disp);font-size:17px;font-weight:500;white-space:nowrap}
+.pfoot{color:var(--dim);font-size:12px;line-height:1.7;margin-top:22px;border-top:1px solid var(--line);padding-top:16px}
+.pfoot b{color:var(--dim-2);font-weight:400}
+.pfoot .rate{display:block;margin-top:8px;color:var(--green-dim)}
+.pgate{max-width:420px;margin:26px auto;text-align:center;border:1px solid var(--line);padding:36px 24px;background:var(--bg-2)}
+.pgate .plock{color:var(--green);font-size:30px;margin-bottom:14px}
+.pgate h2{font-family:var(--disp);color:var(--ink);font-size:20px;margin:0 0 6px;font-weight:500}
+.pgate p{color:var(--dim-2);font-size:13px;margin:0 0 20px;letter-spacing:.5px}
+.pgate input{width:100%;background:#000;border:1px solid var(--line);color:var(--ink);font-family:var(--mono);font-size:16px;letter-spacing:4px;text-align:center;padding:13px;margin-bottom:14px}
+.pgate input:focus{outline:none;border-color:var(--green);box-shadow:0 0 14px rgba(0,255,102,.2)}
+.pgate .pgerr{color:#ff5b5b;font-size:12px;min-height:1.2em;margin-top:8px;letter-spacing:1px}
+@media(max-width:560px){.prow .pprice{font-size:16px}}
 </style>
 </head>
 <body>
@@ -227,6 +286,7 @@ main{padding:24px var(--pad) 0;max-width:1600px;margin:0 auto;min-height:60vh}
     <button class="chip cat" data-cat="reel">Reels</button>
     <button class="chip cat" data-cat="photo">Photography</button>
     <button class="chip cat" data-cat="business">Business Edit</button>
+    <button class="chip cat price-chip" data-cat="prices">Precios</button>
   </div>
   <div class="filter-row" id="tagRow">
     <span class="axis">Estudio</span>
@@ -503,12 +563,18 @@ function bindHover(){
 const box=document.getElementById("box"),stage=document.getElementById("boxStage"),cap=document.getElementById("boxCap");
 function openItem(idx){
   const v=DATA[idx];
+  const inner=box.querySelector(".inner");
   if(v.demo || (v.kind==="video" && !v.yt)){
-    stage.className="stage";stage.innerHTML='<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--dim);text-align:center;padding:20px;letter-spacing:1px">Placeholder. Agrega el ID de YouTube en el array <span style="color:var(--green)">&nbsp;DATA</span>.</div>';
+    inner.classList.remove("vert");
+    stage.className="stage";stage.innerHTML='<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--dim);text-align:center;padding:20px;letter-spacing:1px">Placeholder.</div>';
   }else if(v.kind==="photo"){
+    inner.classList.remove("vert");
     stage.className="stage photo";stage.innerHTML='<img src="'+v.img+'" alt="'+v.title+'">';
   }else{
-    stage.className="stage";stage.innerHTML='<iframe src="'+ytEmbed(v,false)+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+    const horiz=(v.category==="music-video");
+    inner.classList.toggle("vert",!horiz);
+    stage.className="stage"+(horiz?" horiz":"");
+    stage.innerHTML='<iframe src="'+ytEmbed(v,false)+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
   }
   cap.innerHTML='<span class="t">'+v.title+'</span>'+(v.client?('<span>'+v.client+'</span>'):'')+'<span>'+(COUNTRY_FULL[v.country]||'')+'</span>';
   box.dataset.idx=idx;box.classList.add("open");document.body.style.overflow="hidden";
@@ -562,12 +628,14 @@ function syncChips(){
 }
 document.getElementById("catRow").addEventListener("click",e=>{
   const b=e.target.closest(".chip.cat");if(!b)return;
+  if(b.dataset.cat==="prices"){openPrices();return;}
   state.cat=b.dataset.cat;syncChips();apply();
 });
 document.getElementById("tagRow").addEventListener("click",e=>{
   const b=e.target.closest(".chip");if(!b)return;
   if(b.classList.contains("st")){state.studio=state.studio===b.dataset.studio?null:b.dataset.studio;}
   if(b.classList.contains("co")){state.country=state.country===b.dataset.country?null:b.dataset.country;}
+  if(state.cat==="prices")state.cat="all";
   syncChips();apply();
 });
 
@@ -589,9 +657,96 @@ function buildClientFilter() {
     const b = e.target.closest(".chip.cl");
     if (!b) return;
     state.client = b.dataset.client === "all" ? null : b.dataset.client;
+    if(state.cat==="prices")state.cat="all";
     syncChips();
     apply();
   });
+}
+
+
+/* ================= Precios (candado ligero BA$HI) ================= */
+const PRICE_PASS="BA$HI";
+let priceUnlocked=false, priceCur="usd";
+const FX={usd:1, dop:59, cop:3150};
+const CUR_TABS=[["usd","USD"],["dop","RD$"],["cop","COP"]];
+const PRICING=[
+  {g:"Edición", note:"Tú pones el material, yo edito. Reels / shorts verticales.", items:[
+    {n:"Reel suelto", usd:80},
+    {n:"Pack 4 reels", usd:280, per:"$70 c/u"},
+    {n:"Pack 8 reels", usd:520, per:"$65 c/u"}
+  ]},
+  {g:"Mensualidad de edición", note:"Retainer mensual con una cantidad fija de reels editados.", items:[
+    {n:"Starter · 8 reels/mes", usd:520},
+    {n:"Pro · 12 reels/mes", usd:720},
+    {n:"Studio · 20 reels/mes", usd:1100}
+  ]},
+  {g:"Creación de videos", note:"Concepto + grabación (iPhone 17 Pro Max, calidad orgánica para redes) + edición.", items:[
+    {n:"1 video", usd:250},
+    {n:"Pack 4 videos", usd:850, per:"$212 c/u"},
+    {n:"Pack 8 videos", usd:1500, per:"$187 c/u"}
+  ]},
+  {g:"Campañas", note:"Concepto, varias piezas y estrategia para redes.", items:[
+    {n:"Básica · 3–4 piezas", usd:900},
+    {n:"Pro · 6–8 piezas", usd:1800},
+    {n:"Full · estrategia + 10+ piezas", usd:3500, plus:true}
+  ]}
+];
+function money(usd,cur){
+  const v=usd*FX[cur];
+  if(cur==="usd") return "$"+Math.round(v).toLocaleString("en-US");
+  if(cur==="dop") return "RD$"+(Math.round(v/10)*10).toLocaleString("en-US");
+  return "$"+(Math.round(v/1000)*1000).toLocaleString("es-CO")+" COP";
+}
+function setCur(c){priceCur=c;renderPrices();}
+function priceTry(){
+  const inp=document.getElementById("pgInput");
+  if(inp && inp.value===PRICE_PASS){priceUnlocked=true;renderPrices();}
+  else{const er=document.getElementById("pgErr");if(er)er.textContent="Clave incorrecta.";}
+}
+function openPrices(){
+  state.cat="prices";state.studio=null;state.country=null;state.client=null;
+  syncChips();
+  document.querySelectorAll(".chip.cat").forEach(c=>c.classList.toggle("on",c.dataset.cat==="prices"));
+  history.replaceState(null,"","#prices");
+  window.scrollTo({top:0});
+  renderPrices();
+}
+function renderPrices(){
+  const app=document.getElementById("app");
+  if(!priceUnlocked){
+    app.innerHTML=
+      '<section class="pgate">'+
+        '<div class="plock">&#128274;</div>'+
+        '<h2>Precios &amp; paquetes</h2>'+
+        '<p>Sección privada. Ingresa la clave para ver la lista.</p>'+
+        '<input id="pgInput" type="password" inputmode="text" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="C L A V E" onkeydown="if(event.key===\'Enter\')priceTry()">'+
+        '<button class="btn" style="width:100%" onclick="priceTry()">Entrar</button>'+
+        '<div class="pgerr" id="pgErr"></div>'+
+      '</section>';
+    const i=document.getElementById("pgInput");if(i)i.focus();
+    return;
+  }
+  const tabs=CUR_TABS.map(([c,l])=>'<button class="chip'+(priceCur===c?' on':'')+'" onclick="setCur(\''+c+'\')">'+l+'</button>').join("");
+  const groups=PRICING.map(gr=>
+    '<div class="pgroup"><h3>'+gr.g+'</h3><div class="gnote">'+gr.note+'</div>'+
+    gr.items.map(it=>
+      '<div class="prow"><div class="pname">'+it.n+(it.per?'<span class="pper">'+it.per+'</span>':'')+'</div>'+
+      '<div class="pprice">'+money(it.usd,priceCur)+(it.plus?'+':'')+'</div></div>'
+    ).join("")+'</div>'
+  ).join("");
+  app.innerHTML=
+    '<section class="prices">'+
+      '<div class="phead"><h2>Precios &amp; paquetes</h2><div class="curtog">'+tabs+'</div></div>'+
+      '<div class="psub">Valores de referencia · el precio final depende del alcance del proyecto.</div>'+
+      groups+
+      '<div class="pfoot">'+
+        '<b>Grabación:</b> incluida con iPhone 17 Pro Max (calidad orgánica optimizada para redes). '+
+        'Producción con cámara profesional (para anuncios con pauta u otra exposición) se cotiza aparte.<br>'+
+        '<b>Incluye:</b> revisiones razonables; material en bruto y música licenciada según el proyecto.'+
+        '<span class="rate">Referencia: 1 USD ≈ '+FX.dop+' RD$ ≈ '+FX.cop.toLocaleString("es-CO")+' COP.</span>'+
+      '</div>'+
+      '<div class="cta" style="margin-top:22px"><a class="btn" href="https://wa.me/17863481676?text=Hola%20Bashi,%20quiero%20cotizar" target="_blank" rel="noopener">Cotizar por WhatsApp</a></div>'+
+    '</section>';
 }
 
 function runIntro(){
@@ -622,9 +777,13 @@ function runIntro(){
 document.getElementById("yr").textContent=new Date().getFullYear();
 window.addEventListener("DOMContentLoaded",()=>{
   buildClientFilter();
+  const filtersEl=document.querySelector(".filters");
+  window.addEventListener("scroll",()=>{filtersEl.classList.toggle("stuck",window.scrollY>150);},{passive:true});
   const h=location.hash.slice(1);
-  if(h==="info"){go("info");} else if(CAT_LABEL[h]){state.cat=h;}
-  syncChips();apply();runIntro();
+  if(h==="info"){go("info");}
+  else if(h==="prices"){openPrices();}
+  else{if(CAT_LABEL[h]){state.cat=h;}syncChips();apply();}
+  runIntro();
 });
 </script>
 
