@@ -268,6 +268,15 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
   .precios-hero{font-size:11px;padding:10px 18px;letter-spacing:1.5px}
   #rubroRow .chip{font-size:11px;padding:9px 12px}
 }
+
+/* ===== v4: autoplay de previews en la grilla ===== */
+.card .frame .play{display:none!important}
+.card .frame.liveframe iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:auto;height:auto;min-width:100%;min-height:100%;aspect-ratio:16/9;object-fit:cover;border:0;z-index:2;pointer-events:none}
+.card .frame .corner{pointer-events:none}
+.card .frame .tap{position:absolute;inset:0;z-index:5;cursor:pointer}
+.card .frame .mutedtag{position:absolute;right:8px;bottom:8px;z-index:6;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.55);border:1px solid var(--green-dim);display:flex;align-items:center;justify-content:center;color:var(--green);pointer-events:none;opacity:.85;transition:opacity .25s}
+.card:hover .frame .mutedtag{opacity:1}
+.card .frame .mutedtag svg{width:14px;height:14px}
 </style>
 </head>
 <body>
@@ -504,9 +513,9 @@ function cardVideo(v,idx,i){
     '<div class="meta-top"><span class="num">'+n+'</span>'+
       '<span class="name">'+v.title+(v.client?(' · '+v.client):'')+'</span>'+
       '<span class="badge">'+(COUNTRY_LABEL[v.country]||'')+(v.studio==='ulloa'?' · ULLOA':'')+'</span></div>'+
-    '<div class="frame" data-hover="'+(v.yt&&!v.demo?'1':'0')+'">'+posterHtml+
+    '<div class="frame'+(v.yt&&!v.demo?' liveframe':'')+'" data-preview="'+(v.yt&&!v.demo?'1':'0')+'">'+posterHtml+
       '<span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>'+
-      (v.yt?'<span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>':'')+
+      (v.yt&&!v.demo?'<span class="mutedtag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor" stroke="none"/><path d="M16 9l5 6M21 9l-5 6"/></svg></span><span class="tap" onclick="event.stopPropagation();openItem('+idx+')"></span>':(v.yt?'<span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>':''))+
     '</div></article>';
 }
 function photoInGrid(v,idx,i){
@@ -545,31 +554,53 @@ function render(){
     }).join("")+'</div>';
   }
   app.innerHTML=metaLine()+body;
-  animateIn();bindHover();
+  animateIn();setupPreviews();
 }
 function animateIn(){
   if(!window.gsap) return;
   gsap.from("#app .card, #app .shot",{opacity:0,y:18,duration:.5,stagger:.035,ease:"power2.out",overwrite:true});
 }
 
-let hoverTimer=null;
-function bindHover(){
-  document.querySelectorAll('.frame[data-hover="1"]').forEach(fr=>{
-    fr.addEventListener("mouseenter",()=>{
-      const card=fr.closest(".card");const idx=+card.dataset.idx;const v=DATA[idx];
-      hoverTimer=setTimeout(()=>{
-        if(fr.querySelector("iframe"))return;
-        const f=document.createElement("iframe");
-        f.src=ytEmbed(v,true);f.setAttribute("allow","autoplay; encrypted-media");
-        f.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
-        f.style.zIndex=2;fr.appendChild(f);
-      },420);
+let previewIO=null;
+const previewRatios=new Map();
+function previewCap(){ return (window.matchMedia && window.matchMedia("(max-width:760px)").matches)?4:8; }
+function activatePreview(fr){
+  if(fr.querySelector("iframe")) return;
+  const card=fr.closest(".card"); if(!card) return;
+  const v=DATA[+card.dataset.idx]; if(!v||!v.yt) return;
+  const f=document.createElement("iframe");
+  f.src=ytEmbed(v,true);
+  f.setAttribute("allow","autoplay; encrypted-media");
+  f.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
+  f.tabIndex=-1;
+  fr.appendChild(f);
+}
+function deactivatePreview(fr){ const f=fr.querySelector("iframe"); if(f) f.remove(); }
+function reconcilePreviews(){
+  const cap=previewCap();
+  const sorted=[...previewRatios.entries()].sort((a,b)=>b[1]-a[1]);
+  const keep=new Set(sorted.slice(0,cap).map(x=>x[0]));
+  previewRatios.forEach((_,fr)=>{ keep.has(fr)?activatePreview(fr):deactivatePreview(fr); });
+}
+function stopAllPreviews(){
+  if(previewIO) previewIO.disconnect();
+  previewRatios.clear();
+  document.querySelectorAll('.frame[data-preview="1"] iframe').forEach(f=>f.remove());
+}
+function setupPreviews(){
+  stopAllPreviews();
+  const reduce=window.matchMedia && window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  const saveData=navigator.connection && navigator.connection.saveData;
+  if(reduce||saveData) return;
+  if(typeof IntersectionObserver==="undefined") return;
+  previewIO=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting && e.intersectionRatio>0.35) previewRatios.set(e.target,e.intersectionRatio);
+      else previewRatios.delete(e.target);
     });
-    fr.addEventListener("mouseleave",()=>{
-      clearTimeout(hoverTimer);
-      const f=fr.querySelector("iframe");if(f)f.remove();
-    });
-  });
+    reconcilePreviews();
+  },{threshold:[0,0.35,0.6,0.85]});
+  document.querySelectorAll('.frame[data-preview="1"]').forEach(fr=>previewIO.observe(fr));
 }
 
 const box=document.getElementById("box"),stage=document.getElementById("boxStage"),cap=document.getElementById("boxCap");
@@ -589,9 +620,9 @@ function openItem(idx){
     stage.innerHTML='<iframe src="'+ytEmbed(v,false)+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
   }
   cap.innerHTML='<span class="t">'+v.title+'</span>'+(v.client?('<span>'+v.client+'</span>'):'')+'<span>'+(COUNTRY_FULL[v.country]||'')+'</span>';
-  box.dataset.idx=idx;box.classList.add("open");document.body.style.overflow="hidden";
+  box.dataset.idx=idx;box.classList.add("open");document.body.style.overflow="hidden";stopAllPreviews();
 }
-function closeBox(){box.classList.remove("open");stage.innerHTML="";document.body.style.overflow="";}
+function closeBox(){box.classList.remove("open");stage.innerHTML="";document.body.style.overflow="";setupPreviews();}
 function step(dir){
   const cur=DATA[+box.dataset.idx];let p=currentList.indexOf(cur);
   p=(p+dir+currentList.length)%currentList.length;openItem(DATA.indexOf(currentList[p]));
