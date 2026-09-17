@@ -277,6 +277,28 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 .card .frame .mutedtag{position:absolute;right:8px;bottom:8px;z-index:6;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.55);border:1px solid var(--green-dim);display:flex;align-items:center;justify-content:center;color:var(--green);pointer-events:none;opacity:.85;transition:opacity .25s}
 .card:hover .frame .mutedtag{opacity:1}
 .card .frame .mutedtag svg{width:14px;height:14px}
+
+/* ===== v5: grilla masonry adaptable (vertical / horizontal) ===== */
+.grid{display:block;column-count:3;column-gap:16px}
+@media(min-width:1550px){.grid{column-count:4}}
+@media(max-width:1000px){.grid{column-count:2}}
+@media(max-width:600px){.grid{column-count:1}}
+.grid .card{break-inside:avoid;-webkit-column-break-inside:avoid;display:block;width:100%;margin:0 0 18px}
+.card .frame.horiz{aspect-ratio:16/9}
+
+/* ===== v6 (BASHI-V6): feed 3 columnas en telefono + menu que no estorba ===== */
+@media(max-width:600px){
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;column-count:auto}
+  .grid .card{margin:0}
+  .grid .card .meta-top{display:none}
+  .grid .card .frame,.grid .card .frame.horiz{aspect-ratio:9/16}
+  .grid .card .frame .corner,.grid .card .frame .mutedtag{display:none}
+  main{padding-top:12px}
+}
+@media(max-width:760px){
+  .filters{position:static;box-shadow:none}
+  .filters.stuck{box-shadow:none;border-bottom-color:var(--line);padding-top:10px;padding-bottom:10px}
+}
 </style>
 </head>
 <body>
@@ -468,6 +490,7 @@ const TIPO_LABEL={musical:"Video Musical",reel:"Reel",anuncio:"Anuncio",cine:"Ci
 const TIPO_ORDER=["musical","reel","anuncio","cine","foto","diseno","campana"];
 const TIPO_DEFAULT={"music-video":"musical","photo":"foto","commercial":"reel"};
 function tipoOf(v){ return v.tipo || TIPO_DEFAULT[v.category] || "reel"; }
+function orientOf(v){ return v.orient || (v.category==="music-video" ? "h" : "v"); }
 function realItem(v){ if(v.demo) return false; if(v.kind==="video" && !v.yt) return false; if(v.kind==="photo" && (!v.img || /picsum\.photos/.test(v.img))) return false; return true; }
 
 let state={rubro:null,tipo:null,client:null};
@@ -513,7 +536,7 @@ function cardVideo(v,idx,i){
     '<div class="meta-top"><span class="num">'+n+'</span>'+
       '<span class="name">'+v.title+(v.client?(' · '+v.client):'')+'</span>'+
       '<span class="badge">'+(COUNTRY_LABEL[v.country]||'')+(v.studio==='ulloa'?' · ULLOA':'')+'</span></div>'+
-    '<div class="frame'+(v.yt&&!v.demo?' liveframe':'')+'" data-preview="'+(v.yt&&!v.demo?'1':'0')+'">'+posterHtml+
+    '<div class="frame'+(orientOf(v)==="h"?" horiz":"")+(v.yt&&!v.demo?' liveframe':'')+'" data-preview="'+(v.yt&&!v.demo?'1':'0')+'">'+posterHtml+
       '<span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>'+
       (v.yt&&!v.demo?'<span class="mutedtag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor" stroke="none"/><path d="M16 9l5 6M21 9l-5 6"/></svg></span><span class="tap" onclick="event.stopPropagation();openItem('+idx+')"></span>':(v.yt?'<span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>':''))+
     '</div></article>';
@@ -563,7 +586,7 @@ function animateIn(){
 
 let previewIO=null;
 const previewRatios=new Map();
-function previewCap(){ return (window.matchMedia && window.matchMedia("(max-width:760px)").matches)?4:8; }
+function previewCap(){ return (window.matchMedia && window.matchMedia("(max-width:760px)").matches)?6:8; }
 function activatePreview(fr){
   if(fr.querySelector("iframe")) return;
   const card=fr.closest(".card"); if(!card) return;
@@ -614,7 +637,7 @@ function openItem(idx){
     inner.classList.remove("vert");
     stage.className="stage photo";stage.innerHTML='<img src="'+v.img+'" alt="'+v.title+'">';
   }else{
-    const horiz=(v.category==="music-video");
+    const horiz=(orientOf(v)==="h");
     inner.classList.toggle("vert",!horiz);
     stage.className="stage"+(horiz?" horiz":"");
     stage.innerHTML='<iframe src="'+ytEmbed(v,false)+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
