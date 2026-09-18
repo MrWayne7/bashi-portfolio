@@ -93,7 +93,7 @@ button{font-family:inherit}
 .header .side{font-size:12px;letter-spacing:2px;color:var(--dim);text-transform:uppercase}
 .header .side.right{text-align:right}
 .header .side a{cursor:pointer;transition:color .2s}
-.header .side a:hover{color:var(--green)}
+.header .side a:hover{color:var(--ink)}
 .wordmark{
   font-family:var(--disp);font-weight:700;letter-spacing:.16em;
   font-size:clamp(26px,5vw,46px);color:var(--ink);text-align:center;line-height:1;
@@ -354,6 +354,20 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
   .mitem{font-size:12px;padding:4px 0}
 }
 @media(max-width:600px){ .layout{padding:0} #subfilter{display:none} }
+
+/* ===== v9 (BASHI-V9): fixes móvil header + menú compacto ===== */
+@media(max-width:700px){
+  .header{grid-template-columns:1fr;padding:16px var(--pad) 10px}
+  .header .side{display:none}
+  .tagline{margin-top:6px}
+}
+@media(max-width:900px){
+  .sidebar{margin-bottom:16px;border-bottom:1px solid var(--line);padding-bottom:10px}
+  #menu{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:20px;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
+  #menu::-webkit-scrollbar{display:none}
+  .mitem{white-space:nowrap;font-size:12px;padding:2px 0}
+  .mdiv{display:none}
+}
 </style>
 </head>
 <body>
@@ -378,7 +392,6 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
   <div>
     <div class="wordmark" onclick="go('all')">BASHI<span class="b-cur">_</span></div>
     <div class="tagline">Films &middot; Photography &middot; Edit</div>
-    <button class="precios-hero" onclick="openPrices()">&#9670;&nbsp; Precios &amp; Paquetes</button>
   </div>
   <div class="side right"><a onclick="go('info')">Information</a></div>
 </header>
