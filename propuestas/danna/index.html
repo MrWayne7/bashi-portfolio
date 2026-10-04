@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Propuesta · Danna × Nicolás — BASHI</title>
+<meta name="description" content="Propuesta de video privada para la boda de Danna y Nicolás.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#050505">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050505; --bg-2:#0a0c0a;
+  --ink:#e9e7df; --dim:#6b716b; --dim-2:#9aa09a;
+  --line:#191d19; --green:#00ff66; --green-dim:#0c9a49;
+  --disp:'Space Grotesk',system-ui,sans-serif;
+  --mono:'Share Tech Mono',ui-monospace,Menlo,Consolas,monospace;
+  --pad:clamp(16px,4vw,40px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--mono);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+img{display:block;max-width:100%}
+.ar{color:var(--green)}
+
+/* ambient fx */
+.fx{position:fixed;inset:0;pointer-events:none;z-index:9998}
+.fx.grain{opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1.2s steps(3) infinite}
+@keyframes grain{0%{transform:translate(0,0)}33%{transform:translate(-4%,2%)}66%{transform:translate(3%,-3%)}100%{transform:translate(0,0)}}
+.fx.scan{opacity:.35;background:repeating-linear-gradient(0deg,rgba(0,255,102,.02) 0 1px,transparent 1px 3px)}
+
+/* candado / gate */
+#gate{position:fixed;inset:0;z-index:10000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+#gate.off{opacity:0;visibility:hidden;transition:opacity .55s ease,visibility 0s .55s}
+.gboot{font-family:var(--mono);color:var(--green);font-size:12px;letter-spacing:2px;min-height:2em;margin-bottom:22px;text-shadow:0 0 8px rgba(0,255,102,.35);text-align:center}
+.gboot .cur{display:inline-block;width:8px;height:1em;background:var(--green);vertical-align:-2px;margin-left:3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.pgate{width:100%;max-width:420px;text-align:center;border:1px solid var(--line);padding:38px 26px;background:var(--bg-2)}
+.pgate .plock{color:var(--green);font-size:26px;margin-bottom:16px;letter-spacing:4px}
+.pgate h1{font-family:var(--disp);color:var(--ink);font-size:20px;margin:0 0 7px;font-weight:500;letter-spacing:.5px}
+.pgate p{color:var(--dim-2);font-size:13px;margin:0 0 22px;letter-spacing:.5px;line-height:1.6}
+.pgate input{width:100%;background:#000;border:1px solid var(--line);color:var(--ink);font-family:var(--mono);font-size:16px;letter-spacing:4px;text-align:center;padding:14px;margin-bottom:14px}
+.pgate input:focus{outline:none;border-color:var(--green);box-shadow:0 0 14px rgba(0,255,102,.2)}
+.pgate .pgerr{color:#ff5b5b;font-size:12px;min-height:1.2em;letter-spacing:1px;margin-bottom:10px}
+
+.btn{display:inline-block;width:100%;padding:14px 24px;background:var(--green);color:#000;border:0;font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.2s}
+.btn:hover{background:#00ff88;transform:translateY(-2px);box-shadow:0 8px 26px rgba(0,255,102,.28)}
+.btn:active{transform:translateY(0)}
+.btn.inline{width:auto}
+.btn[disabled]{opacity:.5;cursor:default;transform:none;box-shadow:none}
+
+/* app */
+#app{display:none;max-width:1040px;margin:0 auto;padding:0 var(--pad)}
+#app.in{display:block;animation:rise .7s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@supports(padding:max(0px)){#app{padding-left:max(var(--pad),env(safe-area-inset-left));padding-right:max(var(--pad),env(safe-area-inset-right))}}
+
+.top{display:flex;justify-content:space-between;align-items:center;padding:24px 0 18px}
+.wordmark{font-family:var(--disp);font-weight:700;letter-spacing:.16em;font-size:clamp(20px,4vw,26px);line-height:1}
+.wordmark .cur{color:var(--green);animation:blink 1.1s steps(1) infinite;text-shadow:0 0 12px rgba(0,255,102,.5)}
+.top .tag{font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;text-align:right}
+
+.lab{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--green-dim);text-transform:uppercase;margin:0 0 14px;display:flex;align-items:center;gap:10px}
+.lab::before{content:"";width:22px;height:1px;background:var(--green-dim)}
+
+/* hero */
+.hero{border:1px solid var(--line);background:var(--bg-2);padding:clamp(28px,6vw,56px) clamp(20px,5vw,44px);position:relative;margin-top:6px}
+.hero .corner{position:absolute;width:16px;height:16px;border:1px solid var(--green);opacity:.85}
+.hero .corner.tl{top:10px;left:10px;border-right:0;border-bottom:0}
+.hero .corner.tr{top:10px;right:10px;border-left:0;border-bottom:0}
+.hero .corner.bl{bottom:10px;left:10px;border-right:0;border-top:0}
+.hero .corner.br{bottom:10px;right:10px;border-left:0;border-top:0}
+.hero .eyebrow{font-size:11px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin:0 0 18px}
+.hero h1{font-family:var(--disp);font-weight:700;letter-spacing:.04em;font-size:clamp(34px,8vw,68px);line-height:1;margin:0;color:var(--ink)}
+.hero h1 .x{color:var(--green);text-shadow:0 0 18px rgba(0,255,102,.4);padding:0 .12em}
+.hero .meta{font-family:var(--mono);color:var(--green);font-size:12px;letter-spacing:3px;margin:20px 0 26px}
+.hero .lead{font-family:var(--disp);font-weight:400;color:var(--dim-2);font-size:clamp(15px,2.4vw,19px);line-height:1.55;max-width:60ch;margin:0}
+
+.sec{padding:clamp(40px,7vw,64px) 0 0}
+.sec h2{font-family:var(--disp);font-weight:500;font-size:clamp(21px,3.4vw,27px);color:var(--ink);margin:0 0 16px;letter-spacing:.3px}
+.sec p{color:var(--dim-2);font-size:14px;line-height:1.85;margin:0 0 14px;max-width:66ch}
+.sec p .g{color:var(--green)}
+.sec p b{color:var(--ink);font-weight:400}
+
+/* momento clave */
+.key{border:1px solid var(--green-dim);background:linear-gradient(180deg,rgba(0,255,102,.045),transparent 60%);padding:clamp(24px,5vw,40px);position:relative}
+.key h2{color:var(--ink)}
+.key .ksub{color:var(--green);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin:0 0 12px}
+.key .ref{display:inline-flex;align-items:center;gap:9px;margin-top:10px;border:1px solid var(--line);padding:11px 16px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim-2);transition:.2s}
+.key .ref:hover{color:var(--ink);border-color:var(--green-dim);box-shadow:0 0 16px rgba(0,255,102,.12)}
+
+/* entregables */
+.deliv{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.d{border:1px solid var(--line);background:var(--bg-2);padding:20px;position:relative}
+.d .fmt{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin:0 0 10px;display:flex;align-items:center;gap:7px}
+.d .fmt .dot{width:5px;height:5px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green)}
+.d h3{font-family:var(--disp);font-weight:500;font-size:16px;color:var(--ink);margin:0 0 7px}
+.d p{color:var(--dim);font-size:12.5px;line-height:1.6;margin:0}
+.deliv-note{color:var(--dim);font-size:12.5px;line-height:1.7;margin:16px 0 0;border-top:1px dashed var(--line);padding-top:14px}
+
+/* referencias */
+.refs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.rcard{border:1px solid var(--line);background:var(--bg-2);padding:18px;display:flex;flex-direction:column;gap:7px;transition:.2s}
+.rcard:hover{border-color:var(--green-dim);box-shadow:0 0 20px rgba(0,255,102,.1)}
+.rcard .rtag{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--green)}
+.rcard .rname{font-family:var(--disp);font-size:14.5px;color:var(--ink);font-weight:500}
+.rcard .rlink{font-size:11px;color:var(--dim);letter-spacing:1px}
+
+/* cronograma */
+.rows{border-top:1px solid var(--line);margin-top:4px}
+.r{display:flex;gap:18px;padding:15px 0;border-bottom:1px solid var(--line);font-size:13.5px;align-items:baseline}
+.r .k{color:var(--green);min-width:130px;letter-spacing:1px;text-transform:uppercase;font-size:11.5px}
+.r .v{color:var(--ink)}
+.r .v small{color:var(--dim);display:block;margin-top:3px;letter-spacing:.3px}
+
+/* inversion */
+.invest{border:1px solid var(--line);background:var(--bg-2);padding:clamp(24px,5vw,38px)}
+.invest .ihead{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:20px}
+.invest .iwhat{color:var(--dim-2);font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
+.invest .iprice{font-family:var(--disp);font-weight:700;color:var(--ink);font-size:clamp(30px,7vw,46px);line-height:1}
+.invest .iprice .cur{color:var(--green);font-size:.45em;letter-spacing:2px;margin-left:8px;vertical-align:middle}
+.invest ul{list-style:none;margin:0;padding:0}
+.invest li{display:flex;gap:11px;align-items:flex-start;color:var(--dim-2);font-size:13px;line-height:1.5;padding:7px 0}
+.invest li::before{content:"›";color:var(--green);flex-shrink:0}
+.invest .ifoot{color:var(--dim);font-size:12.5px;line-height:1.7;margin-top:18px;border-top:1px dashed var(--line);padding-top:16px}
+.invest .ifoot b{color:var(--green);font-weight:400}
+
+/* musica (sistema) */
+.music .mform{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.music .mform input{flex:1;min-width:200px;background:#000;border:1px solid var(--line);color:var(--ink);font-family:var(--mono);font-size:14px;padding:12px;transition:border-color .2s}
+.music .mform input:focus{outline:none;border-color:var(--green);box-shadow:0 0 12px rgba(0,255,102,.15)}
+.music .merr{color:#ff5b5b;font-size:12px;min-height:1em;letter-spacing:.5px;margin-bottom:4px}
+.music .mlisthead{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--green-dim);margin:18px 0 2px}
+.music .mlist{border-top:1px solid var(--line)}
+.music .mrow{display:flex;gap:14px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.music .mrow .mi{color:var(--green);font-size:11px;min-width:22px}
+.music .mrow .mc{color:var(--ink);font-size:13.5px;flex:1;line-height:1.4}
+.music .mrow .mc small{display:block;color:var(--dim);margin-top:3px;font-size:11px;letter-spacing:.5px}
+.music .mempty{color:var(--dim);font-size:12.5px;padding:16px 0;letter-spacing:.5px}
+
+/* cierre + footer */
+.close-sec{text-align:center;padding:clamp(48px,9vw,80px) 0 0}
+.close-sec .cmsg{font-family:var(--disp);font-size:clamp(18px,3vw,24px);color:var(--ink);font-weight:400;line-height:1.5;margin:0 auto 10px;max-width:40ch}
+.close-sec .csig{color:var(--green);font-size:12px;letter-spacing:2px;text-transform:uppercase}
+.footer{margin-top:clamp(48px,8vw,70px);border-top:1px solid var(--line);padding:26px 0;text-align:center;font-size:10.5px;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase}
+
+@media(max-width:620px){
+  .deliv,.refs{grid-template-columns:1fr}
+  .r{flex-direction:column;gap:5px}
+  .r .k{min-width:0}
+  .music .mform input{min-width:0}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .fx{display:none}
+}
+</style>
+</head>
+<body>
+<div class="fx grain"></div>
+<div class="fx scan"></div>
+
+<!-- ============ CANDADO PRIVADO ============ -->
+<div id="gate">
+  <div class="gboot" id="gboot"></div>
+  <div class="pgate">
+    <div class="plock">[ • ]</div>
+    <h1>Propuesta privada</h1>
+    <p>Esta propuesta es solo para Danna.<br>Escribe la clave que te compartí.</p>
+    <input id="pw" type="password" inputmode="text" autocomplete="off" placeholder="• • • • • • • •" aria-label="Clave de acceso">
+    <div class="pgerr" id="pgerr"></div>
+    <button class="btn" id="enter">Entrar</button>
+  </div>
+</div>
+
+<!-- ============ PROPUESTA ============ -->
+<main id="app">
+
+  <div class="top">
+    <div class="wordmark">BASHI<span class="cur">▮</span></div>
+    <div class="tag">Propuesta de video<br>Boda · 05.12.2026</div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="corner tl"></span><span class="corner tr"></span>
+    <span class="corner bl"></span><span class="corner br"></span>
+    <p class="eyebrow">Propuesta de video · Boda</p>
+    <h1>DANNA<span class="x">×</span>NICOLÁS</h1>
+    <p class="meta">05 · DIC · 2026 — FUSAGASUGÁ</p>
+    <p class="lead">Tu día contado como pasó de verdad: en vivo, sin poses y sin libreto. Lo que viviste y lo que sentiste, tal cual quedó.</p>
+  </section>
+
+  <!-- ENFOQUE -->
+  <section class="sec">
+    <p class="lab">Enfoque</p>
+    <h2>Real, nada actuado</h2>
+    <p>La idea es la tuya y me encanta: <b>contar la historia del día</b> tal como se vive. Nada de montar escenas ni pedir poses raras — grabo lo que pasa cuando pasa. La risa de verdad, el nervio antes de entrar, el abrazo que nadie planeó.</p>
+    <p>Me quedo <b>todo el día</b> grabando para tener material de sobra, y de ahí sale todo: el video completo del día, un resumen y los cortos para redes. Lo narrativo va en <span class="g">horizontal</span>; los reels, en <span class="g">vertical</span> para que se vean bien en el celular.</p>
+  </section>
+
+  <!-- MOMENTO CLAVE -->
+  <section class="sec">
+    <p class="lab">El momento clave</p>
+    <div class="key">
+      <p class="ksub">El que no se puede perder</p>
+      <h2>La salida bajo el arco de sables</h2>
+      <p>Nicolás con el uniforme de la Fuerza Aérea, sus compañeros formando el caminito y las espadas en alto mientras salen de la iglesia. Ese plano lo grabo pensado, con el tiempo y el ángulo justos — es de los momentos que más quiero que te queden <b>para siempre</b>.</p>
+      <a class="ref" href="https://www.instagram.com/reels/DU6rwp8AJgQ/" target="_blank" rel="noopener"><span class="ar">▸</span> Ver la referencia de la salida</a>
+    </div>
+  </section>
+
+  <!-- ENTREGABLES -->
+  <section class="sec">
+    <p class="lab">Lo que te llevas</p>
+    <h2>Qué te entrego</h2>
+    <div class="deliv">
+      <div class="d">
+        <p class="fmt"><span class="dot"></span>Horizontal</p>
+        <h3>El video completo</h3>
+        <p>Todo el día contado de principio a fin. Es la pieza grande, para ver con calma y guardar siempre.</p>
+      </div>
+      <div class="d">
+        <p class="fmt"><span class="dot"></span>Horizontal · ~10 min</p>
+        <h3>El resumen</h3>
+        <p>Lo mejor del día en un solo video de unos 10 minutos: ceremonia, sables y fiesta.</p>
+      </div>
+      <div class="d">
+        <p class="fmt"><span class="dot"></span>Horizontal · 1–2 min</p>
+        <h3>El teaser</h3>
+        <p>Un corte corto y con ritmo, de 1 a 2 minutos, para revivir el día de un vistazo.</p>
+      </div>
+      <div class="d">
+        <p class="fmt"><span class="dot"></span>Vertical · x5</p>
+        <h3>5 reels</h3>
+        <p>Cinco clips verticales listos para subir a Instagram o TikTok.</p>
+      </div>
+    </div>
+    <p class="deliv-note">Todo sale del mismo día de grabación. Primero te paso los <b>reels y el teaser</b> para que publiques caliente, y las piezas largas van un poco después.</p>
+  </section>
+
+  <!-- REFERENCIAS -->
+  <section class="sec">
+    <p class="lab">Referencias</p>
+    <h2>El estilo que buscamos</h2>
+    <p>Estas son las que tienes en mente. Nos sirven para apuntarle a lo mismo: ritmo, emoción y momentos reales.</p>
+    <div class="refs">
+      <a class="rcard" href="https://www.instagram.com/reels/ClByQZNpZOZ/" target="_blank" rel="noopener">
+        <span class="rtag">El video largo</span>
+        <span class="rname">La boda contada bien</span>
+        <span class="rlink"><span class="ar">▸</span> ver en Instagram</span>
+      </a>
+      <a class="rcard" href="https://www.instagram.com/reels/DU6rwp8AJgQ/" target="_blank" rel="noopener">
+        <span class="rtag">La salida · sables</span>
+        <span class="rname">Arco de sables — idea 1</span>
+        <span class="rlink"><span class="ar">▸</span> ver en Instagram</span>
+      </a>
+      <a class="rcard" href="https://www.instagram.com/reels/DWUtfUSEYno/" target="_blank" rel="noopener">
+        <span class="rtag">La salida · sables</span>
+        <span class="rname">Arco de sables — idea 2</span>
+        <span class="rlink"><span class="ar">▸</span> ver en Instagram</span>
+      </a>
+      <a class="rcard" href="https://www.instagram.com/reels/DaZ-YFrukyN/" target="_blank" rel="noopener">
+        <span class="rtag">La salida · sables</span>
+        <span class="rname">Arco de sables — idea 3</span>
+        <span class="rlink"><span class="ar">▸</span> ver en Instagram</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- CRONOGRAMA -->
+  <section class="sec">
+    <p class="lab">El día</p>
+    <h2>Cómo se mueve</h2>
+    <div class="rows">
+      <div class="r"><span class="k">Fecha</span><span class="v">5 de diciembre de 2026</span></div>
+      <div class="r"><span class="k">Ceremonia</span><span class="v">El Encanto · 2:00 PM</span></div>
+      <div class="r"><span class="k">Celebración</span><span class="v">El Novillero</span></div>
+      <div class="r"><span class="k">Ciudad</span><span class="v">Fusagasugá, Cundinamarca</span></div>
+      <div class="r"><span class="k">Cobertura</span><span class="v">Día completo<small>De la mañana hasta la noche</small></span></div>
+      <div class="r"><span class="k">Entrega</span><span class="v">1 a 2 semanas<small>Por fases, según correcciones</small></span></div>
+    </div>
+  </section>
+
+  <!-- INVERSION -->
+  <section class="sec">
+    <p class="lab">Inversión</p>
+    <div class="invest">
+      <div class="ihead">
+        <span class="iwhat">Todo lo de arriba, incluido</span>
+        <!-- CAMBIAR PRECIO AQUI -->
+        <span class="iprice">$1.000.000<span class="cur">COP</span></span>
+      </div>
+      <ul>
+        <li>Cobertura de todo el día del evento</li>
+        <li>Video completo + resumen (~10 min) + teaser (1–2 min)</li>
+        <li>5 reels verticales para redes</li>
+        <li>Edición, musicalización y corrección de color</li>
+      </ul>
+      <p class="ifoot">Para apartar la fecha dejas un <b>abono del 50%</b>, y el resto cuando te entrego. El 5 de diciembre es una sola fecha: con el abono queda reservada para ti.</p>
+    </div>
+  </section>
+
+  <!-- MUSICA (SISTEMA) -->
+  <section class="sec music">
+    <p class="lab">Música</p>
+    <h2>Tus canciones</h2>
+    <p>La música le pone el alma al video. Anota las canciones que quieres que suenen — se guardan acá mismo y yo las veo al toque. Puedes volver cuando quieras y seguir agregando.</p>
+    <div class="mform">
+      <input id="mSong" type="text" maxlength="300" placeholder="Canción — artista (o link)">
+      <input id="mMoment" type="text" maxlength="120" placeholder="¿Para qué momento? (opcional)">
+      <button class="btn inline" id="mAdd">Agregar</button>
+    </div>
+    <div class="merr" id="mErr"></div>
+    <p class="mlisthead">Tu lista</p>
+    <div class="mlist" id="mList"><div class="mempty">Cargando…</div></div>
+  </section>
+
+  <!-- CIERRE -->
+  <section class="close-sec">
+    <p class="cmsg">Si te laten las ideas, cuadramos tu día para que quede para siempre.</p>
+    <p class="csig">— Sebas · BASHI</p>
+  </section>
+
+  <footer class="footer">BASHI // Films &amp; Photography · Propuesta privada · <span id="yr"></span></footer>
+
+</main>
+
+<script>
+/* =================== CONFIG =================== */
+/* Cambia la clave aqui y diselo a Danna */
+var CLAVE = "dannanicolas";
+/* Endpoint del sistema de canciones (Cloudflare Function) */
+var API = "/api/canciones";
+/* ============================================= */
+
+(function(){
+  "use strict";
+  var gate=document.getElementById('gate');
+  var app=document.getElementById('app');
+  var pw=document.getElementById('pw');
+  var err=document.getElementById('pgerr');
+  var gboot=document.getElementById('gboot');
+  var KEY='danna_unlocked_v1';
+  var songsLoaded=false;
+
+  function reveal(){
+    gate.classList.add('off');
+    app.classList.add('in');
+    setTimeout(function(){ gate.style.display='none'; },600);
+    loadSongs();
+  }
+  function tryEnter(){
+    var val=(pw.value||'').trim().toUpperCase();
+    if(val===CLAVE.toUpperCase()){
+      try{ sessionStorage.setItem(KEY,'1'); }catch(e){}
+      reveal();
+    }else{
+      err.textContent='Clave incorrecta. Intenta de nuevo.';
+      pw.value=''; pw.focus();
+    }
+  }
+  document.getElementById('enter').addEventListener('click',tryEnter);
+  pw.addEventListener('keydown',function(e){ if(e.key==='Enter') tryEnter(); });
+
+  var unlocked=false;
+  try{ unlocked=sessionStorage.getItem(KEY)==='1'; }catch(e){}
+  if(unlocked){
+    gate.style.display='none'; app.classList.add('in'); loadSongs();
+  }else{
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var line='> BASHI · cargando tu propuesta…';
+    if(reduce){ gboot.textContent=line; }
+    else{
+      var i=0;
+      (function type(){
+        gboot.innerHTML=line.slice(0,i)+'<span class="cur"></span>';
+        if(i++<line.length) setTimeout(type,34);
+      })();
+    }
+    setTimeout(function(){ pw.focus(); },400);
+  }
+
+  /* ---------- sistema de canciones ---------- */
+  var mList=document.getElementById('mList');
+  var mErr=document.getElementById('mErr');
+  var mSong=document.getElementById('mSong');
+  var mMoment=document.getElementById('mMoment');
+  var mAdd=document.getElementById('mAdd');
+
+  function esc(s){ return (s||'').replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  function render(list){
+    if(!list || !list.length){ mList.innerHTML='<div class="mempty">Aún no hay canciones. Agrega la primera arriba.</div>'; return; }
+    var html='';
+    for(var i=0;i<list.length;i++){
+      var it=list[i];
+      html+='<div class="mrow"><span class="mi">'+(i+1).toString().padStart(2,'0')+'</span><span class="mc">'+esc(it.cancion)+(it.momento?'<small>'+esc(it.momento)+'</small>':'')+'</span></div>';
+    }
+    mList.innerHTML=html;
+  }
+
+  function loadSongs(){
+    if(songsLoaded) return; songsLoaded=true;
+    fetch(API,{headers:{'x-clave':CLAVE}})
+      .then(function(r){ return r.ok?r.json():Promise.reject(); })
+      .then(render)
+      .catch(function(){ mList.innerHTML='<div class="mempty">No se pudo cargar la lista todavía.</div>'; });
+  }
+
+  function addSong(){
+    var cancion=(mSong.value||'').trim();
+    var momento=(mMoment.value||'').trim();
+    mErr.textContent='';
+    if(!cancion){ mSong.focus(); return; }
+    mAdd.disabled=true; mAdd.textContent='Guardando…';
+    fetch(API,{
+      method:'POST',
+      headers:{'content-type':'application/json','x-clave':CLAVE},
+      body:JSON.stringify({cancion:cancion,momento:momento})
+    })
+    .then(function(r){ return r.ok?r.json():Promise.reject(); })
+    .then(function(res){
+      render(res.list||[]);
+      mSong.value=''; mMoment.value=''; mSong.focus();
+    })
+    .catch(function(){ mErr.textContent='No se pudo guardar. Intenta de nuevo en un momento.'; })
+    .finally(function(){ mAdd.disabled=false; mAdd.textContent='Agregar'; });
+  }
+  mAdd.addEventListener('click',addSong);
+  mSong.addEventListener('keydown',function(e){ if(e.key==='Enter') addSong(); });
+  mMoment.addEventListener('keydown',function(e){ if(e.key==='Enter') addSong(); });
+
+  document.getElementById('yr').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

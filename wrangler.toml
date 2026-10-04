@@ -1,0 +1,6 @@
+name = "bashi-portfolio"
+compatibility_date = "2025-01-01"
+
+[[kv_namespaces]]
+binding = "CANCIONES"
+id = "d405f4ba88fc41bf952d845ce4d33092"
