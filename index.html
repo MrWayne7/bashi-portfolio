@@ -3,22 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>BASHI — Films & Photography</title>
-<meta name="description" content="Bashi — Director, editor y fotógrafo. Music videos, comerciales, reels y fotografía. Santo Domingo · Colombia · USA.">
-<meta property="og:title" content="BASHI — Films & Photography">
-<meta property="og:description" content="Director, editor y fotógrafo. Music videos, comerciales, reels y fotografía.">
+<link rel="preconnect" href="https://i.ytimg.com" crossorigin>
+<link rel="preconnect" href="https://www.youtube-nocookie.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<script>try{var _t=localStorage.getItem("bashi-theme");if(_t)document.documentElement.setAttribute("data-theme",_t);}catch(e){}</script>
+<title>BASHI — Editor de Video, Reels y Creador de Contenido | Santo Domingo & Colombia</title>
+<meta name="description" content="Editor de video, reels y contenido para redes · camarógrafo · fotografía · diseño web. Trabajo remoto y local en Santo Domingo (RD), Colombia y USA. Cotiza con BASHI.">
+<meta property="og:title" content="BASHI — Editor de Video, Reels y Contenido para Redes">
+<meta property="og:description" content="Editor de video, reels y contenido · camarógrafo · fotografía · diseño web. Santo Domingo, Colombia y USA.">
 <meta property="og:type" content="website">
-<link rel="canonical" href="https://bashi-portfolio.pages.dev/">
-<meta name="keywords" content="editor de video, reels, videos para redes sociales, comerciales, music videos, fotografia, campanas digitales, Santo Domingo, Colombia, Bashi, Ulloa Media">
+<link rel="canonical" href="https://studiobashi.com/">
+<meta name="keywords" content="editor de video, editor de reels, creador de contenido, camarógrafo, operador de cámara, grabación de contenido, videos para redes, music videos, comerciales, fotografía, diseño web, páginas web, desarrollo web, motion graphics, editor freelance, Santo Domingo, República Dominicana, Colombia, Bogotá, Bashi, Ulloa Media">
 <meta property="og:site_name" content="BASHI">
-<meta property="og:url" content="https://bashi-portfolio.pages.dev/">
+<meta property="og:url" content="https://studiobashi.com/">
 <meta property="og:image" content="https://i.ytimg.com/vi/IiZK0ZqbLNs/maxresdefault.jpg">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="720">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BASHI — Films & Photography">
-<meta name="twitter:description" content="Director, editor y fotografo. Music videos, comerciales, reels y fotografia.">
+<meta name="twitter:title" content="BASHI — Editor de Video, Reels y Contenido">
+<meta name="twitter:description" content="Editor de video, reels y contenido · camarógrafo · fotografía · diseño web. Santo Domingo, Colombia y USA.">
 <meta name="twitter:image" content="https://i.ytimg.com/vi/IiZK0ZqbLNs/maxresdefault.jpg">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="BASHI">
+<meta name="geo.placename" content="Santo Domingo, República Dominicana">
+<meta property="og:locale" content="es_DO">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%23050505%22/><text x=%2216%22 y=%2222%22 font-family=%22Arial%22 font-weight=%22bold%22 font-size=%2216%22 fill=%22%2300ff66%22 text-anchor=%22middle%22>B</text></svg>">
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"ProfessionalService",
+ "name":"BASHI",
+ "alternateName":"Bashi Films",
+ "description":"Editor de video y reels, camarógrafo y creador de contenido para redes. También fotografía, motion graphics y diseño de páginas web.",
+ "url":"https://studiobashi.com/",
+ "image":"https://i.ytimg.com/vi/IiZK0ZqbLNs/maxresdefault.jpg",
+ "telephone":"+1-786-348-1676",
+ "email":"hola@studiobashi.com",
+ "priceRange":"$$",
+ "founder":{"@type":"Person","name":"Sebastián Bashi","jobTitle":"Director, editor y fotógrafo","knowsAbout":["Edición de video","Edición de reels","Creación de contenido","Camarógrafo","Fotografía","Motion graphics","Diseño web","Beatmaking","Ingeniería de grabación de voces"],"sameAs":["https://www.instagram.com/sebxsco/"]},
+ "areaServed":[{"@type":"City","name":"Santo Domingo"},{"@type":"Place","name":"Bogotá, Colombia"},{"@type":"Country","name":"Estados Unidos"}],
+ "serviceType":["Edición de video","Edición de reels","Creación de contenido para redes","Camarógrafo / operario de cámara","Fotografía","Diseño y desarrollo web","Campañas digitales","Motion graphics"],
+ "sameAs":["https://www.instagram.com/sebxsco/"]
+}
+</script>
 <meta name="theme-color" content="#050505">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -368,9 +396,52 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
   .mitem{white-space:nowrap;font-size:12px;padding:2px 0}
   .mdiv{display:none}
 }
+
+/* ===== v10 (BASHI-V10): miniaturas limpias + telefono 2 columnas con titulo ===== */
+.card .frame .play{display:none!important}
+.card .frame .playdot{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.9);z-index:4;width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none}
+.card .frame .playdot svg{width:16px;height:16px;fill:#fff;margin-left:2px}
+.card:hover .frame .playdot{opacity:1;transform:translate(-50%,-50%) scale(1)}
+@media(max-width:600px){
+  .grid{display:block;column-count:2;column-gap:10px}
+  .grid .card{margin:0 0 16px;break-inside:avoid}
+  .grid .card .meta-top{display:flex;font-size:10px;gap:6px;margin-bottom:6px}
+  .grid .card .badge{display:none}
+  .grid .card .frame{aspect-ratio:9/16}
+  .grid .card .frame.horiz{aspect-ratio:16/9}
+  .grid .card .frame .corner{display:none}
+  .grid .card .frame .playdot{opacity:.85;width:38px;height:38px}
+}
+
+/* ===== v11 (BASHI-V11): tema claro/oscuro + perf + pulido ===== */
+:root[data-theme="light"]{
+  --bg:#f5f4ef; --bg-2:#ffffff; --ink:#17191c; --dim:#8a8f8a; --dim-2:#50544f; --line:#e4e3dc; --green:#07a046; --green-dim:#0a8f42; --grain-opacity:.02;
+}
+.themebtn{position:fixed;top:max(10px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));z-index:85;width:36px;height:36px;border-radius:50%;background:var(--bg-2);border:1px solid var(--line);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .2s,border-color .2s,transform .2s}
+.themebtn:hover{border-color:var(--green);color:var(--green);transform:rotate(18deg)}
+.themebtn svg{width:16px;height:16px}
+.precios-pin{right:calc(max(12px,env(safe-area-inset-right)) + 46px)}
+#box .stage::after{content:"";position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;border:2px solid rgba(255,255,255,.18);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;z-index:0;pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.card .meta-top{align-items:baseline}
+.card .name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ===== v12 (BASHI-V12): toggle ES/EN ===== */
+.langbtn{position:fixed;top:max(10px,env(safe-area-inset-top));right:calc(max(12px,env(safe-area-inset-right)) + 44px);z-index:85;height:36px;padding:0 13px;border-radius:18px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink);font-family:var(--mono);font-size:12px;letter-spacing:1px;cursor:pointer;transition:color .2s,border-color .2s}
+.langbtn:hover{border-color:var(--green);color:var(--green)}
+.precios-pin{left:max(12px,env(safe-area-inset-left));right:auto!important}
+
+/* ===== v14 (BASHI-V14): dominio + instagram =====
+/* v13 SEO */
+.seo-h1{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.footer .fservices{color:var(--dim-2);letter-spacing:1px}
+.footer .flocs{color:var(--dim);margin-top:6px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+.footer .fcopy{margin-top:14px}
+.footer .flinks{margin-top:8px}
 </style>
 </head>
 <body>
+<h1 class="seo-h1">BASHI — Editor de video, reels y contenido para redes · Camarógrafo y operario de cámara · Fotografía · Diseño de páginas web · Motion graphics. Trabajo remoto y local en Santo Domingo (República Dominicana), Bogotá (Colombia) y Estados Unidos.</h1>
 <div class="fx grain"></div>
 <div class="fx scan"></div>
 
@@ -388,13 +459,15 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 <button class="skip" id="skip" style="display:none">SKIP &#9656;</button>
 
 <header class="header">
-  <div class="side"><a onclick="go('all')">Archive</a></div>
+  <div class="side"><a onclick="go('all')" data-i18n="archive">Archive</a></div>
   <div>
     <div class="wordmark" onclick="go('all')">BASHI<span class="b-cur">_</span></div>
-    <div class="tagline">Films &middot; Photography &middot; Edit</div>
+    <div class="tagline" data-i18n="tagline">Films &middot; Photography &middot; Edit</div>
   </div>
-  <div class="side right"><a onclick="go('info')">Information</a></div>
+  <div class="side right"><a onclick="go('info')" data-i18n="info">Information</a></div>
 </header>
+<button class="themebtn" onclick="toggleTheme()" aria-label="Cambiar tema" title="Tema claro/oscuro"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 3a9 9 0 010 18z" fill="currentColor"/></svg></button>
+<button class="langbtn" onclick="toggleLang()" aria-label="Language">EN</button>
 <button class="precios-pin" onclick="openPrices()">&#9670; Precios</button>
 
 <div class="layout">
@@ -407,10 +480,13 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 </div>
 
 <footer class="footer">
-  &copy; <span id="yr"></span> BASHI &middot; Films &amp; Photography — Santo Domingo, RD
-  <div style="margin-top:10px">
-    <a href="https://www.instagram.com/yo.bashi/" target="_blank" rel="noopener">Instagram</a> &middot;
-    <a href="https://wa.me/17863481676?text=Hola%20Bashi" target="_blank" rel="noopener">WhatsApp</a>
+  <div class="fservices">Edición de video &middot; Reels &middot; Contenido para redes &middot; Camarógrafo &middot; Fotografía &middot; Diseño web &middot; Motion graphics</div>
+  <div class="flocs">Santo Domingo (RD) &middot; Bogotá, Colombia &middot; Estados Unidos &middot; Trabajo remoto</div>
+  <div class="fcopy">&copy; <span id="yr"></span> BASHI</div>
+  <div class="flinks">
+    <a href="https://www.instagram.com/sebxsco/" target="_blank" rel="noopener">Instagram</a> &middot;
+    <a href="https://wa.me/17863481676?text=Hola%20Bashi" target="_blank" rel="noopener">WhatsApp</a> &middot;
+    <a href="mailto:hola@studiobashi.com">Email</a>
   </div>
 </footer>
 
@@ -564,6 +640,32 @@ function orientOf(v){ return v.orient || (v.category==="music-video" ? "h" : "v"
 function selectedOf(v){ return (v.sel!=null)?v.sel:(v.category==="music-video"); }
 function realItem(v){ if(v.demo) return false; if(v.kind==="video" && !v.yt) return false; if(v.kind==="photo" && (!v.img || /picsum\.photos/.test(v.img))) return false; return true; }
 
+let lang=(function(){try{return localStorage.getItem("bashi-lang")||"es";}catch(e){return "es";}})();
+function L(es,en){return lang==="en"?en:es;}
+const I18N={
+ es:{archive:"Archivo",info:"Información",selected:"Destacados",all:"Todos los proyectos",precios:"Precios",tagline:"Cine · Fotografía · Edición",tipo:"Tipo",cliente:"Cliente",todos:"Todos",proyecto:"proyecto",proyectos:"proyectos",allwork:"Todo el trabajo",
+   ru_artistico:"Artístico",ru_negocios:"Negocios / Servicios",ru_belleza:"Belleza",ru_producto:"Producto / Tecnología",ru_restaurantes:"Restaurantes",ru_automotriz:"Automotriz",
+   tp_musical:"Video Musical",tp_bts:"Detrás de cámaras",tp_trailer:"Trailer",tp_reel:"Reel",tp_anuncio:"Anuncio",tp_cine:"Cinematográfico",tp_foto:"Fotografía",tp_diseno:"Diseño",tp_campana:"Campañas Digitales"},
+ en:{archive:"Archive",info:"Information",selected:"Selected Work",all:"All Projects",precios:"Pricing",tagline:"Film · Photography · Edit",tipo:"Type",cliente:"Client",todos:"All",proyecto:"project",proyectos:"projects",allwork:"All work",
+   ru_artistico:"Artistic",ru_negocios:"Business / Services",ru_belleza:"Beauty",ru_producto:"Product / Tech",ru_restaurantes:"Restaurants",ru_automotriz:"Automotive",
+   tp_musical:"Music Video",tp_bts:"Behind the Scenes",tp_trailer:"Trailer",tp_reel:"Reel",tp_anuncio:"Ad",tp_cine:"Cinematic",tp_foto:"Photography",tp_diseno:"Design",tp_campana:"Digital Campaigns"}
+};
+function t(k){return (I18N[lang]&&I18N[lang][k])||I18N.es[k]||k;}
+function ruL(r){return t("ru_"+r);}
+function tpL(x){return t("tp_"+x);}
+function applyStaticI18n(){
+  document.querySelectorAll("[data-i18n]").forEach(el=>{el.textContent=t(el.dataset.i18n);});
+  const lb=document.querySelector(".langbtn"); if(lb) lb.textContent=lang==="en"?"ES":"EN";
+}
+function rerenderAll(){
+  applyStaticI18n();
+  if(document.getElementById("menu")){ buildMenu(); buildSubfilter(); }
+  if(state.view==="info") document.getElementById("app").innerHTML=infoHtml();
+  else if(state.view==="prices") renderPrices();
+  else apply();
+}
+function toggleLang(){ lang=lang==="en"?"es":"en"; try{localStorage.setItem("bashi-lang",lang);}catch(e){} rerenderAll(); }
+
 let state={view:"sel", rubro:null, tipo:null, client:null};
 let currentList=[];
 
@@ -608,9 +710,9 @@ function cardVideo(v,idx,i){
     '<div class="meta-top"><span class="num">'+n+'</span>'+
       '<span class="name">'+v.title+(v.client?(' · '+v.client):'')+'</span>'+
       '<span class="badge">'+(COUNTRY_LABEL[v.country]||'')+(v.studio==='ulloa'?' · ULLOA':'')+'</span></div>'+
-    '<div class="frame'+(orientOf(v)==="h"?" horiz":"")+(v.yt&&!v.demo?' liveframe':'')+'" data-preview="'+(v.yt&&!v.demo?'1':'0')+'">'+posterHtml+
+    '<div class="frame'+(orientOf(v)==="h"?" horiz":"")+'">'+posterHtml+
       '<span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>'+
-      (v.yt&&!v.demo?'<span class="mutedtag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor" stroke="none"/><path d="M16 9l5 6M21 9l-5 6"/></svg></span><span class="tap" onclick="event.stopPropagation();openItem('+idx+')"></span>':(v.yt?'<span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>':''))+
+      '<span class="playdot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>'+
     '</div></article>';
 }
 function photoInGrid(v,idx,i){
@@ -626,11 +728,11 @@ function cardPhoto(v,idx){
 }
 function metaLine(){
   let parts=[];
-  if(state.view==="sel") parts.push("Selected Work");
-  if(state.rubro) parts.push(RUBRO_LABEL[state.rubro]);
-  if(state.tipo) parts.push(TIPO_LABEL[state.tipo]);
+  if(state.view==="sel") parts.push(t("selected"));
+  if(state.rubro) parts.push(ruL(state.rubro));
+  if(state.tipo) parts.push(tpL(state.tipo));
   if(state.client) parts.push(state.client);
-  let s='<b>'+currentList.length+'</b> '+(currentList.length===1?'proyecto':'proyectos')+' · '+(parts.length?parts.join(' · '):'Todo el trabajo');
+  let s='<b>'+currentList.length+'</b> '+(currentList.length===1?t("proyecto"):t("proyectos"))+' · '+(parts.length?parts.join(' · '):t("allwork"));
   return '<div class="result-meta">'+s+'</div>';
 }
 function render(){
@@ -650,7 +752,7 @@ function render(){
     }).join("")+'</div>';
   }
   app.innerHTML=metaLine()+body;
-  animateIn();setupPreviews();
+  animateIn();
 }
 function animateIn(){
   if(!window.gsap) return;
@@ -734,38 +836,37 @@ document.addEventListener("keydown",e=>{
 
 function infoHtml(){
   return '<section class="info">'+
-    '<p class="lead">Bashi es director, editor y fotografo. Convierte ideas en imagenes con textura de cine — music videos, comerciales, reels y foto.</p>'+
-    '<p>Trabajo entre <b style="color:var(--ink)">Santo Domingo, Colombia y Estados Unidos</b>, en proyectos propios y como parte de <b style="color:var(--ink)">Ulloa Media</b>. Filtra el archivo por rubro, tipo o cliente para ver cada linea de trabajo.</p>'+
+    '<p class="lead">'+L('Bashi es director, editor y fotógrafo. Convierte ideas en imágenes con textura de cine — music videos, comerciales, reels y foto.','Bashi is a director, editor and photographer. He turns ideas into images with a cinematic texture — music videos, commercials, reels and photography.')+'</p>'+
+    '<p>'+L('Trabajo entre <b style="color:var(--ink)">Santo Domingo, Colombia y Estados Unidos</b>, en proyectos propios y como parte de <b style="color:var(--ink)">Ulloa Media</b>. Filtra el archivo por rubro, tipo o cliente para ver cada línea de trabajo.','I work across <b style="color:var(--ink)">Santo Domingo, Colombia and the United States</b>, on personal projects and as part of <b style="color:var(--ink)">Ulloa Media</b>. Filter the archive by industry, type or client to explore each line of work.')+'</p>'+
     '<div class="rows">'+
-      '<div class="r"><span class="k">Instagram</span><a href="https://www.instagram.com/yo.bashi/" target="_blank" rel="noopener">@yo.bashi</a></div>'+
+      '<div class="r"><span class="k">Instagram</span><a href="https://www.instagram.com/sebxsco/" target="_blank" rel="noopener">@sebxsco</a></div>'+
       '<div class="r"><span class="k">WhatsApp</span><a href="https://wa.me/17863481676" target="_blank" rel="noopener">+1 (786) 348-1676</a></div>'+
-      '<div class="r"><span class="k">Email</span><a href="mailto:hola@bashi.film">hola@bashi.film</a></div>'+
-      '<div class="r"><span class="k">Base</span><span style="color:var(--dim-2)">Santo Domingo, RD</span></div>'+
+      '<div class="r"><span class="k">Email</span><a href="mailto:hola@studiobashi.com">hola@studiobashi.com</a></div>'+
+      '<div class="r"><span class="k">'+L('Base','Based in')+'</span><span style="color:var(--dim-2)">Santo Domingo, RD</span></div>'+
     '</div>'+
     '<div class="cta">'+
-      '<a class="btn" href="https://wa.me/17863481676?text=Quiero%20cotizar%20un%20proyecto" target="_blank" rel="noopener">Cotizar un proyecto</a>'+
-      '<a class="btn ghost" href="https://www.instagram.com/yo.bashi/" target="_blank" rel="noopener">Ver Instagram</a>'+
+      '<a class="btn" href="https://wa.me/17863481676?text='+encodeURIComponent(L('Quiero cotizar un proyecto','I want a quote for a project'))+'" target="_blank" rel="noopener">'+L('Cotizar un proyecto','Request a quote')+'</a>'+
+      '<a class="btn ghost" href="https://www.instagram.com/sebxsco/" target="_blank" rel="noopener">'+L('Ver Instagram','View Instagram')+'</a>'+
     '</div>'+
-    '<h3 class="ititle">Cómo trabajo</h3>'+
+    '<h3 class="ititle">'+L('Cómo trabajo','How I work')+'</h3>'+
     '<div class="steps3">'+
-      '<div class="stp"><span class="sn">01</span><b>Concepto</b><p>Aterrizamos tu idea en un concepto claro y una referencia visual.</p></div>'+
-      '<div class="stp"><span class="sn">02</span><b>Producción</b><p>Grabo con iPhone 17 Pro Max (calidad orgánica para redes) o trabajo tu material.</p></div>'+
-      '<div class="stp"><span class="sn">03</span><b>Edición y entrega</b><p>Edito, ajustamos juntos y entrego listo para publicar.</p></div>'+
+      '<div class="stp"><span class="sn">01</span><b>'+L('Concepto','Concept')+'</b><p>'+L('Aterrizamos tu idea en un concepto claro y una referencia visual.','We shape your idea into a clear concept and a visual reference.')+'</p></div>'+
+      '<div class="stp"><span class="sn">02</span><b>'+L('Producción','Production')+'</b><p>'+L('Grabo con iPhone 17 Pro Max (calidad orgánica para redes) o trabajo tu material.','I shoot on iPhone 17 Pro Max (organic quality for social) or work with your footage.')+'</p></div>'+
+      '<div class="stp"><span class="sn">03</span><b>'+L('Edición y entrega','Editing & delivery')+'</b><p>'+L('Edito, ajustamos juntos y entrego listo para publicar.','I edit, we fine-tune together, and I deliver ready to publish.')+'</p></div>'+
     '</div>'+
-    '<h3 class="ititle">Cotiza tu proyecto</h3>'+
+    '<h3 class="ititle">'+L('Cotiza tu proyecto','Get a quote')+'</h3>'+
     '<div class="cotiza">'+
-      '<div class="ffield"><label>Nombre</label><input id="cotNombre" type="text" autocomplete="name" placeholder="Tu nombre o marca"></div>'+
-      '<div class="ffield"><label>Rubro</label><select id="cotRubro"><option>Restaurantes</option><option>Belleza</option><option>Automotriz</option><option>Producto / Tecnología</option><option>Artístico / Música</option><option>Negocios / Servicios</option><option>Otro</option></select></div>'+
-      '<div class="ffield"><label>Servicio</label><select id="cotServ"><option>Edición de reels</option><option>Creación de videos</option><option>Campaña</option><option>Fotografía</option><option>Diseño</option><option>Mensualidad</option><option>Otro</option></select></div>'+
-      '<div class="ffield"><label>Detalle (opcional)</label><textarea id="cotMsg" rows="3" placeholder="Cuéntame brevemente qué necesitas"></textarea></div>'+
-      '<button class="btn" onclick="enviarCotizacion()">Enviar por WhatsApp</button>'+
+      '<div class="ffield"><label>'+L('Nombre','Name')+'</label><input id="cotNombre" type="text" autocomplete="name" placeholder="'+L('Tu nombre o marca','Your name or brand')+'"></div>'+
+      '<div class="ffield"><label>'+L('Rubro','Industry')+'</label><select id="cotRubro"><option>'+L('Restaurantes','Restaurants')+'</option><option>'+L('Belleza','Beauty')+'</option><option>'+L('Automotriz','Automotive')+'</option><option>'+L('Producto / Tecnología','Product / Tech')+'</option><option>'+L('Artístico / Música','Artistic / Music')+'</option><option>'+L('Negocios / Servicios','Business / Services')+'</option><option>'+L('Otro','Other')+'</option></select></div>'+
+      '<div class="ffield"><label>'+L('Servicio','Service')+'</label><select id="cotServ"><option>'+L('Edición de reels','Reel editing')+'</option><option>'+L('Creación de videos','Video creation')+'</option><option>'+L('Campaña','Campaign')+'</option><option>'+L('Fotografía','Photography')+'</option><option>'+L('Diseño','Design')+'</option><option>'+L('Mensualidad','Monthly plan')+'</option><option>'+L('Otro','Other')+'</option></select></div>'+
+      '<div class="ffield"><label>'+L('Detalle (opcional)','Details (optional)')+'</label><textarea id="cotMsg" rows="3" placeholder="'+L('Cuéntame brevemente qué necesitas','Tell me briefly what you need')+'"></textarea></div>'+
+      '<button class="btn" onclick="enviarCotizacion()">'+L('Enviar por WhatsApp','Send via WhatsApp')+'</button>'+
       '<div class="cotErr" id="cotErr"></div>'+
     '</div></section>';
-}
-function enviarCotizacion(){
+}function enviarCotizacion(){
   const g=id=>document.getElementById(id);
   const nombre=(g('cotNombre').value||'').trim();
-  if(!nombre){ g('cotErr').textContent='Escribe tu nombre para continuar.'; g('cotNombre').focus(); return; }
+  if(!nombre){ g('cotErr').textContent=L('Escribe tu nombre para continuar.','Enter your name to continue.'); g('cotNombre').focus(); return; }
   let t='Hola Bashi! Quiero cotizar un proyecto.\n\nNombre: '+nombre+'\nRubro: '+g('cotRubro').value+'\nServicio: '+g('cotServ').value;
   const msg=(g('cotMsg').value||'').trim(); if(msg) t+='\nDetalle: '+msg;
   window.open('https://wa.me/17863481676?text='+encodeURIComponent(t),'_blank');
@@ -785,13 +886,13 @@ function refreshNav(){ buildMenu(); buildSubfilter(); }
 function buildMenu(){
   const present=[...new Set(DATA.filter(realItem).map(rubroOf))];
   let h='';
-  h+='<button class="mitem'+(state.view==="sel"?" on":"")+'" data-act="sel">Selected Work</button>';
-  h+='<button class="mitem'+(state.view==="all"?" on":"")+'" data-act="all">All Projects</button>';
+  h+='<button class="mitem'+(state.view==="sel"?" on":"")+'" data-act="sel">'+t("selected")+'</button>';
+  h+='<button class="mitem'+(state.view==="all"?" on":"")+'" data-act="all">'+t("all")+'</button>';
   h+='<div class="mdiv"></div>';
-  RUBRO_ORDER.filter(r=>present.includes(r)).forEach(r=>{ h+='<button class="mitem'+((state.view==="rubro"&&state.rubro===r)?" on":"")+'" data-act="rubro:'+r+'">'+RUBRO_LABEL[r]+'</button>'; });
+  RUBRO_ORDER.filter(r=>present.includes(r)).forEach(r=>{ h+='<button class="mitem'+((state.view==="rubro"&&state.rubro===r)?" on":"")+'" data-act="rubro:'+r+'">'+ruL(r)+'</button>'; });
   h+='<div class="mdiv"></div>';
-  h+='<button class="mitem'+(state.view==="prices"?" on":"")+'" data-act="prices">Precios</button>';
-  h+='<button class="mitem'+(state.view==="info"?" on":"")+'" data-act="info">Information</button>';
+  h+='<button class="mitem'+(state.view==="prices"?" on":"")+'" data-act="prices">'+t("precios")+'</button>';
+  h+='<button class="mitem'+(state.view==="info"?" on":"")+'" data-act="info">'+t("info")+'</button>';
   document.getElementById("menu").innerHTML=h;
 }
 function buildSubfilter(){
@@ -804,12 +905,12 @@ function buildSubfilter(){
   if(state.client && !clients.includes(state.client)) state.client=null;
   let h='';
   if(tipos.length>1){
-    h+='<div class="subrow"><span class="slab">Tipo</span><span class="slink'+(!state.tipo?" on":"")+'" data-tipo="all">Todos</span>';
-    tipos.forEach(t=>{ h+='<span class="slink'+(state.tipo===t?" on":"")+'" data-tipo="'+t+'">'+TIPO_LABEL[t]+'</span>'; });
+    h+='<div class="subrow"><span class="slab">'+t("tipo")+'</span><span class="slink'+(!state.tipo?" on":"")+'" data-tipo="all">'+t("todos")+'</span>';
+    tipos.forEach(x=>{ h+='<span class="slink'+(state.tipo===x?" on":"")+'" data-tipo="'+x+'">'+tpL(x)+'</span>'; });
     h+='</div>';
   }
   if(clients.length>1){
-    h+='<div class="subrow"><span class="slab">Cliente</span><span class="slink'+(!state.client?" on":"")+'" data-client="all">Todos</span>';
+    h+='<div class="subrow"><span class="slab">'+t("cliente")+'</span><span class="slink'+(!state.client?" on":"")+'" data-client="all">'+t("todos")+'</span>';
     clients.forEach(c=>{ h+='<span class="slink'+(state.client===c?" on":"")+'" data-client="'+c.replace(/"/g,"&quot;")+'">'+c+'</span>'; });
     h+='</div>';
   }
@@ -842,25 +943,25 @@ let priceUnlocked=false, priceCur="usd";
 const FX={usd:1, dop:59, cop:3150};
 const CUR_TABS=[["usd","USD"],["dop","RD$"],["cop","COP"]];
 const PRICING=[
-  {g:"Edición", note:"Tú pones el material, yo edito. Reels / shorts verticales.", items:[
-    {n:"Reel suelto", usd:80},
-    {n:"Pack 4 reels", usd:280, per:"$70 c/u"},
-    {n:"Pack 8 reels", usd:520, per:"$65 c/u"}
+  {g:"Edición", gEn:"Editing", note:"Tú pones el material, yo edito. Reels / shorts verticales.", noteEn:"You provide the footage, I edit. Vertical reels / shorts.", items:[
+    {n:"Reel suelto", nEn:"Single reel", usd:80},
+    {n:"Pack 4 reels", nEn:"4-reel pack", usd:280, per:"$70 c/u"},
+    {n:"Pack 8 reels", nEn:"8-reel pack", usd:520, per:"$65 c/u"}
   ]},
-  {g:"Mensualidad de edición", note:"Retainer mensual con una cantidad fija de reels editados.", items:[
-    {n:"Starter · 8 reels/mes", usd:520},
-    {n:"Pro · 12 reels/mes", usd:720},
-    {n:"Studio · 20 reels/mes", usd:1100}
+  {g:"Mensualidad de edición", gEn:"Monthly editing", note:"Retainer mensual con una cantidad fija de reels editados.", noteEn:"Monthly retainer with a fixed number of edited reels.", items:[
+    {n:"Starter · 8 reels/mes", nEn:"Starter · 8 reels/mo", usd:520},
+    {n:"Pro · 12 reels/mes", nEn:"Pro · 12 reels/mo", usd:720},
+    {n:"Studio · 20 reels/mes", nEn:"Studio · 20 reels/mo", usd:1100}
   ]},
-  {g:"Creación de videos", note:"Concepto + grabación (iPhone 17 Pro Max, calidad orgánica para redes) + edición.", items:[
-    {n:"1 video", usd:250},
-    {n:"Pack 4 videos", usd:850, per:"$212 c/u"},
-    {n:"Pack 8 videos", usd:1500, per:"$187 c/u"}
+  {g:"Creación de videos", gEn:"Video creation", note:"Concepto + grabación (iPhone 17 Pro Max, calidad orgánica para redes) + edición.", noteEn:"Concept + filming (iPhone 17 Pro Max, organic social quality) + editing.", items:[
+    {n:"1 video", nEn:"1 video", usd:250},
+    {n:"Pack 4 videos", nEn:"4-video pack", usd:850, per:"$212 c/u"},
+    {n:"Pack 8 videos", nEn:"8-video pack", usd:1500, per:"$187 c/u"}
   ]},
-  {g:"Campañas", note:"Concepto, varias piezas y estrategia para redes.", items:[
-    {n:"Básica · 3–4 piezas", usd:900},
-    {n:"Pro · 6–8 piezas", usd:1800},
-    {n:"Full · estrategia + 10+ piezas", usd:3500, plus:true}
+  {g:"Campañas", gEn:"Campaigns", note:"Concepto, varias piezas y estrategia para redes.", noteEn:"Concept, multiple pieces and social strategy.", items:[
+    {n:"Básica · 3–4 piezas", nEn:"Basic · 3–4 pieces", usd:900},
+    {n:"Pro · 6–8 piezas", nEn:"Pro · 6–8 pieces", usd:1800},
+    {n:"Full · estrategia + 10+ piezas", nEn:"Full · strategy + 10+ pieces", usd:3500, plus:true}
   ]}
 ];
 function money(usd,cur){
@@ -873,7 +974,7 @@ function setCur(c){priceCur=c;renderPrices();}
 function priceTry(){
   const inp=document.getElementById("pgInput");
   if(inp && inp.value===PRICE_PASS){priceUnlocked=true;renderPrices();}
-  else{const er=document.getElementById("pgErr");if(er)er.textContent="Clave incorrecta.";}
+  else{const er=document.getElementById("pgErr");if(er)er.textContent=L("Clave incorrecta.","Wrong password.");}
 }
 function buildPriceRow(){
   const nav=document.querySelector(".filters");
@@ -884,6 +985,7 @@ function buildPriceRow(){
   nav.appendChild(row);
   row.addEventListener("click",e=>{ if(e.target.closest(".price-chip")) openPrices(); });
 }
+function toggleTheme(){var el=document.documentElement;var cur=el.getAttribute("data-theme")==="light"?"dark":"light";el.setAttribute("data-theme",cur);try{localStorage.setItem("bashi-theme",cur);}catch(e){}}
 function openPrices(){
   state.view="prices";
   if(document.getElementById("menu")) refreshNav();
@@ -897,10 +999,10 @@ function renderPrices(){
     app.innerHTML=
       '<section class="pgate">'+
         '<div class="plock">&#128274;</div>'+
-        '<h2>Precios &amp; paquetes</h2>'+
-        '<p>Sección privada. Ingresa la clave para ver la lista.</p>'+
-        '<input id="pgInput" type="password" inputmode="text" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="C L A V E" onkeydown="if(event.key===\'Enter\')priceTry()">'+
-        '<button class="btn" style="width:100%" onclick="priceTry()">Entrar</button>'+
+        '<h2>'+L('Precios &amp; paquetes','Pricing &amp; packages')+'</h2>'+
+        '<p>'+L('Sección privada. Ingresa la clave para ver la lista.','Private section. Enter the password to view the list.')+'</p>'+
+        '<input id="pgInput" type="password" inputmode="text" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="'+L('C L A V E','P A S S')+'" onkeydown="if(event.key===\'Enter\')priceTry()">'+
+        '<button class="btn" style="width:100%" onclick="priceTry()">'+L('Entrar','Enter')+'</button>'+
         '<div class="pgerr" id="pgErr"></div>'+
       '</section>';
     const i=document.getElementById("pgInput");if(i)i.focus();
@@ -908,24 +1010,22 @@ function renderPrices(){
   }
   const tabs=CUR_TABS.map(([c,l])=>'<button class="chip'+(priceCur===c?' on':'')+'" onclick="setCur(\''+c+'\')">'+l+'</button>').join("");
   const groups=PRICING.map(gr=>
-    '<div class="pgroup"><h3>'+gr.g+'</h3><div class="gnote">'+gr.note+'</div>'+
+    '<div class="pgroup"><h3>'+L(gr.g,gr.gEn)+'</h3><div class="gnote">'+L(gr.note,gr.noteEn)+'</div>'+
     gr.items.map(it=>
-      '<div class="prow"><div class="pname">'+it.n+(it.per?'<span class="pper">'+it.per+'</span>':'')+'</div>'+
+      '<div class="prow"><div class="pname">'+L(it.n,it.nEn||it.n)+(it.per?'<span class="pper">'+(lang==="en"?it.per.replace("c/u","ea"):it.per)+'</span>':'')+'</div>'+
       '<div class="pprice">'+money(it.usd,priceCur)+(it.plus?'+':'')+'</div></div>'
     ).join("")+'</div>'
   ).join("");
   app.innerHTML=
     '<section class="prices">'+
-      '<div class="phead"><h2>Precios &amp; paquetes</h2><div class="curtog">'+tabs+'</div></div>'+
-      '<div class="psub">Valores de referencia · el precio final depende del alcance del proyecto.</div>'+
+      '<div class="phead"><h2>'+L('Precios &amp; paquetes','Pricing &amp; packages')+'</h2><div class="curtog">'+tabs+'</div></div>'+
+      '<div class="psub">'+L('Valores de referencia · el precio final depende del alcance del proyecto.','Reference values · final price depends on project scope.')+'</div>'+
       groups+
       '<div class="pfoot">'+
-        '<b>Grabación:</b> incluida con iPhone 17 Pro Max (calidad orgánica optimizada para redes). '+
-        'Producción con cámara profesional (para anuncios con pauta u otra exposición) se cotiza aparte.<br>'+
-        '<b>Incluye:</b> revisiones razonables; material en bruto y música licenciada según el proyecto.'+
-        '<span class="rate">Referencia: 1 USD ≈ '+FX.dop+' RD$ ≈ '+FX.cop.toLocaleString("es-CO")+' COP.</span>'+
+        L('<b>Grabación:</b> incluida con iPhone 17 Pro Max (calidad orgánica optimizada para redes). Producción con cámara profesional (para anuncios con pauta u otra exposición) se cotiza aparte.<br><b>Incluye:</b> revisiones razonables; material en bruto y música licenciada según el proyecto.','<b>Filming:</b> included with iPhone 17 Pro Max (organic quality optimized for social). Professional-camera production (for paid ads or other exposure) is quoted separately.<br><b>Includes:</b> reasonable revisions; raw footage and licensed music depending on the project.')+
+        '<span class="rate">'+L('Referencia','Reference')+': 1 USD ≈ '+FX.dop+' RD$ ≈ '+FX.cop.toLocaleString("es-CO")+' COP.</span>'+
       '</div>'+
-      '<div class="cta" style="margin-top:22px"><a class="btn" href="https://wa.me/17863481676?text=Hola%20Bashi,%20quiero%20cotizar" target="_blank" rel="noopener">Cotizar por WhatsApp</a></div>'+
+      '<div class="cta" style="margin-top:22px"><a class="btn" href="https://wa.me/17863481676?text='+encodeURIComponent(L('Hola Bashi, quiero cotizar','Hi Bashi, I\'d like a quote'))+'" target="_blank" rel="noopener">'+L('Cotizar por WhatsApp','Quote via WhatsApp')+'</a></div>'+
     '</section>';
 }
 
@@ -935,7 +1035,7 @@ function runIntro(){
   const finish=()=>{intro.classList.add("done");skip.style.display="none";};
   if(reduce||!window.gsap){finish();return;}
   skip.style.display="block";
-  const lines=["> bashi.film","> loading reel...","> ready"];
+  const lines=["> studiobashi.com","> loading reel...","> ready"];
   let li=0,ci=0;
   function type(){
     if(li>=lines.length)return;
@@ -956,12 +1056,12 @@ function runIntro(){
 
 document.getElementById("yr").textContent=new Date().getFullYear();
 window.addEventListener("DOMContentLoaded",()=>{
-  buildMenu(); buildSubfilter();
+  buildMenu(); buildSubfilter(); applyStaticI18n();
   window.addEventListener("scroll",()=>{document.body.classList.toggle("scrolled",window.scrollY>150);},{passive:true});
   const h=location.hash.slice(1);
   if(h==="info"){go("info");}
   else if(h==="prices"){openPrices();}
-  else if(RUBRO_LABEL[h]){state.view="rubro";state.rubro=h;refreshNav();apply();}
+  else if(RUBRO_ORDER.includes(h)){state.view="rubro";state.rubro=h;refreshNav();apply();}
   else{state.view="sel";refreshNav();apply();}
   runIntro();
 });
