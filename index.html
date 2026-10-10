@@ -438,6 +438,10 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 .footer .flocs{color:var(--dim);margin-top:6px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
 .footer .fcopy{margin-top:14px}
 .footer .flinks{margin-top:8px}
+
+/* ===== v15 (BASHI-V15): rendimiento "Todos los proyectos" ===== */
+#app .card{content-visibility:auto;contain-intrinsic-size:auto 480px}
+@media(max-width:600px){ #app .card{contain-intrinsic-size:auto 320px} }
 </style>
 </head>
 <body>
@@ -703,7 +707,7 @@ function cardVideo(v,idx,i){
   const n=String(i+1).padStart(2,"0");
   const p=poster(v);
   const posterHtml = p
-    ? '<img loading="lazy" alt="'+v.title+'" src="'+p+'" onerror="this.onerror=null;this.src=\'https://i.ytimg.com/vi/'+v.yt+'/mqdefault.jpg\'">'
+    ? '<img loading="lazy" decoding="async" alt="'+v.title+'" src="'+p+'" onerror="this.onerror=null;this.src=\'https://i.ytimg.com/vi/'+v.yt+'/mqdefault.jpg\'">'
     : '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:11px;letter-spacing:1px">SUBIR VIDEO &#9656;</div>';
   return ''+
   '<article class="card" tabindex="0" data-idx="'+idx+'" onclick="openItem('+idx+')" onkeydown="if(event.key===\'Enter\')openItem('+idx+')">'+
@@ -719,11 +723,11 @@ function photoInGrid(v,idx,i){
   const n=String(i+1).padStart(2,"0");
   return '<article class="card" tabindex="0" data-idx="'+idx+'" onclick="openItem('+idx+')">'+
     '<div class="meta-top"><span class="num">'+n+'</span><span class="name">'+v.title+'</span><span class="badge">'+(COUNTRY_LABEL[v.country]||'')+'</span></div>'+
-    '<div class="frame photo"><img loading="lazy" alt="'+v.title+'" src="'+v.img+'">'+
+    '<div class="frame photo"><img loading="lazy" decoding="async" alt="'+v.title+'" src="'+v.img+'">'+
     '<span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span></div></article>';
 }
 function cardPhoto(v,idx){
-  return '<div class="shot" onclick="openItem('+idx+')"><img loading="lazy" alt="'+v.title+'" src="'+v.img+'">'+
+  return '<div class="shot" onclick="openItem('+idx+')"><img loading="lazy" decoding="async" alt="'+v.title+'" src="'+v.img+'">'+
     '<div class="cap">'+v.title+' · '+(COUNTRY_LABEL[v.country]||'')+'</div></div>';
 }
 function metaLine(){
@@ -756,7 +760,9 @@ function render(){
 }
 function animateIn(){
   if(!window.gsap) return;
-  gsap.from("#app .card, #app .shot",{opacity:0,y:18,duration:.5,stagger:.035,ease:"power2.out",overwrite:true});
+  const cards=document.querySelectorAll("#app .card, #app .shot");
+  const first=Array.prototype.slice.call(cards,0,14);
+  if(first.length) gsap.from(first,{opacity:0,y:16,duration:.45,stagger:0.04,ease:"power2.out",overwrite:true});
 }
 
 let previewIO=null;
