@@ -441,6 +441,10 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 
 /* ===== v16 (BASHI-V16): carga por tandas (scroll infinito) ===== */
 #more-sentinel{height:1px;width:100%}
+
+/* ===== v17 (BASHI-V17): seccion Quien soy ===== */
+.info .afoot{color:var(--dim);font-size:12px;margin-top:20px;line-height:1.7}
+.info p{line-height:1.75}
 </style>
 </head>
 <body>
@@ -857,8 +861,12 @@ document.addEventListener("keydown",e=>{
 
 function infoHtml(){
   return '<section class="info">'+
-    '<p class="lead">'+L('Bashi es director, editor y fotógrafo. Convierte ideas en imágenes con textura de cine — music videos, comerciales, reels y foto.','Bashi is a director, editor and photographer. He turns ideas into images with a cinematic texture — music videos, commercials, reels and photography.')+'</p>'+
-    '<p>'+L('Trabajo entre <b style="color:var(--ink)">Santo Domingo, Colombia y Estados Unidos</b>, en proyectos propios y como parte de <b style="color:var(--ink)">Ulloa Media</b>. Filtra el archivo por rubro, tipo o cliente para ver cada línea de trabajo.','I work across <b style="color:var(--ink)">Santo Domingo, Colombia and the United States</b>, on personal projects and as part of <b style="color:var(--ink)">Ulloa Media</b>. Filter the archive by industry, type or client to explore each line of work.')+'</p>'+
+    '<p class="lead">'+L('Soy Sebas — BASHI. Director, editor y fotógrafo. Convierto ideas en imágenes con textura de cine.','I\'m Sebas — BASHI. Director, editor and photographer. I turn ideas into images with a cinematic texture.')+'</p>'+
+    '<h3 class="ititle">'+L('Quién soy','About')+'</h3>'+
+    '<p>'+L('Todo empezó por curiosidad: de niño me prestaron una cámara profesional y no la solté más. A los 15 ya tenía la mía y había empezado a crear; a los 17 hice un técnico en cine que me dio las bases. Hoy, a los 23, llevo más de seis años editando video de forma profesional — empecé empírico y me fui puliendo hasta hacerlo a tiempo completo.','It all started out of curiosity: as a kid I was handed a professional camera and never let it go. By 15 I had my own and had begun creating; at 17 I earned a technical degree in film that gave me my foundation. Today, at 23, I\'ve been editing video professionally for over six years — I started self-taught and kept refining until I made it my full-time craft.')+'</p>'+
+    '<p>'+L('Mi trabajo se siente distinto porque soy <b style="color:var(--ink)">dinámico, adaptativo y contemporáneo</b>: me ajusto a lo que cada cliente necesita y, en lo creativo, exploro muchas vertientes del cine. Me gusta jugar entre lo analógico y lo digital — llevar lo digital a una textura analógica sin perder calidad. Lo que más disfruto es el montaje: editar es donde de verdad cuento la historia. Y como también soy ingeniero de grabación y mezcla de voces, muchas veces musicalizo o mezclo el audio del mismo video, para que sonido e imagen hablen el mismo idioma.','My work feels different because I\'m <b style="color:var(--ink)">dynamic, adaptive and contemporary</b>: I shape each project around what the client needs, and creatively I explore many cinematic directions. I love playing between analog and digital — pulling digital footage into an analog texture without losing quality. What I enjoy most is the edit: editing is where I truly tell the story. And since I\'m also a vocal recording and mixing engineer, I often score or mix the audio of the same video, so sound and image speak the same language.')+'</p>'+
+    '<p>'+L('He trabajado con artistas como <b style="color:var(--ink)">Kanye West, French Montana, Offset y Javiielo</b>, además de artistas y negocios locales en Nueva York, Miami, Atlanta, República Dominicana y Colombia. Soy de <b style="color:var(--ink)">Fusagasugá</b> — un tipo de pueblo que aprendió a moverse en la ciudad sin perder su raíz, y la lleva a donde vaya. Mi filosofía es simple: <b style="color:var(--ink)">jamás dejar de aprender</b>.','I\'ve worked with artists like <b style="color:var(--ink)">Kanye West, French Montana, Offset and Javiielo</b>, plus local artists and businesses across New York, Miami, Atlanta, the Dominican Republic and Colombia. I\'m from <b style="color:var(--ink)">Fusagasugá, Colombia</b> — a small-town guy who learned to move through the big city without losing his roots, carrying them wherever he goes. My philosophy is simple: <b style="color:var(--ink)">never stop learning</b>.')+'</p>'+
+    '<p class="afoot">'+L('Trabajo entre Santo Domingo, Colombia y Estados Unidos, en proyectos propios y como parte de Ulloa Media. Filtra el archivo por rubro, tipo o cliente.','I work across Santo Domingo, Colombia and the United States, on personal projects and as part of Ulloa Media. Filter the archive by industry, type or client.')+'</p>'+
     '<div class="rows">'+
       '<div class="r"><span class="k">Instagram</span><a href="https://www.instagram.com/sebxsco/" target="_blank" rel="noopener">@sebxsco</a></div>'+
       '<div class="r"><span class="k">WhatsApp</span><a href="https://wa.me/17863481676" target="_blank" rel="noopener">+1 (786) 348-1676</a></div>'+
