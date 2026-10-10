@@ -439,9 +439,8 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 .footer .fcopy{margin-top:14px}
 .footer .flinks{margin-top:8px}
 
-/* ===== v15 (BASHI-V15): rendimiento "Todos los proyectos" ===== */
-#app .card{content-visibility:auto;contain-intrinsic-size:auto 480px}
-@media(max-width:600px){ #app .card{contain-intrinsic-size:auto 320px} }
+/* ===== v16 (BASHI-V16): carga por tandas (scroll infinito) ===== */
+#more-sentinel{height:1px;width:100%}
 </style>
 </head>
 <body>
@@ -671,7 +670,7 @@ function rerenderAll(){
 function toggleLang(){ lang=lang==="en"?"es":"en"; try{localStorage.setItem("bashi-lang",lang);}catch(e){} rerenderAll(); }
 
 let state={view:"sel", rubro:null, tipo:null, client:null};
-let currentList=[];
+let currentList=[]; let shown=0; const BATCH=30; let moreIO=null;
 
 function ytThumb(id){return "https://i.ytimg.com/vi/"+id+"/hqdefault.jpg";}
 function ytEmbed(v,muted){
@@ -745,18 +744,34 @@ function render(){
     app.innerHTML=metaLine()+'<div class="empty"><span class="g">// </span>No hay trabajo con estos filtros todavia.<br>Agrega proyectos en el array <span class="g">DATA</span> del codigo.</div>';
     return;
   }
+  const cls=currentList.every(v=>v.kind==="photo")?"gallery":"grid";
+  shown=0;
+  app.innerHTML=metaLine()+'<div class="'+cls+'" id="workgrid"></div><div id="more-sentinel" aria-hidden="true"></div>';
+  appendBatch();
+  setupMore();
+}
+function appendBatch(){
+  const grid=document.getElementById("workgrid"); if(!grid) return;
+  if(shown>=currentList.length) return;
   const onlyPhotos=currentList.every(v=>v.kind==="photo");
-  let body;
-  if(onlyPhotos){
-    body='<div class="gallery">'+currentList.map(v=>cardPhoto(v,DATA.indexOf(v))).join("")+'</div>';
-  }else{
-    body='<div class="grid">'+currentList.map((v,i)=>{
-      const idx=DATA.indexOf(v);
-      return v.kind==="photo"?photoInGrid(v,idx,i):cardVideo(v,idx,i);
-    }).join("")+'</div>';
+  const start=grid.children.length, end=Math.min(shown+BATCH,currentList.length);
+  let html="";
+  for(let i=shown;i<end;i++){
+    const v=currentList[i], idx=DATA.indexOf(v);
+    html += onlyPhotos ? cardPhoto(v,idx) : (v.kind==="photo"?photoInGrid(v,idx,i):cardVideo(v,idx,i));
   }
-  app.innerHTML=metaLine()+body;
-  animateIn();
+  grid.insertAdjacentHTML("beforeend",html);
+  shown=end;
+  if(window.gsap){ const added=Array.prototype.slice.call(grid.children,start); if(added.length) gsap.from(added,{opacity:0,y:16,duration:.4,stagger:0.03,ease:"power2.out",overwrite:true}); }
+  if(shown>=currentList.length){ const s=document.getElementById("more-sentinel"); if(s)s.remove(); if(moreIO)moreIO.disconnect(); }
+  else if(moreIO){ const s=document.getElementById("more-sentinel"); if(s){ moreIO.unobserve(s); moreIO.observe(s); } }
+}
+function setupMore(){
+  if(moreIO){moreIO.disconnect();}
+  const s=document.getElementById("more-sentinel"); if(!s||shown>=currentList.length) return;
+  if(typeof IntersectionObserver==="undefined"){ while(shown<currentList.length) appendBatch(); return; }
+  moreIO=new IntersectionObserver(function(es){ for(const e of es){ if(e.isIntersecting){ appendBatch(); break; } } },{rootMargin:"800px 0px"});
+  moreIO.observe(s);
 }
 function animateIn(){
   if(!window.gsap) return;
