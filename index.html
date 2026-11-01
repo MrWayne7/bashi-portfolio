@@ -38,7 +38,7 @@
  "description":"Editor de video y reels, camarógrafo y creador de contenido para redes. También fotografía, motion graphics y diseño de páginas web.",
  "url":"https://studiobashi.com/",
  "image":"https://i.ytimg.com/vi/IiZK0ZqbLNs/maxresdefault.jpg",
- "telephone":"+1-786-348-1676",
+ "telephone":"+57-324-502-6518",
  "email":"hola@studiobashi.com",
  "priceRange":"$$",
  "founder":{"@type":"Person","name":"Sebastián Bashi","jobTitle":"Director, editor y fotógrafo","knowsAbout":["Edición de video","Edición de reels","Creación de contenido","Camarógrafo","Fotografía","Motion graphics","Diseño web","Beatmaking","Ingeniería de grabación de voces"],"sameAs":["https://www.instagram.com/sebxsco/"]},
@@ -457,7 +457,8 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 .prow .pinc{display:block;color:var(--dim);font-size:11px;letter-spacing:.3px;margin-top:4px;line-height:1.55;text-transform:none}
 .prow .psuf{color:var(--dim);font-size:12px;margin-left:1px;font-family:var(--mono)}
 
-/* ===== v20 (BASHI-V20): estrategia de precios ===== */
+/* ===== v21 (BASHI-V21): whatsapp business =====
+/* v20 estrategia de precios */
 .prow.rec{background:linear-gradient(90deg,rgba(0,255,102,.06),transparent);margin-left:-10px;margin-right:-10px;padding-left:10px;padding-right:10px;border-radius:5px}
 .recbadge{display:inline-block;font-size:9px;letter-spacing:1px;color:var(--green);border:1px solid var(--green-dim);border-radius:10px;padding:1px 8px;margin-left:8px;text-transform:uppercase;vertical-align:middle;white-space:nowrap}
 </style>
@@ -507,7 +508,7 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
   <div class="fcopy">&copy; <span id="yr"></span> BASHI</div>
   <div class="flinks">
     <a href="https://www.instagram.com/sebxsco/" target="_blank" rel="noopener">Instagram</a> &middot;
-    <a href="https://wa.me/17863481676?text=Hola%20Bashi" target="_blank" rel="noopener">WhatsApp</a> &middot;
+    <a href="https://wa.me/573245026518?text=Hola%20Bashi" target="_blank" rel="noopener">WhatsApp</a> &middot;
     <a href="mailto:hola@studiobashi.com">Email</a>
   </div>
 </footer>
@@ -884,12 +885,12 @@ function infoHtml(){
     '<p class="afoot">'+L('Trabajo entre Santo Domingo, Colombia y Estados Unidos, en proyectos propios y como parte de Ulloa Media. Filtra el archivo por rubro, tipo o cliente.','I work across Santo Domingo, Colombia and the United States, on personal projects and as part of Ulloa Media. Filter the archive by industry, type or client.')+'</p>'+
     '<div class="rows">'+
       '<div class="r"><span class="k">Instagram</span><a href="https://www.instagram.com/sebxsco/" target="_blank" rel="noopener">@sebxsco</a></div>'+
-      '<div class="r"><span class="k">WhatsApp</span><a href="https://wa.me/17863481676" target="_blank" rel="noopener">+1 (786) 348-1676</a></div>'+
+      '<div class="r"><span class="k">WhatsApp</span><a href="https://wa.me/573245026518" target="_blank" rel="noopener">+57 324 502 6518</a></div>'+
       '<div class="r"><span class="k">Email</span><a href="mailto:hola@studiobashi.com">hola@studiobashi.com</a></div>'+
       '<div class="r"><span class="k">'+L('Base','Based in')+'</span><span style="color:var(--dim-2)">Santo Domingo, RD</span></div>'+
     '</div>'+
     '<div class="cta">'+
-      '<a class="btn" href="https://wa.me/17863481676?text='+encodeURIComponent(L('Quiero cotizar un proyecto','I want a quote for a project'))+'" target="_blank" rel="noopener">'+L('Cotizar un proyecto','Request a quote')+'</a>'+
+      '<a class="btn" href="https://wa.me/573245026518?text='+encodeURIComponent(L('Quiero cotizar un proyecto','I want a quote for a project'))+'" target="_blank" rel="noopener">'+L('Cotizar un proyecto','Request a quote')+'</a>'+
       '<a class="btn ghost" href="https://www.instagram.com/sebxsco/" target="_blank" rel="noopener">'+L('Ver Instagram','View Instagram')+'</a>'+
     '</div>'+
     '<h3 class="ititle">'+L('Cómo trabajo','How I work')+'</h3>'+
@@ -913,7 +914,7 @@ function infoHtml(){
   if(!nombre){ g('cotErr').textContent=L('Escribe tu nombre para continuar.','Enter your name to continue.'); g('cotNombre').focus(); return; }
   let t='Hola Bashi! Quiero cotizar un proyecto.\n\nNombre: '+nombre+'\nRubro: '+g('cotRubro').value+'\nServicio: '+g('cotServ').value;
   const msg=(g('cotMsg').value||'').trim(); if(msg) t+='\nDetalle: '+msg;
-  window.open('https://wa.me/17863481676?text='+encodeURIComponent(t),'_blank');
+  window.open('https://wa.me/573245026518?text='+encodeURIComponent(t),'_blank');
 }
 
 function go(where){
@@ -1061,7 +1062,7 @@ function renderPrices(){
         '<input id="pgInput" type="password" inputmode="text" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="'+L('C L A V E','P A S S')+'" onkeydown="if(event.key===\'Enter\')priceTry()">'+
         '<button class="btn" style="width:100%" onclick="priceTry()">'+L('Entrar','Enter')+'</button>'+
         '<div class="pgerr" id="pgErr"></div>'+
-        '<div class="pgate-alt">'+L('¿No tienes la clave?','No password?')+' <a href="https://wa.me/17863481676?text='+encodeURIComponent(L('Hola Bashi, me interesan tus precios y paquetes','Hi Bashi, I\'m interested in your pricing and packages'))+'" target="_blank" rel="noopener">'+L('Pídela por WhatsApp','Request it on WhatsApp')+'</a></div>'+
+        '<div class="pgate-alt">'+L('¿No tienes la clave?','No password?')+' <a href="https://wa.me/573245026518?text='+encodeURIComponent(L('Hola Bashi, me interesan tus precios y paquetes','Hi Bashi, I\'m interested in your pricing and packages'))+'" target="_blank" rel="noopener">'+L('Pídela por WhatsApp','Request it on WhatsApp')+'</a></div>'+
       '</section>';
     const i=document.getElementById("pgInput");if(i)i.focus();
     return;
@@ -1083,7 +1084,7 @@ function renderPrices(){
         L('<b>Grabación:</b> cámara especializada para contenido orgánico de redes, o cámara de formato cine con iluminación y estabilización para piezas más cinematográficas.<br><b>Incluye:</b> revisiones razonables; material en bruto y música según el proyecto.<br><b>Precios directos</b> (agendándome a mí). También disponible a <b>tarifa de estudio</b>, más accesible, a través de <a href="https://estacion2600.com" target="_blank" rel="noopener" style="color:var(--green)">Estación 2600</a>.','<b>Filming:</b> content-specialized camera for organic social content, or cinema-format camera with lighting and stabilization for more cinematic pieces.<br><b>Includes:</b> reasonable revisions; raw footage and music depending on the project.<br><b>Direct rates</b> (booking me directly). Also available at a more accessible <b>studio rate</b> through <a href="https://estacion2600.com" target="_blank" rel="noopener" style="color:var(--green)">Estación 2600</a>.')+
         '<span class="rate">'+L('Referencia','Reference')+': 1 USD ≈ '+FX.dop+' RD$ ≈ '+FX.cop.toLocaleString("es-CO")+' COP.</span>'+
       '</div>'+
-      '<div class="cta" style="margin-top:22px"><a class="btn" href="https://wa.me/17863481676?text='+encodeURIComponent(L('Hola Bashi, quiero cotizar','Hi Bashi, I\'d like a quote'))+'" target="_blank" rel="noopener">'+L('Cotizar por WhatsApp','Quote via WhatsApp')+'</a></div>'+
+      '<div class="cta" style="margin-top:22px"><a class="btn" href="https://wa.me/573245026518?text='+encodeURIComponent(L('Hola Bashi, quiero cotizar','Hi Bashi, I\'d like a quote'))+'" target="_blank" rel="noopener">'+L('Cotizar por WhatsApp','Quote via WhatsApp')+'</a></div>'+
     '</section>';
 }
 
