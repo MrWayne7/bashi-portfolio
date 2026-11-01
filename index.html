@@ -26,8 +26,8 @@
 <meta name="twitter:image" content="https://i.ytimg.com/vi/IiZK0ZqbLNs/maxresdefault.jpg">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="BASHI">
-<meta name="geo.placename" content="Santo Domingo, República Dominicana">
-<meta property="og:locale" content="es_DO">
+<meta name="geo.placename" content="Bogotá, Colombia">
+<meta property="og:locale" content="es_CO">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%23050505%22/><text x=%2216%22 y=%2222%22 font-family=%22Arial%22 font-weight=%22bold%22 font-size=%2216%22 fill=%22%2300ff66%22 text-anchor=%22middle%22>B</text></svg>">
 <script type="application/ld+json">
 {
@@ -42,7 +42,7 @@
  "email":"hola@studiobashi.com",
  "priceRange":"$$",
  "founder":{"@type":"Person","name":"Sebastián Bashi","jobTitle":"Director, editor y fotógrafo","knowsAbout":["Edición de video","Edición de reels","Creación de contenido","Camarógrafo","Fotografía","Motion graphics","Diseño web","Beatmaking","Ingeniería de grabación de voces"],"sameAs":["https://www.instagram.com/sebxsco/"]},
- "areaServed":[{"@type":"City","name":"Santo Domingo"},{"@type":"Place","name":"Bogotá, Colombia"},{"@type":"Country","name":"Estados Unidos"}],
+ "areaServed":[{"@type":"City","name":"Bogotá"},{"@type":"Place","name":"Cundinamarca y alrededores"},{"@type":"Country","name":"Colombia"},{"@type":"Country","name":"República Dominicana"},{"@type":"Country","name":"Estados Unidos"}],
  "serviceType":["Edición de video","Edición de reels","Creación de contenido para redes","Camarógrafo / operario de cámara","Fotografía","Diseño y desarrollo web","Campañas digitales","Motion graphics"],
  "sameAs":["https://www.instagram.com/sebxsco/"]
 }
@@ -461,6 +461,23 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 /* v20 estrategia de precios */
 .prow.rec{background:linear-gradient(90deg,rgba(0,255,102,.06),transparent);margin-left:-10px;margin-right:-10px;padding-left:10px;padding-right:10px;border-radius:5px}
 .recbadge{display:inline-block;font-size:9px;letter-spacing:1px;color:var(--green);border:1px solid var(--green-dim);border-radius:10px;padding:1px 8px;margin-left:8px;text-transform:uppercase;vertical-align:middle;white-space:nowrap}
+
+/* ===== v22 (BASHI-V22): portafolio web + SEO presencial ===== */
+.webwrap{max-width:1000px;margin:0 auto}
+.webintro{color:var(--dim);font-size:13px;line-height:1.7;margin:0 0 26px;max-width:620px}
+.webgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+@media(max-width:760px){.webgrid{grid-template-columns:1fr}}
+.webcard{border:1px solid var(--line);background:var(--bg-2);overflow:hidden;transition:border-color .25s ease,transform .25s ease}
+.webcard:hover{border-color:var(--green-dim);transform:translateY(-3px)}
+.webshot{display:block;aspect-ratio:16/10;overflow:hidden;background:#000}
+.webshot img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .55s ease}
+.webcard:hover .webshot img{transform:scale(1.04)}
+.webmeta{padding:18px 20px 22px}
+.webmeta .wtag{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--green)}
+.webmeta h3{font-family:var(--disp);color:var(--ink);font-size:18px;margin:6px 0 8px;font-weight:500}
+.webmeta p{color:var(--dim);font-size:13px;line-height:1.65;margin:0 0 14px}
+.weblink{font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--ink);border-bottom:1px solid var(--green-dim);padding-bottom:2px;transition:color .2s}
+.weblink:hover{color:var(--green)}
 </style>
 </head>
 <body>
@@ -504,7 +521,7 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 
 <footer class="footer">
   <div class="fservices">Edición de video &middot; Reels &middot; Contenido para redes &middot; Camarógrafo &middot; Fotografía &middot; Diseño web &middot; Motion graphics</div>
-  <div class="flocs">Santo Domingo (RD) &middot; Bogotá, Colombia &middot; Estados Unidos &middot; Trabajo remoto</div>
+  <div class="flocs">Bogotá y alrededores (presencial) &middot; Colombia, RD y USA (remoto)</div>
   <div class="fcopy">&copy; <span id="yr"></span> BASHI</div>
   <div class="flinks">
     <a href="https://www.instagram.com/sebxsco/" target="_blank" rel="noopener">Instagram</a> &middot;
@@ -685,6 +702,7 @@ function rerenderAll(){
   if(document.getElementById("menu")){ buildMenu(); buildSubfilter(); }
   if(state.view==="info") document.getElementById("app").innerHTML=infoHtml();
   else if(state.view==="prices") renderPrices();
+  else if(state.view==="web") renderWeb();
   else apply();
 }
 function toggleLang(){ lang=lang==="en"?"es":"en"; try{localStorage.setItem("bashi-lang",lang);}catch(e){} rerenderAll(); }
@@ -882,12 +900,13 @@ function infoHtml(){
     '<p>'+L('Todo empezó por curiosidad: de niño me prestaron una cámara profesional y no la solté más. A los 15 ya tenía la mía y había empezado a crear; a los 17 hice un técnico en cine que me dio las bases. Hoy, a los 23, llevo más de seis años editando video de forma profesional — empecé empírico y me fui puliendo hasta hacerlo a tiempo completo.','It all started out of curiosity: as a kid I was handed a professional camera and never let it go. By 15 I had my own and had begun creating; at 17 I earned a technical degree in film that gave me my foundation. Today, at 23, I\'ve been editing video professionally for over six years — I started self-taught and kept refining until I made it my full-time craft.')+'</p>'+
     '<p>'+L('Mi trabajo se siente distinto porque soy <b style="color:var(--ink)">dinámico, adaptativo y contemporáneo</b>: me ajusto a lo que cada cliente necesita y, en lo creativo, exploro muchas vertientes del cine. Me gusta jugar entre lo analógico y lo digital — llevar lo digital a una textura analógica sin perder calidad. Lo que más disfruto es el montaje: editar es donde de verdad cuento la historia. Y como también soy ingeniero de grabación y mezcla de voces, muchas veces musicalizo o mezclo el audio del mismo video, para que sonido e imagen hablen el mismo idioma.','My work feels different because I\'m <b style="color:var(--ink)">dynamic, adaptive and contemporary</b>: I shape each project around what the client needs, and creatively I explore many cinematic directions. I love playing between analog and digital — pulling digital footage into an analog texture without losing quality. What I enjoy most is the edit: editing is where I truly tell the story. And since I\'m also a vocal recording and mixing engineer, I often score or mix the audio of the same video, so sound and image speak the same language.')+'</p>'+
     '<p>'+L('He trabajado con artistas como <b style="color:var(--ink)">Kanye West, French Montana, Offset y Javiielo</b>, además de artistas y negocios locales en Nueva York, Miami, Atlanta, República Dominicana y Colombia. Soy de <b style="color:var(--ink)">Fusagasugá</b> — un tipo de pueblo que aprendió a moverse en la ciudad sin perder su raíz, y la lleva a donde vaya. Mi filosofía es simple: <b style="color:var(--ink)">jamás dejar de aprender</b>.','I\'ve worked with artists like <b style="color:var(--ink)">Kanye West, French Montana, Offset and Javiielo</b>, plus local artists and businesses across New York, Miami, Atlanta, the Dominican Republic and Colombia. I\'m from <b style="color:var(--ink)">Fusagasugá, Colombia</b> — a small-town guy who learned to move through the big city without losing his roots, carrying them wherever he goes. My philosophy is simple: <b style="color:var(--ink)">never stop learning</b>.')+'</p>'+
-    '<p class="afoot">'+L('Trabajo entre Santo Domingo, Colombia y Estados Unidos, en proyectos propios y como parte de Ulloa Media. Filtra el archivo por rubro, tipo o cliente.','I work across Santo Domingo, Colombia and the United States, on personal projects and as part of Ulloa Media. Filter the archive by industry, type or client.')+'</p>'+
+    '<p>'+L('En lo musical hago beats, grabo y mezclo voces — formo parte de <a href="https://estacion2600.com" target="_blank" rel="noopener" style="color:var(--green)">Estación 2600</a>, un estudio de grabación y hub creativo.','On the music side I make beats, record and mix vocals — I\'m part of <a href="https://estacion2600.com" target="_blank" rel="noopener" style="color:var(--green)">Estación 2600</a>, a recording studio and creative hub.')+'</p>'+
+    '<p class="afoot">'+L('Con base en Bogotá — presencial en Bogotá y alrededores, disponible para viajar y remoto en toda Colombia, RD y USA. Filtra el archivo por rubro, tipo o cliente.','Based in Bogotá — on-site in Bogotá and nearby, available to travel and remote across Colombia, the DR and the USA. Filter the archive by industry, type or client.')+'</p>'+
     '<div class="rows">'+
       '<div class="r"><span class="k">Instagram</span><a href="https://www.instagram.com/sebxsco/" target="_blank" rel="noopener">@sebxsco</a></div>'+
       '<div class="r"><span class="k">WhatsApp</span><a href="https://wa.me/573245026518" target="_blank" rel="noopener">+57 324 502 6518</a></div>'+
       '<div class="r"><span class="k">Email</span><a href="mailto:hola@studiobashi.com">hola@studiobashi.com</a></div>'+
-      '<div class="r"><span class="k">'+L('Base','Based in')+'</span><span style="color:var(--dim-2)">Santo Domingo, RD</span></div>'+
+      '<div class="r"><span class="k">'+L('Base','Based in')+'</span><span style="color:var(--dim-2)">Bogotá, Colombia</span></div>'+
     '</div>'+
     '<div class="cta">'+
       '<a class="btn" href="https://wa.me/573245026518?text='+encodeURIComponent(L('Quiero cotizar un proyecto','I want a quote for a project'))+'" target="_blank" rel="noopener">'+L('Cotizar un proyecto','Request a quote')+'</a>'+
@@ -936,6 +955,7 @@ function buildMenu(){
   h+='<div class="mdiv"></div>';
   RUBRO_ORDER.filter(r=>present.includes(r)).forEach(r=>{ h+='<button class="mitem'+((state.view==="rubro"&&state.rubro===r)?" on":"")+'" data-act="rubro:'+r+'">'+ruL(r)+'</button>'; });
   h+='<div class="mdiv"></div>';
+  h+='<button class="mitem'+(state.view==="web"?" on":"")+'" data-act="web">Web</button>';
   h+='<button class="mitem'+(state.view==="prices"?" on":"")+'" data-act="prices">'+t("precios")+'</button>';
   h+='<button class="mitem'+(state.view==="info"?" on":"")+'" data-act="info">'+t("info")+'</button>';
   document.getElementById("menu").innerHTML=h;
@@ -966,6 +986,7 @@ document.getElementById("menu").addEventListener("click",e=>{
   const act=b.dataset.act;
   if(act==="prices"){ openPrices(); return; }
   if(act==="info"){ go("info"); return; }
+  if(act==="web"){ openWeb(); return; }
   state.tipo=null; state.client=null;
   if(act==="sel"){ state.view="sel"; state.rubro=null; }
   else if(act==="all"){ state.view="all"; state.rubro=null; }
@@ -1044,6 +1065,45 @@ function buildPriceRow(){
   row.addEventListener("click",e=>{ if(e.target.closest(".price-chip")) openPrices(); });
 }
 function toggleTheme(){var el=document.documentElement;var cur=el.getAttribute("data-theme")==="light"?"dark":"light";el.setAttribute("data-theme",cur);try{localStorage.setItem("bashi-theme",cur);}catch(e){}}
+const WEBSITES=[
+  {name:"BASHI", url:"https://studiobashi.com", tag:"Portafolio", tagEn:"Portfolio",
+   desc:"Mi propio portafolio (este mismo sitio). Reproductor de video, filtros por rubro, precios y bilingüe — la prueba viva de lo que puedo construir para ti.",
+   descEn:"My own portfolio (this very site). Video player, industry filters, pricing and bilingual — living proof of what I can build for you."},
+  {name:"Estación 2600", url:"https://estacion2600.com", tag:"Estudio musical", tagEn:"Music studio",
+   desc:"Sitio del estudio de grabación y hub musical: presenta el estudio, sus servicios e identidad sonora. Gana una presencia digital que atrae artistas y clientes.",
+   descEn:"Site for the recording studio and music hub: presents the studio, its services and sound identity. Gains a digital presence that attracts artists and clients."},
+  {name:"Martini Bar", url:"https://martinibar.life", tag:"Coctelería", tagEn:"Cocktail bar",
+   desc:"Landing elegante para un bar de coctelería: carta, ambiente y ubicación en una página que invita a visitar.",
+   descEn:"Elegant landing for a cocktail bar: menu, atmosphere and location in a page that invites visits."},
+  {name:"Barbería Mr. Ortiz", url:"https://barbermrortiz.com", tag:"Barbería", tagEn:"Barbershop",
+   desc:"Sitio para una barbería: servicios, estilo y contacto directo. Gana imagen profesional y un canal para que los clientes agenden.",
+   descEn:"Site for a barbershop: services, style and direct contact. Gains a professional image and a channel for clients to book."},
+  {name:"Con un Propósito", url:"https://conunproposito.com", tag:"Marca", tagEn:"Brand",
+   desc:"Sitio de presentación de la marca: cuenta su historia y propósito, y convierte visitantes en seguidores.",
+   descEn:"Brand presentation site: tells its story and purpose, turning visitors into followers."}
+];
+function renderWeb(){
+  const app=document.getElementById("app");
+  const cards=WEBSITES.map(w0=>
+    '<article class="webcard">'+
+      '<a class="webshot" href="'+w0.url+'" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="https://image.thum.io/get/width/1000/crop/1250/noanimate/'+w0.url+'" alt="'+w0.name+'"></a>'+
+      '<div class="webmeta"><span class="wtag">'+L(w0.tag,w0.tagEn||w0.tag)+'</span>'+
+        '<h3>'+w0.name+'</h3><p>'+L(w0.desc,w0.descEn||w0.desc)+'</p>'+
+        '<a class="weblink" href="'+w0.url+'" target="_blank" rel="noopener">'+L('Ver sitio en vivo →','View live site →')+'</a></div>'+
+    '</article>'
+  ).join("");
+  app.innerHTML='<section class="webwrap"><div class="result-meta"><b>'+WEBSITES.length+'</b> '+L('sitios · Diseño & desarrollo web','sites · Web design & development')+'</div>'+
+    '<p class="webintro">'+L('Páginas rápidas, a medida y con hosting incluido. Cada proyecto, pensado para que el cliente gane presencia y clientes.','Fast, custom-built sites with hosting included. Each one designed so the client gains presence and customers.')+'</p>'+
+    '<div class="webgrid">'+cards+'</div></section>';
+  if(window.gsap) gsap.from("#app .webcard",{opacity:0,y:24,duration:.5,stagger:.08,ease:"power2.out",overwrite:true});
+}
+function openWeb(){
+  state.view="web"; state.rubro=null; state.tipo=null; state.client=null;
+  refreshNav();
+  history.replaceState(null,"","#web");
+  window.scrollTo({top:0});
+  renderWeb();
+}
 function openPrices(){
   state.view="prices";
   if(document.getElementById("menu")) refreshNav();
@@ -1120,6 +1180,7 @@ window.addEventListener("DOMContentLoaded",()=>{
   const h=location.hash.slice(1);
   if(h==="info"){go("info");}
   else if(h==="prices"){openPrices();}
+  else if(h==="web"){openWeb();}
   else if(RUBRO_ORDER.includes(h)){state.view="rubro";state.rubro=h;refreshNav();apply();}
   else{state.view="sel";refreshNav();apply();}
   runIntro();
