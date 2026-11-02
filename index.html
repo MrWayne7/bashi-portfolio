@@ -462,7 +462,8 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 .prow.rec{background:linear-gradient(90deg,rgba(0,255,102,.06),transparent);margin-left:-10px;margin-right:-10px;padding-left:10px;padding-right:10px;border-radius:5px}
 .recbadge{display:inline-block;font-size:9px;letter-spacing:1px;color:var(--green);border:1px solid var(--green-dim);border-radius:10px;padding:1px 8px;margin-left:8px;text-transform:uppercase;vertical-align:middle;white-space:nowrap}
 
-/* ===== v25 (BASHI-V25): precios por país (geo) =====
+/* ===== v26 (BASHI-V26): Colombia 95% (coherencia con estudio) =====
+/* v25 precios por país (geo)
 /* v24 enganche administrador (overrides)
 /* v23 fix dominio martinibar
 /* v22 portafolio web + SEO presencial */
@@ -1049,7 +1050,7 @@ const FX={usd:1, dop:59, cop:3150};
 let PRICE_MULT=1, GEO_COUNTRY="";
 let REGIONS={
   "default":{mult:1,    cur:"usd", label:"Internacional",    labelEn:"International"},
-  "CO":     {mult:0.55, cur:"cop", label:"Colombia",         labelEn:"Colombia"},
+  "CO":     {mult:0.95, cur:"cop", label:"Colombia",         labelEn:"Colombia"},
   "DO":     {mult:0.85, cur:"dop", label:"Rep. Dominicana",  labelEn:"Dominican Rep."},
   "US":     {mult:1,    cur:"usd", label:"Estados Unidos",   labelEn:"United States"}
 };
