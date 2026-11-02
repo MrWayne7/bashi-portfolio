@@ -462,7 +462,8 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 .prow.rec{background:linear-gradient(90deg,rgba(0,255,102,.06),transparent);margin-left:-10px;margin-right:-10px;padding-left:10px;padding-right:10px;border-radius:5px}
 .recbadge{display:inline-block;font-size:9px;letter-spacing:1px;color:var(--green);border:1px solid var(--green-dim);border-radius:10px;padding:1px 8px;margin-left:8px;text-transform:uppercase;vertical-align:middle;white-space:nowrap}
 
-/* ===== v23 (BASHI-V23): fix dominio martinibar =====
+/* ===== v24 (BASHI-V24): enganche administrador (overrides) =====
+/* v23 fix dominio martinibar
 /* v22 portafolio web + SEO presencial */
 .webwrap{max-width:1000px;margin:0 auto}
 .webintro{color:var(--dim);font-size:13px;line-height:1.7;margin:0 0 26px;max-width:620px}
@@ -554,7 +555,7 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
    false -> modo PUBLICO: solo se ve el trabajo real terminado (nada roto ni de relleno). */
 const SHOW_PLACEHOLDERS = false;
 
-const DATA = [
+let DATA = [
 
   { kind:"video", category:"music-video", studio:"solo", country:"us", yt:"rIz4lr93gGY", start:5,  title:"La Rez15",      client:"Santa Mykah" },
   { kind:"video", category:"music-video", studio:"solo", country:"us", yt:"R8JPsa1N-w0", start:19, title:"SS Levi",       client:"Essene" },
@@ -666,6 +667,23 @@ const DATA = [
   { kind:"video", category:"commercial", studio:"ulloa", country:"do", yt:"U3W_nniLGQs", title:"MODELO P20", client:"Electromedia" },
 
 ];
+
+/* ===== Overrides desde el administrador (Cloudflare KV). Si falla, el sitio queda igual ===== */
+const BASE_DATA = DATA.slice();
+async function applyOverrides(){
+  try{
+    const r = await fetch("/api/overrides",{cache:"no-store"});
+    if(!r.ok) return;
+    const ov = await r.json();
+    const hidden = Array.isArray(ov.hidden) ? ov.hidden : [];
+    const added  = Array.isArray(ov.added)  ? ov.added  : [];
+    if(!hidden.length && !added.length) return;
+    DATA = BASE_DATA.filter(v => !(v.yt && hidden.includes(v.yt))).concat(added);
+    refreshNav();
+    if(state.view==="info" || state.view==="prices" || state.view==="web"){ /* no usan DATA */ }
+    else apply();
+  }catch(e){ /* sin conexión a la base: se queda como está */ }
+}
 
 const COUNTRY_LABEL={do:"RD",co:"CO",us:"USA"};
 const COUNTRY_FULL={do:"Dominicana",co:"Colombia",us:"USA"};
@@ -1185,6 +1203,7 @@ window.addEventListener("DOMContentLoaded",()=>{
   else if(RUBRO_ORDER.includes(h)){state.view="rubro";state.rubro=h;refreshNav();apply();}
   else{state.view="sel";refreshNav();apply();}
   runIntro();
+  applyOverrides();
 });
 </script>
 

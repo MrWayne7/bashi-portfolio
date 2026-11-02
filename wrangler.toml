@@ -1,7 +1,7 @@
-pages_build_output_dir = "."
 name = "bashi-portfolio"
-compatibility_date = "2025-01-01"
+compatibility_date = "2025-06-01"
+pages_build_output_dir = "."
 
 [[kv_namespaces]]
-binding = "CANCIONES"
-id = "d405f4ba88fc41bf952d845ce4d33092"
+binding = "BASHI_KV"
+id = "db4be8ccee984af1a163131cd10f4a09"
