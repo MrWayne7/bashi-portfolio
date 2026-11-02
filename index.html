@@ -462,7 +462,8 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 .prow.rec{background:linear-gradient(90deg,rgba(0,255,102,.06),transparent);margin-left:-10px;margin-right:-10px;padding-left:10px;padding-right:10px;border-radius:5px}
 .recbadge{display:inline-block;font-size:9px;letter-spacing:1px;color:var(--green);border:1px solid var(--green-dim);border-radius:10px;padding:1px 8px;margin-left:8px;text-transform:uppercase;vertical-align:middle;white-space:nowrap}
 
-/* ===== v26 (BASHI-V26): Colombia 95% (coherencia con estudio) =====
+/* ===== v27 (BASHI-V27): hook épico Estación 2600 =====
+/* v26 Colombia 95%
 /* v25 precios por país (geo)
 /* v24 enganche administrador (overrides)
 /* v23 fix dominio martinibar
@@ -486,6 +487,43 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 /* ===== v25 (BASHI-V25): precios por país (geo) + editables desde admin ===== */
 .pregion{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--dim);margin:-6px 0 18px;text-transform:uppercase}
 .pregion b{color:var(--green)}
+
+/* ===== v27 (BASHI-V27): hook épico Estación 2600 ===== */
+.e26{position:relative;margin:54px 0 14px;padding:52px 26px 56px;border:1px solid var(--line);border-radius:12px;overflow:hidden;text-align:center;
+  background:radial-gradient(130% 150% at 50% 0%, rgba(0,255,102,.09), transparent 58%), var(--bg-2)}
+.e26-bars{position:absolute;left:0;right:0;bottom:0;height:70px;display:flex;gap:4px;align-items:flex-end;justify-content:center;opacity:.45;pointer-events:none}
+.e26-bars i{display:block;width:5px;height:8px;background:linear-gradient(to top,var(--green),transparent);animation:eqBar 1s ease-in-out infinite}
+@keyframes eqBar{0%,100%{height:7px}50%{height:50px}}
+.e26-inner{position:relative;z-index:1}
+.e26-tag{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--green);text-transform:uppercase}
+.e26-title{font-family:var(--disp);font-weight:600;font-size:clamp(30px,7vw,58px);letter-spacing:5px;margin:12px 0 8px;color:var(--ink);text-shadow:0 0 22px rgba(0,255,102,.22)}
+.e26-sub{color:var(--dim);font-size:13px;letter-spacing:1px;margin:0 0 24px}
+.e26-cta{font-family:var(--mono);font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#000;background:var(--green);border:none;border-radius:5px;padding:14px 28px;cursor:pointer;transition:.2s;display:inline-flex;gap:8px;align-items:center}
+.e26-cta span{transition:transform .2s}
+.e26-cta:hover{box-shadow:0 0 30px rgba(0,255,102,.55);transform:translateY(-2px)}
+.e26-cta:hover span{transform:translateX(5px)}
+/* transición full-screen */
+#studio-trans{position:fixed;inset:0;z-index:99999;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;visibility:hidden;transition:opacity .25s ease}
+#studio-trans.on{opacity:1;visibility:visible}
+#studio-trans .st-bars{position:absolute;inset:0;display:flex;gap:5px;align-items:center;justify-content:center;opacity:.3;overflow:hidden;padding:0 8px}
+#studio-trans .st-bars i{display:block;width:6px;height:12px;background:var(--green)}
+#studio-trans.on .st-bars i{animation:stEq .7s ease-in-out infinite}
+@keyframes stEq{0%,100%{height:12px;opacity:.22}50%{height:68vh;opacity:.7}}
+#studio-trans .st-text{position:relative;font-family:var(--mono);font-size:12px;letter-spacing:4px;color:var(--green);text-transform:uppercase;z-index:2;opacity:0}
+#studio-trans.on .st-text{animation:stFade .5s .15s ease forwards}
+#studio-trans .st-title{position:relative;z-index:2;font-family:var(--disp);font-weight:700;font-size:clamp(32px,9vw,86px);letter-spacing:6px;color:#fff;text-shadow:0 0 34px rgba(0,255,102,.5)}
+#studio-trans.on .st-title{animation:stTitleIn .55s cubic-bezier(.2,.8,.2,1) both}
+#studio-trans.on .st-title::before,#studio-trans.on .st-title::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%}
+#studio-trans.on .st-title::before{color:#00ff66;clip-path:inset(0 0 55% 0);animation:stGa .4s steps(2) infinite}
+#studio-trans.on .st-title::after{color:#ff2fa0;clip-path:inset(55% 0 0 0);animation:stGb .45s steps(2) infinite}
+#studio-trans .st-flash{position:absolute;inset:0;background:radial-gradient(circle,#9fffc7,#fff);opacity:0;pointer-events:none;z-index:3}
+#studio-trans.on .st-flash{animation:stFlash 1.9s ease-in forwards}
+@keyframes stFade{to{opacity:1}}
+@keyframes stTitleIn{from{opacity:0;transform:scale(.82);filter:blur(10px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
+@keyframes stGa{0%{transform:translate(0)}50%{transform:translate(-3px,-2px)}100%{transform:translate(2px,1px)}}
+@keyframes stGb{0%{transform:translate(0)}50%{transform:translate(3px,2px)}100%{transform:translate(-2px,-1px)}}
+@keyframes stFlash{0%,72%{opacity:0}100%{opacity:1}}
+@media (prefers-reduced-motion: reduce){.e26-bars i,#studio-trans.on .st-bars i,#studio-trans.on .st-title::before,#studio-trans.on .st-title::after{animation:none}}
 </style>
 </head>
 <body>
@@ -824,7 +862,7 @@ function render(){
   }
   const cls=currentList.every(v=>v.kind==="photo")?"gallery":"grid";
   shown=0;
-  app.innerHTML=metaLine()+'<div class="'+cls+'" id="workgrid"></div><div id="more-sentinel" aria-hidden="true"></div>';
+  app.innerHTML=metaLine()+'<div class="'+cls+'" id="workgrid"></div><div id="more-sentinel" aria-hidden="true"></div>'+(state.view==="sel"?estacionBand():"");
   appendBatch();
   setupMore();
 }
@@ -1129,6 +1167,35 @@ const WEBSITES=[
    desc:"Sitio de presentación de la marca: cuenta su historia y propósito, y convierte visitantes en seguidores.",
    descEn:"Brand presentation site: tells its story and purpose, turning visitors into followers."}
 ];
+function estacionBand(){
+  let bars="";
+  for(let i=0;i<40;i++){ bars+='<i style="animation-delay:-'+(Math.random()*1.1).toFixed(2)+'s;animation-duration:'+(0.75+Math.random()*0.8).toFixed(2)+'s"></i>'; }
+  return '<section class="e26" aria-label="Estación 2600">'+
+    '<div class="e26-bars" aria-hidden="true">'+bars+'</div>'+
+    '<div class="e26-inner">'+
+      '<div class="e26-tag">'+L('El lado musical de BASHI','The musical side of BASHI')+'</div>'+
+      '<h2 class="e26-title" data-text="ESTACIÓN 2600">ESTACIÓN 2600</h2>'+
+      '<p class="e26-sub">'+L('Estudio de grabación · Beats · Mezcla · Hub creativo','Recording studio · Beats · Mixing · Creative hub')+'</p>'+
+      '<button class="e26-cta" onclick="goStudio()">'+L('Entrar al estudio','Enter the studio')+' <span>&#8594;</span></button>'+
+    '</div>'+
+  '</section>';
+}
+function studioTransHtml(){
+  let bars="";
+  for(let i=0;i<48;i++){ bars+='<i style="animation-delay:'+(Math.random()*0.5).toFixed(2)+'s"></i>'; }
+  return '<div class="st-bars" aria-hidden="true">'+bars+'</div>'+
+    '<div class="st-text">'+L('Entrando al estudio','Entering the studio')+'…</div>'+
+    '<div class="st-title" data-text="ESTACIÓN 2600">ESTACIÓN 2600</div>'+
+    '<div class="st-flash"></div>';
+}
+function goStudio(){
+  let t=document.getElementById("studio-trans");
+  if(t) t.remove();
+  t=document.createElement("div"); t.id="studio-trans"; t.innerHTML=studioTransHtml();
+  document.body.appendChild(t);
+  requestAnimationFrame(function(){ t.classList.add("on"); });
+  setTimeout(function(){ window.location.href="https://estacion2600.com"; }, 1900);
+}
 function renderWeb(){
   const app=document.getElementById("app");
   const cards=WEBSITES.map(w0=>
