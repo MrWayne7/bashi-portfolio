@@ -17,13 +17,13 @@
 <meta name="keywords" content="editor de video, editor de reels, creador de contenido, camarógrafo, operador de cámara, grabación de contenido, videos para redes, music videos, comerciales, fotografía, diseño web, páginas web, desarrollo web, motion graphics, editor freelance, Santo Domingo, República Dominicana, Colombia, Bogotá, Bashi, Ulloa Media">
 <meta property="og:site_name" content="BASHI">
 <meta property="og:url" content="https://studiobashi.com/">
-<meta property="og:image" content="https://i.ytimg.com/vi/IiZK0ZqbLNs/maxresdefault.jpg">
-<meta property="og:image:width" content="1280">
-<meta property="og:image:height" content="720">
+<meta property="og:image" content="https://studiobashi.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="BASHI — Editor de Video, Reels y Contenido">
 <meta name="twitter:description" content="Editor de video, reels y contenido · camarógrafo · fotografía · diseño web. Santo Domingo, Colombia y USA.">
-<meta name="twitter:image" content="https://i.ytimg.com/vi/IiZK0ZqbLNs/maxresdefault.jpg">
+<meta name="twitter:image" content="https://studiobashi.com/og.png">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="BASHI">
 <meta name="geo.placename" content="Bogotá, Colombia">
@@ -462,7 +462,8 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 .prow.rec{background:linear-gradient(90deg,rgba(0,255,102,.06),transparent);margin-left:-10px;margin-right:-10px;padding-left:10px;padding-right:10px;border-radius:5px}
 .recbadge{display:inline-block;font-size:9px;letter-spacing:1px;color:var(--green);border:1px solid var(--green-dim);border-radius:10px;padding:1px 8px;margin-left:8px;text-transform:uppercase;vertical-align:middle;white-space:nowrap}
 
-/* ===== v27 (BASHI-V27): hook épico Estación 2600 =====
+/* ===== v28 (BASHI-V28): WhatsApp flotante + FAQ + OG =====
+/* v27 hook épico Estación 2600
 /* v26 Colombia 95%
 /* v25 precios por país (geo)
 /* v24 enganche administrador (overrides)
@@ -524,6 +525,18 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 @keyframes stGb{0%{transform:translate(0)}50%{transform:translate(3px,2px)}100%{transform:translate(-2px,-1px)}}
 @keyframes stFlash{0%,72%{opacity:0}100%{opacity:1}}
 @media (prefers-reduced-motion: reduce){.e26-bars i,#studio-trans.on .st-bars i,#studio-trans.on .st-title::before,#studio-trans.on .st-title::after{animation:none}}
+
+/* ===== v28 (BASHI-V28): WhatsApp flotante + FAQ + OG ===== */
+.faq{margin-top:6px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:14px 2px;font-size:14px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--green);font-family:var(--mono);font-size:18px;transition:transform .2s}
+.faq details[open] summary::after{content:"–"}
+.faq p{color:var(--dim);font-size:13px;line-height:1.7;margin:0 2px 16px}
+#wafab{position:fixed;right:20px;bottom:20px;z-index:300;width:54px;height:54px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,.45);transition:transform .2s ease,box-shadow .2s ease}
+#wafab:hover{transform:scale(1.08);box-shadow:0 8px 28px rgba(37,211,102,.5)}
+@media print{#wafab{display:none}}
 </style>
 </head>
 <body>
@@ -993,7 +1006,7 @@ function infoHtml(){
     '<h3 class="ititle">'+L('Cómo trabajo','How I work')+'</h3>'+
     '<div class="steps3">'+
       '<div class="stp"><span class="sn">01</span><b>'+L('Concepto','Concept')+'</b><p>'+L('Aterrizamos tu idea en un concepto claro y una referencia visual.','We shape your idea into a clear concept and a visual reference.')+'</p></div>'+
-      '<div class="stp"><span class="sn">02</span><b>'+L('Producción','Production')+'</b><p>'+L('Grabo con iPhone 17 Pro Max (calidad orgánica para redes) o trabajo tu material.','I shoot on iPhone 17 Pro Max (organic quality for social) or work with your footage.')+'</p></div>'+
+      '<div class="stp"><span class="sn">02</span><b>'+L('Producción','Production')+'</b><p>'+L('Grabo con cámara especializada para contenido (orgánico para redes) o trabajo tu material.','I shoot with a content-specialized camera (organic for social) or work with your footage.')+'</p></div>'+
       '<div class="stp"><span class="sn">03</span><b>'+L('Edición y entrega','Editing & delivery')+'</b><p>'+L('Edito, ajustamos juntos y entrego listo para publicar.','I edit, we fine-tune together, and I deliver ready to publish.')+'</p></div>'+
     '</div>'+
     '<h3 class="ititle">'+L('Cotiza tu proyecto','Get a quote')+'</h3>'+
@@ -1004,7 +1017,7 @@ function infoHtml(){
       '<div class="ffield"><label>'+L('Detalle (opcional)','Details (optional)')+'</label><textarea id="cotMsg" rows="3" placeholder="'+L('Cuéntame brevemente qué necesitas','Tell me briefly what you need')+'"></textarea></div>'+
       '<button class="btn" onclick="enviarCotizacion()">'+L('Enviar por WhatsApp','Send via WhatsApp')+'</button>'+
       '<div class="cotErr" id="cotErr"></div>'+
-    '</div></section>';
+    '</div>'+'<h3 class="ititle">'+L('Preguntas frecuentes','FAQ')+'</h3>'+'<div class="faq">'+'<details><summary>'+L('¿Trabajas presencial o remoto?','Do you work on-site or remote?')+'</summary><p>'+L('Presencial en Bogotá y alrededores; remoto para edición, diseño web y más en cualquier ciudad.','On-site in Bogotá and nearby; remote for editing, web design and more anywhere.')+'</p></details>'+'<details><summary>'+L('¿Cuánto tardas en entregar?','How long does delivery take?')+'</summary><p>'+L('Los reels suelen estar en 3–5 días. Los proyectos más grandes, según el alcance acordado.','Reels are usually ready in 3–5 days. Larger projects depend on the agreed scope.')+'</p></details>'+'<details><summary>'+L('¿Cuántas revisiones incluye?','How many revisions are included?')+'</summary><p>'+L('Según el paquete, 1 o 2 rondas de ajustes razonables.','Depending on the package, 1 or 2 rounds of reasonable adjustments.')+'</p></details>'+'<details><summary>'+L('¿Cómo son los pagos?','How do payments work?')+'</summary><p>'+L('Un anticipo para arrancar y el saldo contra entrega. Precios ajustados según tu país.','A deposit to start and the balance on delivery. Prices adjusted to your country.')+'</p></details>'+'<details><summary>'+L('¿Cómo empezamos?','How do we start?')+'</summary><p>'+L('Escríbeme por WhatsApp o llena el formulario de cotización. Te respondo rápido.','Message me on WhatsApp or fill the quote form. I reply fast.')+'</p></details>'+'</div>'+'</section>';
 }function enviarCotizacion(){
   const g=id=>document.getElementById(id);
   const nombre=(g('cotNombre').value||'').trim();
@@ -1303,5 +1316,6 @@ window.addEventListener("DOMContentLoaded",()=>{
 });
 </script>
 
+<a id="wafab" href="https://wa.me/573245026518?text=%C2%A1Hola%20BASHI!%20Quiero%20cotizar%20un%20proyecto" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 32 32" width="27" height="27" fill="currentColor" aria-hidden="true"><path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2 7.8L.5 31.5l7.9-2.1c2.3 1.2 4.9 1.9 7.6 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.3c-2.4 0-4.7-.6-6.7-1.8l-.5-.3-4.7 1.2 1.3-4.6-.3-.5c-1.3-2.1-2-4.5-2-7 0-7.2 5.9-13.1 13.1-13.1 3.5 0 6.8 1.4 9.3 3.9 2.5 2.5 3.9 5.8 3.9 9.3-.1 7.2-6 13-13.2 13zm7.2-9.8c-.4-.2-2.3-1.1-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.2 1.5-.2.2-.4.3-.8.1-.4-.2-1.7-.6-3.2-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8.2-.2.4-.4.5-.7.2-.2.2-.4.4-.6.1-.3 0-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.8-.6-.7-.9-.7h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9 0 1.7 1.2 3.3 1.4 3.6.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .8.8.3 1.6.2 2.2.1.7-.1 2.3-.9 2.6-1.8.3-.9.3-1.6.2-1.8-.1-.1-.3-.2-.7-.4z"/></svg></a>
 </body>
 </html>
