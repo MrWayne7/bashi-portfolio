@@ -56,6 +56,7 @@ button{font-family:"Share Tech Mono",monospace;font-size:12px;letter-spacing:1px
   <div class="nav">
     <button id="navV" class="on" onclick="tab('v')">Videos</button>
     <button id="navP" onclick="tab('p')">Precios y países</button>
+    <button id="navC" onclick="tab('c')">Clientes</button>
   </div>
 
   <!-- ===== VIDEOS ===== -->
@@ -125,6 +126,23 @@ button{font-family:"Share Tech Mono",monospace;font-size:12px;letter-spacing:1px
       <span id="dirtyP" class="sub" style="margin:0"></span>
     </div>
   </div>
+
+  <!-- ===== CLIENTES ===== -->
+  <div id="panelC" class="hide">
+    <div class="card">
+      <b class="mono g">CONTACTOS DEL FORMULARIO</b>
+      <p class="sub">Personas que dejaron sus datos. Se borran solas a los 12 meses.</p>
+      <div id="leadList"></div>
+      <p id="leadEmpty" class="sub">Todavía nadie ha dejado sus datos.</p>
+    </div>
+    <div class="card">
+      <b class="mono g">CLICS PARA CONTACTARTE</b>
+      <p class="sub">Cuántas veces tocaron WhatsApp, Instagram o correo, y desde qué página. Así sabes qué página vende.</p>
+      <div class="row" style="margin-top:10px"><div><label>Mes</label><select id="mesSel" onchange="renderClicks()"></select></div></div>
+      <div id="clickSum" style="margin-top:14px"></div>
+      <div id="clickList"></div>
+    </div>
+  </div>
 </div>
 
 <div id="msg" class="msg"></div>
@@ -142,7 +160,40 @@ const $=id=>document.getElementById(id);
 function toast(t){const m=$("msg");m.textContent=t;m.classList.add("on");setTimeout(()=>m.classList.remove("on"),2300);}
 function ytId(u){u=(u||"").trim();let m=u.match(/(?:youtu\.be\/|shorts\/|embed\/|v=)([A-Za-z0-9_-]{6,})/);return m?m[1]:(/^[A-Za-z0-9_-]{6,}$/.test(u)?u:"");}
 function thumb(id){return "https://i.ytimg.com/vi/"+id+"/mqdefault.jpg";}
-function tab(w){const v=w==="v";$("panelV").classList.toggle("hide",!v);$("panelP").classList.toggle("hide",v);$("navV").classList.toggle("on",v);$("navP").classList.toggle("on",!v);}
+function tab(w){["v","p","c"].forEach(k=>{const K=k.toUpperCase();$("panel"+K).classList.toggle("hide",k!==w);$("nav"+K).classList.toggle("on",k===w);}); if(w==="c") loadStats();}
+let STATS=null;
+const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+async function loadStats(){
+  try{ const r=await fetch("/api/stats",{headers:{"x-admin-pass":PASS},cache:"no-store"}); STATS=await r.json(); if(STATS.error){toast(STATS.error);return;} }
+  catch(e){ toast("No se pudieron cargar las estadísticas"); return; }
+  renderLeads();
+  const meses=[...new Set((STATS.clicks||[]).map(c=>c.mes))].sort().reverse();
+  const now=new Date().toISOString().slice(0,7); if(!meses.includes(now)) meses.unshift(now);
+  $("mesSel").innerHTML=meses.map(m=>'<option>'+m+'</option>').join("");
+  renderClicks();
+}
+function renderLeads(){
+  const L=STATS.leads||[], box=$("leadList"); $("leadEmpty").style.display=L.length?"none":"block";
+  box.innerHTML=L.map(l=>{
+    const wa=(l.contacto||"").replace(/[^0-9]/g,"");
+    return '<div class="vid" style="align-items:flex-start"><div class="t"><b>'+esc(l.nombre)+' <span class="tag">'+esc(l.servicio||"")+'</span></b>'+
+      '<span>'+esc(new Date(l.t).toLocaleString("es-CO"))+' · '+esc(l.contacto||"sin contacto")+' · desde '+esc(l.origen||"")+(l.pais?' · '+esc(l.pais):'')+'</span>'+
+      (l.detalle?'<span style="display:block;margin-top:6px;color:var(--ink);white-space:normal">'+esc(l.detalle)+'</span>':'')+'</div>'+
+      (wa.length>=8?'<a class="btn2" style="padding:9px 12px;text-decoration:none" target="_blank" href="https://wa.me/'+wa+'">Escribir</a>':'')+
+      '<button class="btn2" data-k="'+esc(l.key)+'">Borrar</button></div>';
+  }).join("");
+  box.querySelectorAll("button[data-k]").forEach(b=>b.onclick=async()=>{ if(!confirm("¿Borrar este contacto?"))return;
+    await fetch("/api/stats",{method:"POST",headers:{"content-type":"application/json","x-admin-pass":PASS},body:JSON.stringify({borrar:b.dataset.k})});
+    STATS.leads=STATS.leads.filter(x=>x.key!==b.dataset.k); renderLeads(); toast("Contacto borrado"); });
+}
+function renderClicks(){
+  const m=$("mesSel").value, C=(STATS.clicks||[]).filter(c=>c.mes===m), tot={};
+  C.forEach(c=>tot[c.e]=(tot[c.e]||0)+c.n);
+  $("clickSum").innerHTML=["whatsapp","instagram","email","llamada"].map(e=>'<span class="tag" style="font-size:12px;padding:4px 10px;margin-right:6px">'+e+': '+(tot[e]||0)+'</span>').join("");
+  const byP={}; C.forEach(c=>{(byP[c.p]=byP[c.p]||{t:0})[c.e]=c.n; byP[c.p].t+=c.n;});
+  const rows=Object.entries(byP).sort((a,b)=>b[1].t-a[1].t);
+  $("clickList").innerHTML=rows.length?rows.map(([p,v])=>'<div class="pitem"><span class="nm">'+esc(p)+'</span><span class="cur" style="width:auto">WA '+(v.whatsapp||0)+' · IG '+(v.instagram||0)+' · @ '+(v.email||0)+'</span><b style="width:40px;text-align:right">'+v.t+'</b></div>').join(""):'<p class="sub">Sin clics registrados este mes.</p>';
+}
 
 async function enter(){
   PASS=$("pass").value.trim(); if(!PASS){return;}
