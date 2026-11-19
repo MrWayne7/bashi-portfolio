@@ -38,15 +38,15 @@
     form.addEventListener('submit', function(e){
       e.preventDefault();
       var g = function(n){ var el = form.elements[n]; return el ? (el.type === 'checkbox' ? el.checked : (el.value || '').trim()) : ''; };
-      var msg = form.querySelector('.msg');
+      var msg = form.querySelector('.msg'), en = form.getAttribute('data-lang') === 'en';
       msg.className = 'msg';
-      if (!g('nombre')){ msg.textContent = 'Escribe tu nombre para continuar.'; msg.classList.add('err'); form.elements.nombre.focus(); return; }
-      if (!g('acepto')){ msg.textContent = 'Marca la casilla de tratamiento de datos para continuar.'; msg.classList.add('err'); return; }
+      if (!g('nombre')){ msg.textContent = en ? 'Please enter your name.' : 'Escribe tu nombre para continuar.'; msg.classList.add('err'); form.elements.nombre.focus(); return; }
+      if (!g('acepto')){ msg.textContent = en ? 'Please tick the data consent box.' : 'Marca la casilla de tratamiento de datos para continuar.'; msg.classList.add('err'); return; }
       var data = { nombre: g('nombre'), contacto: g('contacto'), servicio: g('servicio'), detalle: g('detalle'), web: g('web'), origen: where() };
       send('/api/lead', data);
-      var t = 'Hola BASHI, quiero cotizar un proyecto.\n\nNombre: ' + data.nombre + '\nServicio: ' + data.servicio + (data.detalle ? '\nDetalle: ' + data.detalle : '');
+      var t = en ? ('Hi BASHI, I would like a quote.\n\nName: ' + data.nombre + '\nService: ' + data.servicio + (data.detalle ? '\nDetails: ' + data.detalle : '')) : ('Hola BASHI, quiero cotizar un proyecto.\n\nNombre: ' + data.nombre + '\nServicio: ' + data.servicio + (data.detalle ? '\nDetalle: ' + data.detalle : ''));
       window.open('https://wa.me/' + form.getAttribute('data-wa') + '?text=' + encodeURIComponent(t), '_blank');
-      msg.textContent = 'Listo. Se abrió WhatsApp con tu mensaje; si no se abrió, escríbeme al +57 324 502 6518.';
+      msg.textContent = en ? 'Done. WhatsApp opened with your message; if it did not, write to +57 324 502 6518.' : 'Listo. Se abrió WhatsApp con tu mensaje; si no se abrió, escríbeme al +57 324 502 6518.';
       msg.classList.add('ok');
     });
   }

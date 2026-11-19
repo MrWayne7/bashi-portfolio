@@ -40,6 +40,13 @@ button{font-family:"Share Tech Mono",monospace;font-size:12px;letter-spacing:1px
 .regrow .lbl{flex:1;font-size:13px}.regrow .lbl span{display:block;font-size:10px;color:var(--dim)}
 .regrow input{width:80px;text-align:right}.regrow select{width:90px}
 .bar{position:sticky;bottom:0;background:linear-gradient(transparent,var(--bg) 40%);padding:18px 0;display:flex;gap:12px;align-items:center}
+#rep{background:#fff;color:#111;padding:36px;max-width:820px;margin:20px auto;font-family:system-ui,sans-serif}
+#rep h1{font-size:26px;letter-spacing:0;margin:0}#rep h2{font-size:17px;margin:26px 0 8px}
+#rep .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+#rep .kpis div{border:1px solid #ddd;padding:12px}#rep .kpis b{display:block;font-size:28px}
+#rep table{width:100%;border-collapse:collapse;font-size:14px}#rep td,#rep th{border-bottom:1px solid #eee;padding:7px 4px;text-align:left}
+#rep .acts{display:flex;gap:10px;margin-top:24px}
+@media print{body{background:#fff;padding:0}#app,#login,#msg{display:none!important}#rep{display:block!important;margin:0;max-width:none}#rep .acts{display:none}}
 </style></head><body>
 
 <div id="login">
@@ -138,13 +145,14 @@ button{font-family:"Share Tech Mono",monospace;font-size:12px;letter-spacing:1px
     <div class="card">
       <b class="mono g">CLICS PARA CONTACTARTE</b>
       <p class="sub">Cuántas veces tocaron WhatsApp, Instagram o correo, y desde qué página. Así sabes qué página vende.</p>
-      <div class="row" style="margin-top:10px"><div><label>Mes</label><select id="mesSel" onchange="renderClicks()"></select></div></div>
+      <div class="row" style="margin-top:10px;align-items:flex-end"><div><label>Mes</label><select id="mesSel" onchange="renderClicks()"></select></div><div style="flex:none"><button class="btn" onclick="reporte()">Reporte del mes</button></div></div>
       <div id="clickSum" style="margin-top:14px"></div>
       <div id="clickList"></div>
     </div>
   </div>
 </div>
 
+<div id="rep" class="hide"></div>
 <div id="msg" class="msg"></div>
 
 <script>
@@ -185,6 +193,20 @@ function renderLeads(){
   box.querySelectorAll("button[data-k]").forEach(b=>b.onclick=async()=>{ if(!confirm("¿Borrar este contacto?"))return;
     await fetch("/api/stats",{method:"POST",headers:{"content-type":"application/json","x-admin-pass":PASS},body:JSON.stringify({borrar:b.dataset.k})});
     STATS.leads=STATS.leads.filter(x=>x.key!==b.dataset.k); renderLeads(); toast("Contacto borrado"); });
+}
+function reporte(){
+  const m=$("mesSel").value, C=(STATS.clicks||[]).filter(c=>c.mes===m), Ls=(STATS.leads||[]).filter(l=>(l.t||"").slice(0,7)===m), tot={};
+  C.forEach(c=>tot[c.e]=(tot[c.e]||0)+c.n);
+  const byP={}; C.forEach(c=>byP[c.p]=(byP[c.p]||0)+c.n);
+  const top=Object.entries(byP).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const byS={}; Ls.forEach(l=>byS[l.servicio||"Sin servicio"]=(byS[l.servicio||"Sin servicio"]||0)+1);
+  const nombreMes=new Date(m+"-15").toLocaleDateString("es-CO",{month:"long",year:"numeric"});
+  $("rep").innerHTML='<h1>Reporte de studiobashi.com · '+esc(nombreMes)+'</h1><p style="color:#666;margin-top:6px">Clics para contactarte y contactos del formulario.</p>'+
+    '<div class="kpis"><div><b>'+(tot.whatsapp||0)+'</b>Clics a WhatsApp</div><div><b>'+(tot.instagram||0)+'</b>Clics a Instagram</div><div><b>'+(tot.email||0)+'</b>Clics a correo</div><div><b>'+Ls.length+'</b>Contactos nuevos</div></div>'+
+    '<h2>Páginas que más contactos generan</h2><table><tr><th>Página</th><th>Clics</th></tr>'+(top.map(([p,n])=>'<tr><td>'+esc(p)+'</td><td>'+n+'</td></tr>').join("")||'<tr><td colspan="2">Sin datos</td></tr>')+'</table>'+
+    '<h2>Contactos por servicio</h2><table><tr><th>Servicio</th><th>Contactos</th></tr>'+(Object.entries(byS).map(([k,n])=>'<tr><td>'+esc(k)+'</td><td>'+n+'</td></tr>').join("")||'<tr><td colspan="2">Sin contactos</td></tr>')+'</table>'+
+    '<div class="acts"><button class="btn" onclick="window.print()">Imprimir o guardar PDF</button><button class="btn2" style="color:#111;border-color:#ccc" onclick="$(\'rep\').classList.add(\'hide\');$(\'app\').classList.remove(\'hide\')">Volver</button></div>';
+  $("app").classList.add("hide"); $("rep").classList.remove("hide"); window.scrollTo(0,0);
 }
 function renderClicks(){
   const m=$("mesSel").value, C=(STATS.clicks||[]).filter(c=>c.mes===m), tot={};
