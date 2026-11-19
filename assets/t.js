@@ -14,6 +14,7 @@
   window.bashiTrack = function(ev){ send('/api/track', { e: ev, p: where() }); };
   document.addEventListener('click', function(e){
     var a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
+    if (a.hasAttribute('data-t')){ send('/api/track', { e: 'bio', p: '/links/' + a.getAttribute('data-t') }); return; }
     var h = a.getAttribute('href') || '', ev = '';
     if (/wa\.me|whatsapp/.test(h)) ev = 'whatsapp';
     else if (/instagram\.com/.test(h)) ev = 'instagram';
@@ -48,6 +49,58 @@
       window.open('https://wa.me/' + form.getAttribute('data-wa') + '?text=' + encodeURIComponent(t), '_blank');
       msg.textContent = en ? 'Done. WhatsApp opened with your message; if it did not, write to +57 324 502 6518.' : 'Listo. Se abrió WhatsApp con tu mensaje; si no se abrió, escríbeme al +57 324 502 6518.';
       msg.classList.add('ok');
+    });
+  }
+
+  /* ---- /links: cuenta cada visita que llega desde la bio de Instagram ---- */
+  if (/^\/links\/?$/.test(location.pathname)) send('/api/track', { e: 'bio', p: '/links/visita' });
+
+  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  function lista(k, cb){ fetch('/api/lista/' + k).then(function(r){ return r.ok ? r.json() : []; }).then(cb).catch(function(){}); }
+
+  /* ---- testimonios: se cargan desde el panel; la sección se oculta si no hay ---- */
+  var tBoxes = document.querySelectorAll('[data-testimonios]');
+  if (tBoxes.length) lista('testimonios', function(L){
+    tBoxes.forEach(function(box){
+      var f = box.getAttribute('data-testimonios'), en = box.getAttribute('data-lang') === 'en';
+      var items = L.filter(function(x){ return !f || !x.servicio || x.servicio === f; }).slice(0, 6);
+      if (!items.length) return;
+      box.querySelector('.tlist').innerHTML = items.map(function(x){
+        return '<figure class="tst"><blockquote>“' + esc(x.texto) + '”</blockquote><figcaption><b>' + esc(x.nombre) + '</b>' + (x.rol ? '<span>' + esc(x.rol) + '</span>' : '') +
+          (x.caso ? '<a href="' + (en ? '/en' : '') + '/work/' + esc(x.caso.replace(/^\/?(work\/)?|\/$/g, '')) + '/">' + (en ? 'See the case' : 'Ver el caso') + '</a>' : '') + '</figcaption></figure>';
+      }).join('');
+      box.hidden = false;
+    });
+  });
+
+  /* ---- tienda: productos cargados desde el panel ---- */
+  var shop = document.querySelector('[data-tienda]');
+  if (shop) lista('tienda', function(L){
+    if (!L.length) return;
+    shop.innerHTML = L.map(function(p){
+      return '<article class="prod">' + (p.img ? '<img src="' + esc(p.img) + '" alt="' + esc(p.nombre) + '" loading="lazy">' : '') +
+        '<div><b>' + esc(p.nombre) + '</b><span class="pr">' + esc(p.precio) + '</span><p>' + esc(p.desc) + '</p>' +
+        '<a class="btn" href="' + esc(p.link) + '" target="_blank" rel="noopener" onclick="window.bashiTrack&&bashiTrack(\'descarga\')">Comprar</a></div></article>';
+    }).join('');
+    var em = document.querySelector('.shop-empty'); if (em) em.hidden = true;
+  });
+
+  /* ---- recurso gratis: se desbloquea al dejar el contacto ---- */
+  var un = document.getElementById('unlock');
+  if (un){
+    var abrir = function(){ document.documentElement.classList.add('unlocked'); };
+    try{ if (localStorage.getItem('bashi-unlock-' + un.getAttribute('data-id'))) abrir(); }catch(e){}
+    un.addEventListener('submit', function(e){
+      e.preventDefault();
+      var n = (un.elements.nombre.value || '').trim(), c = (un.elements.contacto.value || '').trim(), m = un.querySelector('.msg');
+      m.className = 'msg';
+      if (!n || !c){ m.textContent = 'Escribe tu nombre y tu WhatsApp o correo.'; m.classList.add('err'); return; }
+      if (!un.elements.acepto.checked){ m.textContent = 'Marca la casilla de tratamiento de datos para continuar.'; m.classList.add('err'); return; }
+      send('/api/lead', { nombre: n, contacto: c, servicio: 'Recurso: ' + un.getAttribute('data-id'), detalle: '', web: un.elements.web.value, origen: location.pathname });
+      send('/api/track', { e: 'descarga', p: location.pathname });
+      try{ localStorage.setItem('bashi-unlock-' + un.getAttribute('data-id'), '1'); }catch(e){}
+      abrir();
+      var full = document.getElementById('completa'); if (full) full.scrollIntoView({ behavior: 'smooth' });
     });
   }
 })();

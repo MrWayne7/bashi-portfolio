@@ -64,6 +64,8 @@ button{font-family:"Share Tech Mono",monospace;font-size:12px;letter-spacing:1px
     <button id="navV" class="on" onclick="tab('v')">Videos</button>
     <button id="navP" onclick="tab('p')">Precios y países</button>
     <button id="navC" onclick="tab('c')">Clientes</button>
+    <button id="navT" onclick="tab('t')">Testimonios</button>
+    <button id="navS" onclick="tab('s')">Tienda</button>
   </div>
 
   <!-- ===== VIDEOS ===== -->
@@ -150,6 +152,31 @@ button{font-family:"Share Tech Mono",monospace;font-size:12px;letter-spacing:1px
       <div id="clickList"></div>
     </div>
   </div>
+  <div id="panelT" class="hide">
+    <div class="card">
+      <b class="mono g">AGREGAR TESTIMONIO</b>
+      <p class="sub">Solo testimonios reales, con permiso de la persona. Salen en la portada, en la página del servicio elegido y en contacto.</p>
+      <div class="row"><div><label>Nombre</label><input id="t_nombre" placeholder="Santa Mykah"></div><div><label>Rol o marca (opcional)</label><input id="t_rol" placeholder="Artista · Miami"></div></div>
+      <label>Lo que dijo</label><input id="t_texto" placeholder="Texto del testimonio">
+      <div class="row"><div><label>Servicio</label><select id="t_serv"><option value="">Todos</option><option value="videoclips">Videoclips</option><option value="comerciales">Reels y comerciales</option><option value="fotografia">Fotografía</option><option value="bodas">Bodas</option><option value="paginas-web">Páginas web</option></select></div>
+      <div><label>Caso (opcional)</label><input id="t_caso" placeholder="santa-mykah"></div></div>
+      <div style="margin-top:14px"><button class="btn" onclick="addT()">+ Agregar</button></div>
+    </div>
+    <div class="card"><b class="mono g">TESTIMONIOS</b><div id="tList"></div><p id="tEmpty" class="sub">Todavía no hay testimonios.</p></div>
+    <div class="bar"><button class="btn" onclick="saveList('testimonios')">Guardar testimonios</button></div>
+  </div>
+  <div id="panelS" class="hide">
+    <div class="card">
+      <b class="mono g">AGREGAR PRODUCTO</b>
+      <p class="sub">Crea el producto en Gumroad, Hotmart o Wompi y pega aquí el enlace de pago. La tienda aparece sola cuando hay al menos uno.</p>
+      <div class="row"><div><label>Nombre</label><input id="p_nombre" placeholder="Pack de presets BASHI"></div><div><label>Precio</label><input id="p_precio" placeholder="$17 USD"></div></div>
+      <label>Descripción</label><input id="p_desc" placeholder="Qué incluye">
+      <div class="row"><div><label>Enlace de pago (https://)</label><input id="p_link"></div><div><label>Imagen (https://, opcional)</label><input id="p_img"></div></div>
+      <div style="margin-top:14px"><button class="btn" onclick="addP()">+ Agregar</button></div>
+    </div>
+    <div class="card"><b class="mono g">PRODUCTOS</b><div id="pList"></div><p id="pEmpty" class="sub">Todavía no hay productos.</p></div>
+    <div class="bar"><button class="btn" onclick="saveList('tienda')">Guardar tienda</button></div>
+  </div>
 </div>
 
 <div id="rep" class="hide"></div>
@@ -168,7 +195,19 @@ const $=id=>document.getElementById(id);
 function toast(t){const m=$("msg");m.textContent=t;m.classList.add("on");setTimeout(()=>m.classList.remove("on"),2300);}
 function ytId(u){u=(u||"").trim();let m=u.match(/(?:youtu\.be\/|shorts\/|embed\/|v=)([A-Za-z0-9_-]{6,})/);return m?m[1]:(/^[A-Za-z0-9_-]{6,}$/.test(u)?u:"");}
 function thumb(id){return "https://i.ytimg.com/vi/"+id+"/mqdefault.jpg";}
-function tab(w){["v","p","c"].forEach(k=>{const K=k.toUpperCase();$("panel"+K).classList.toggle("hide",k!==w);$("nav"+K).classList.toggle("on",k===w);}); if(w==="c") loadStats();}
+let LISTS={testimonios:[],tienda:[]};
+async function loadLists(){ for(const k of ["testimonios","tienda"]){ try{ LISTS[k]=await (await fetch("/api/lista/"+k,{cache:"no-store"})).json(); }catch(e){} } renderT(); renderP(); }
+function renderT(){ const L=LISTS.testimonios; $("tEmpty").style.display=L.length?"none":"block";
+  $("tList").innerHTML=L.map((t,i)=>'<div class="vid" style="align-items:flex-start"><div class="t"><b>'+esc(t.nombre)+(t.servicio?' <span class="tag">'+esc(t.servicio)+'</span>':'')+'</b><span style="white-space:normal">“'+esc(t.texto)+'”'+(t.rol?' — '+esc(t.rol):'')+'</span></div><button class="btn2" onclick="LISTS.testimonios.splice('+i+',1);renderT()">Quitar</button></div>').join(""); }
+function renderP(){ const L=LISTS.tienda; $("pEmpty").style.display=L.length?"none":"block";
+  $("pList").innerHTML=L.map((p,i)=>'<div class="vid"><div class="t"><b>'+esc(p.nombre)+' <span class="tag">'+esc(p.precio)+'</span></b><span>'+esc(p.link)+'</span></div><button class="btn2" onclick="LISTS.tienda.splice('+i+',1);renderP()">Quitar</button></div>').join(""); }
+function addT(){ const t={nombre:$("t_nombre").value.trim(),rol:$("t_rol").value.trim(),texto:$("t_texto").value.trim(),servicio:$("t_serv").value,caso:$("t_caso").value.trim()};
+  if(!t.nombre||!t.texto){toast("Falta el nombre o el texto");return;} LISTS.testimonios.push(t); ["t_nombre","t_rol","t_texto","t_caso"].forEach(i=>$(i).value=""); renderT(); toast("Agregado: falta guardar"); }
+function addP(){ const p={nombre:$("p_nombre").value.trim(),precio:$("p_precio").value.trim(),desc:$("p_desc").value.trim(),link:$("p_link").value.trim(),img:$("p_img").value.trim()};
+  p.id=p.nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-");
+  if(!p.nombre||!/^https:\/\//.test(p.link)){toast("Falta el nombre o el enlace de pago (https://)");return;} LISTS.tienda.push(p); ["p_nombre","p_precio","p_desc","p_link","p_img"].forEach(i=>$(i).value=""); renderP(); toast("Agregado: falta guardar"); }
+async function saveList(k){ try{ const r=await fetch("/api/lista/"+k,{method:"POST",headers:{"content-type":"application/json","x-admin-pass":PASS},body:JSON.stringify(LISTS[k])}); const o=await r.json(); toast(o.ok?("Guardado ✓ ("+o.n+")"):(o.error||"Error")); }catch(e){ toast("No se pudo guardar"); } }
+function tab(w){["v","p","c","t","s"].forEach(k=>{const K=k.toUpperCase();$("panel"+K).classList.toggle("hide",k!==w);$("nav"+K).classList.toggle("on",k===w);}); if(w==="c") loadStats(); if(w==="t"||w==="s") loadLists();}
 let STATS=null;
 const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 async function loadStats(){
@@ -202,7 +241,7 @@ function reporte(){
   const byS={}; Ls.forEach(l=>byS[l.servicio||"Sin servicio"]=(byS[l.servicio||"Sin servicio"]||0)+1);
   const nombreMes=new Date(m+"-15").toLocaleDateString("es-CO",{month:"long",year:"numeric"});
   $("rep").innerHTML='<h1>Reporte de studiobashi.com · '+esc(nombreMes)+'</h1><p style="color:#666;margin-top:6px">Clics para contactarte y contactos del formulario.</p>'+
-    '<div class="kpis"><div><b>'+(tot.whatsapp||0)+'</b>Clics a WhatsApp</div><div><b>'+(tot.instagram||0)+'</b>Clics a Instagram</div><div><b>'+(tot.email||0)+'</b>Clics a correo</div><div><b>'+Ls.length+'</b>Contactos nuevos</div></div>'+
+    '<div class="kpis"><div><b>'+(tot.whatsapp||0)+'</b>Clics a WhatsApp</div><div><b>'+(tot.instagram||0)+'</b>Clics a Instagram</div><div><b>'+(tot.email||0)+'</b>Clics a correo</div><div><b>'+Ls.length+'</b>Contactos nuevos</div><div><b>'+(C.filter(c=>c.e==="bio"&&c.p==="/links/visita").reduce((a,c)=>a+c.n,0))+'</b>Visitas desde la bio</div><div><b>'+(tot.qr||0)+'</b>Escaneos de QR</div><div><b>'+(tot.descarga||0)+'</b>Descargas</div><div><b>'+(C.filter(c=>c.e==="bio"&&c.p!=="/links/visita").reduce((a,c)=>a+c.n,0))+'</b>Clics en /links</div></div>'+
     '<h2>Páginas que más contactos generan</h2><table><tr><th>Página</th><th>Clics</th></tr>'+(top.map(([p,n])=>'<tr><td>'+esc(p)+'</td><td>'+n+'</td></tr>').join("")||'<tr><td colspan="2">Sin datos</td></tr>')+'</table>'+
     '<h2>Contactos por servicio</h2><table><tr><th>Servicio</th><th>Contactos</th></tr>'+(Object.entries(byS).map(([k,n])=>'<tr><td>'+esc(k)+'</td><td>'+n+'</td></tr>').join("")||'<tr><td colspan="2">Sin contactos</td></tr>')+'</table>'+
     '<div class="acts"><button class="btn" onclick="window.print()">Imprimir o guardar PDF</button><button class="btn2" style="color:#111;border-color:#ccc" onclick="$(\'rep\').classList.add(\'hide\');$(\'app\').classList.remove(\'hide\')">Volver</button></div>';
@@ -211,7 +250,7 @@ function reporte(){
 function renderClicks(){
   const m=$("mesSel").value, C=(STATS.clicks||[]).filter(c=>c.mes===m), tot={};
   C.forEach(c=>tot[c.e]=(tot[c.e]||0)+c.n);
-  $("clickSum").innerHTML=["whatsapp","instagram","email","llamada"].map(e=>'<span class="tag" style="font-size:12px;padding:4px 10px;margin-right:6px">'+e+': '+(tot[e]||0)+'</span>').join("");
+  $("clickSum").innerHTML=["whatsapp","instagram","email","llamada","bio","qr","descarga"].map(e=>'<span class="tag" style="font-size:12px;padding:4px 10px;margin-right:6px">'+e+': '+(tot[e]||0)+'</span>').join("");
   const byP={}; C.forEach(c=>{(byP[c.p]=byP[c.p]||{t:0})[c.e]=c.n; byP[c.p].t+=c.n;});
   const rows=Object.entries(byP).sort((a,b)=>b[1].t-a[1].t);
   $("clickList").innerHTML=rows.length?rows.map(([p,v])=>'<div class="pitem"><span class="nm">'+esc(p)+'</span><span class="cur" style="width:auto">WA '+(v.whatsapp||0)+' · IG '+(v.instagram||0)+' · @ '+(v.email||0)+'</span><b style="width:40px;text-align:right">'+v.t+'</b></div>').join(""):'<p class="sub">Sin clics registrados este mes.</p>';
