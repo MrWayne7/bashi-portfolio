@@ -43,6 +43,14 @@
 /propuestas/*
   X-Robots-Tag: noindex, nofollow
 
+/p/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
+
+/c/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
+
 /lab
   X-Robots-Tag: noindex
 

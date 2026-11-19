@@ -28,7 +28,7 @@ button{font-family:"Share Tech Mono",monospace;font-size:12px;letter-spacing:1px
 #login{max-width:340px;margin:60px auto}
 .hide{display:none}
 .counter{color:var(--dim);font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-top:6px}
-.nav{display:flex;gap:10px;margin:16px 0 4px}
+.nav{display:flex;gap:8px;margin:16px 0 4px;flex-wrap:wrap}
 .nav button{background:transparent;color:var(--dim);border:1px solid var(--line)}
 .nav button.on{color:#000;background:var(--green);border-color:var(--green)}
 .pgrp{margin:14px 0 2px;font-family:"Share Tech Mono",monospace;font-size:12px;letter-spacing:1px;color:var(--green);text-transform:uppercase}
@@ -47,6 +47,19 @@ button{font-family:"Share Tech Mono",monospace;font-size:12px;letter-spacing:1px
 #rep table{width:100%;border-collapse:collapse;font-size:14px}#rep td,#rep th{border-bottom:1px solid #eee;padding:7px 4px;text-align:left}
 #rep .acts{display:flex;gap:10px;margin-top:24px}
 @media print{body{background:#fff;padding:0}#app,#login,#msg{display:none!important}#rep{display:block!important;margin:0;max-width:none}#rep .acts{display:none}}
+textarea{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--ink);padding:10px 12px;font-size:14px;font-family:inherit;border-radius:4px;min-height:92px;resize:vertical}
+textarea:focus{outline:none;border-color:var(--green-dim)}
+.it{border-top:1px solid var(--line);padding:12px 0;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.it .t{flex:1;min-width:200px}.it .t b{font-size:14px}.it .t span{display:block;font-size:12px;color:var(--dim);margin-top:3px}
+.it .acts{display:flex;gap:6px;flex-wrap:wrap}.it .acts button,.it .acts a{padding:7px 10px;font-size:11px}
+a.btn2{display:inline-block;text-decoration:none;font-family:"Share Tech Mono",monospace;letter-spacing:1px;text-transform:uppercase;border-radius:4px}
+.st{font-size:9px;letter-spacing:1px;text-transform:uppercase;border-radius:9px;padding:2px 8px;margin-left:6px;border:1px solid var(--line);color:var(--dim)}
+.it .t b .st{display:inline-block;margin-top:0;vertical-align:2px}
+.st.vista{border-color:#e3b23c;color:#e3b23c}.st.aceptada{border-color:var(--green);color:var(--green)}
+.erow{display:grid;grid-template-columns:1.2fr 1.6fr 1fr auto;gap:8px;margin-top:8px}.erow input{font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chip{border:1px solid var(--line);border-radius:12px;padding:4px 10px;font-size:12px;font-family:"Share Tech Mono",monospace}
+.chip button{background:none;color:var(--dim);padding:0 0 0 6px;font-size:12px}.chip.oc{border-color:var(--green-dim);color:var(--green)}
+@media(max-width:640px){.erow{grid-template-columns:1fr}}
 </style></head><body>
 
 <div id="login">
@@ -66,6 +79,9 @@ button{font-family:"Share Tech Mono",monospace;font-size:12px;letter-spacing:1px
     <button id="navC" onclick="tab('c')">Clientes</button>
     <button id="navT" onclick="tab('t')">Testimonios</button>
     <button id="navS" onclick="tab('s')">Tienda</button>
+    <button id="navR" onclick="tab('r')">Propuestas</button>
+    <button id="navJ" onclick="tab('j')">Proyectos</button>
+    <button id="navA" onclick="tab('a')">Agenda</button>
   </div>
 
   <!-- ===== VIDEOS ===== -->
@@ -177,6 +193,61 @@ button{font-family:"Share Tech Mono",monospace;font-size:12px;letter-spacing:1px
     <div class="card"><b class="mono g">PRODUCTOS</b><div id="pList"></div><p id="pEmpty" class="sub">Todavía no hay productos.</p></div>
     <div class="bar"><button class="btn" onclick="saveList('tienda')">Guardar tienda</button></div>
   </div>
+
+  <!-- ===== v33 PROPUESTAS ===== -->
+  <div id="panelR" class="hide">
+    <div class="card">
+      <b class="mono g" id="rTit">NUEVA PROPUESTA</b>
+      <p class="sub">Llénala y te doy un link para mandarle al cliente. Cuando la acepte, te aparece aquí y en Clientes.</p>
+      <input type="hidden" id="r_id">
+      <div class="row"><div><label>Cliente</label><input id="r_cliente" placeholder="Santa Mykah"></div><div><label>WhatsApp del cliente</label><input id="r_contacto" placeholder="+57 300 000 0000"></div></div>
+      <div class="row"><div><label>Servicio (llena una plantilla)</label><select id="r_serv" onchange="plantilla()"><option value="">Elegir…</option></select></div><div><label>Título de la propuesta</label><input id="r_titulo" placeholder="Videoclip «Nombre de la canción»"></div></div>
+      <label>Introducción</label><textarea id="r_intro" placeholder="Unas líneas sobre la idea del cliente y cómo la vas a contar."></textarea>
+      <label>Qué vamos a hacer (una por línea)</label><textarea id="r_alcance"></textarea>
+      <label>Qué recibe (una por línea)</label><textarea id="r_entregables"></textarea>
+      <label>Tiempos (una por línea)</label><textarea id="r_cronograma"></textarea>
+      <div class="row"><div><label>Inversión</label><input id="r_precio" placeholder="$ 2.400.000 COP"></div><div><label>Anticipo %</label><input id="r_anticipo" type="number" min="0" max="100" value="50"></div><div><label>Válida hasta</label><input id="r_valida" type="date"></div></div>
+      <label>Link de pago del anticipo (https://, opcional)</label><input id="r_pago" placeholder="Bold, Wompi o Mercado Pago">
+      <label>Notas internas (el cliente no las ve)</label><input id="r_notas">
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" onclick="saveR()">Guardar y crear link</button><button class="btn2" onclick="clearR()">Limpiar</button></div>
+      <p id="rLink" class="sub"></p>
+    </div>
+    <div class="card"><b class="mono g">PROPUESTAS</b><div id="rList"></div><p id="rEmpty" class="sub">Todavía no hay propuestas.</p></div>
+  </div>
+
+  <!-- ===== v33 PROYECTOS (portal de clientes) ===== -->
+  <div id="panelJ" class="hide">
+    <div class="card">
+      <b class="mono g" id="jTit">NUEVO PROYECTO</b>
+      <p class="sub">Cada proyecto tiene un link privado para el cliente: ve en qué vas, revisa las entregas, comenta en el segundo exacto y ve sus pagos.</p>
+      <input type="hidden" id="j_t"><input type="hidden" id="j_prop">
+      <div class="row"><div><label>Cliente</label><input id="j_cliente"></div><div><label>Proyecto</label><input id="j_proyecto" placeholder="Videoclip «Nombre»"></div><div><label>WhatsApp</label><input id="j_contacto"></div></div>
+      <label>Mensaje para el cliente (opcional)</label><input id="j_mensaje" placeholder="¡Ya arrancamos! Aquí vas a ver todo el avance.">
+      <label>Fases · una por línea: nombre | fecha | listo</label><textarea id="j_fases" placeholder="Preproducción | 2026-12-01 | listo&#10;Rodaje | 2026-12-06&#10;Edición | 2026-12-13&#10;Entrega final | 2026-12-20"></textarea>
+      <label>Entregas · YouTube (oculto), link de Drive o video .mp4</label><div id="jEnt"></div>
+      <div style="margin-top:8px"><button class="btn2" onclick="addE()">+ Entrega</button></div>
+      <div class="row"><div><label>Total</label><input id="j_total" placeholder="$ 2.400.000"></div><div><label>Pagado</label><input id="j_pagado" placeholder="$ 1.200.000"></div></div>
+      <label>Link para pagar el saldo (https://, opcional)</label><input id="j_pago">
+      <label>Notas internas</label><input id="j_notas">
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" onclick="saveJ()">Guardar proyecto</button><button class="btn2" onclick="clearJ()">Limpiar</button></div>
+      <p id="jLink" class="sub"></p>
+    </div>
+    <div class="card"><b class="mono g">PROYECTOS</b><div id="jList"></div><p id="jEmpty" class="sub">Todavía no hay proyectos.</p></div>
+  </div>
+
+  <!-- ===== v33 AGENDA ===== -->
+  <div id="panelA" class="hide">
+    <div class="card">
+      <b class="mono g">AGENDA</b>
+      <p class="sub">Las fechas ocupadas y bloqueadas no se pueden pedir en studiobashi.com/agenda. Las solicitudes también te llegan a Clientes.</p>
+      <label>Link de pago del anticipo (https://, opcional)</label><input id="a_ant" placeholder="Si lo dejas vacío, el cliente te escribe por WhatsApp">
+      <label>Texto corto en la página (opcional)</label><input id="a_txt" placeholder="Anticipo del 50% para apartar la fecha">
+      <div class="row" style="align-items:flex-end"><div><label>Fecha</label><input id="a_f" type="date"></div><div style="flex:none"><button class="btn2" onclick="marca('bloqueadas')">Bloquear</button></div><div style="flex:none"><button class="btn2" onclick="marca('ocupadas')">Marcar ocupada</button></div></div>
+      <div class="chips" id="aChips"></div>
+      <div style="margin-top:14px"><button class="btn" onclick="saveA()">Guardar agenda</button></div>
+    </div>
+    <div class="card"><b class="mono g">SOLICITUDES</b><div id="aList"></div><p id="aEmpty" class="sub">Todavía no hay solicitudes.</p></div>
+  </div>
 </div>
 
 <div id="rep" class="hide"></div>
@@ -207,7 +278,7 @@ function addP(){ const p={nombre:$("p_nombre").value.trim(),precio:$("p_precio")
   p.id=p.nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-");
   if(!p.nombre||!/^https:\/\//.test(p.link)){toast("Falta el nombre o el enlace de pago (https://)");return;} LISTS.tienda.push(p); ["p_nombre","p_precio","p_desc","p_link","p_img"].forEach(i=>$(i).value=""); renderP(); toast("Agregado: falta guardar"); }
 async function saveList(k){ try{ const r=await fetch("/api/lista/"+k,{method:"POST",headers:{"content-type":"application/json","x-admin-pass":PASS},body:JSON.stringify(LISTS[k])}); const o=await r.json(); toast(o.ok?("Guardado ✓ ("+o.n+")"):(o.error||"Error")); }catch(e){ toast("No se pudo guardar"); } }
-function tab(w){["v","p","c","t","s"].forEach(k=>{const K=k.toUpperCase();$("panel"+K).classList.toggle("hide",k!==w);$("nav"+K).classList.toggle("on",k===w);}); if(w==="c") loadStats(); if(w==="t"||w==="s") loadLists();}
+function tab(w){["v","p","c","t","s","r","j","a"].forEach(k=>{const K=k.toUpperCase();$("panel"+K).classList.toggle("hide",k!==w);$("nav"+K).classList.toggle("on",k===w);}); if(w==="c") loadStats(); if(w==="t"||w==="s") loadLists(); if(w==="r") loadR(); if(w==="j") loadJ(); if(w==="a") loadA();}
 let STATS=null;
 const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 async function loadStats(){
@@ -333,5 +404,79 @@ async function savePrices(){
   try{const r=await fetch("/api/pricing",{method:"POST",headers:{"content-type":"application/json","x-admin-pass":PASS},body:JSON.stringify({pricing:PRICING,regions:REGIONS})});
     const o=await r.json(); if(o.ok){toast("Precios guardados ✓ — ya está en vivo");$("dirtyP").textContent="";}else{toast(o.error||"Error");}}catch(e){toast("No se pudo guardar");}
 }
+
+/* ===== v33: propuestas, proyectos y agenda ===== */
+const ORIG=location.origin;
+const api=(u,b)=>fetch(u,b?{method:"POST",headers:{"content-type":"application/json","x-admin-pass":PASS},body:JSON.stringify(b)}:{headers:{"x-admin-pass":PASS},cache:"no-store"}).then(r=>r.json());
+const waTo=(num,msg)=>"https://wa.me/"+String(num||"").replace(/[^\d]/g,"")+"?text="+encodeURIComponent(msg);
+const fechaC=d=>d?new Date(d.length===10?d+"T12:00":d).toLocaleDateString("es-CO",{day:"numeric",month:"short",year:"numeric"}):"";
+async function copiar(t){ try{ await navigator.clipboard.writeText(t); toast("Link copiado"); }catch(e){ prompt("Copia el link:",t); } }
+const PLANT={
+ "Videoclip":{alcance:"Reunión de concepto y guion visual\nScouting y plan de rodaje\nUn día de rodaje con cámara de cine, luz y estabilización\nDirección del artista en set\nEdición al ritmo de la canción, color y efectos básicos",entregables:"Videoclip horizontal 4K\n3 cortes verticales para Reels y TikTok\nPortada para YouTube\n2 rondas de ajustes",cronograma:"Semana 1: concepto y preproducción\nSemana 2: rodaje\nSemanas 3 y 4: edición, color y entrega"},
+ "Reels y contenido para marca":{alcance:"Reunión para definir objetivos y mensajes\nGuiones cortos para cada pieza\nJornada de grabación en tu negocio\nEdición con subtítulos y música",entregables:"4 reels verticales de hasta 60 segundos\nSubtítulos y portada para cada uno\n1 ronda de ajustes por reel",cronograma:"Semana 1: guiones y grabación\nSemana 2: edición y entrega"},
+ "Fotografía":{alcance:"Reunión para definir estilo y referencias\nSesión de fotos con iluminación\nSelección y retoque profesional",entregables:"Fotos editadas en alta resolución\nVersiones para redes\nGalería en línea para descargar",cronograma:"Día de la sesión\nEntrega en 5 a 7 días"},
+ "Boda":{alcance:"Reunión previa con la pareja\nCobertura del día: preparativos, ceremonia y fiesta\nAudio de votos y discursos",entregables:"Video resumen de 4 a 6 minutos\nTeaser vertical para redes\nVideo completo de la ceremonia",cronograma:"Día de la boda\nTeaser en 7 días\nVideo final en 4 a 6 semanas"},
+ "Página web":{alcance:"Reunión para definir objetivos y secciones\nDiseño a medida con tu marca\nDesarrollo rápido y adaptable a celular\nSEO básico y conexión con WhatsApp",entregables:"Sitio publicado con dominio y hosting\nPanel o guía para actualizar contenido\n1 mes de ajustes incluido",cronograma:"Semana 1: diseño\nSemana 2: desarrollo\nSemana 3: ajustes y publicación"}
+};
+function plantilla(){ const p=PLANT[$("r_serv").value]; if(!p) return; ["alcance","entregables","cronograma"].forEach(k=>{ if(!$("r_"+k).value.trim()) $("r_"+k).value=p[k]; }); if(!$("r_titulo").value.trim()) $("r_titulo").value=$("r_serv").value; }
+$("r_serv").innerHTML='<option value="">Elegir…</option>'+Object.keys(PLANT).map(k=>'<option>'+k+'</option>').join("")+'<option>Otro</option>';
+let PROPS=[], PROYS=[], AG={ocupadas:[],bloqueadas:[],anticipo:"",texto:""}, SOL=[], EROWS=[];
+const RF=["id","cliente","contacto","titulo","intro","alcance","entregables","cronograma","precio","anticipo","valida","pago","notas"];
+async function loadR(){ try{ PROPS=await api("/api/prop"); if(PROPS.error){toast(PROPS.error);PROPS=[];} }catch(e){ toast("No se pudieron cargar"); } renderR(); }
+function renderR(){ $("rEmpty").style.display=PROPS.length?"none":"block";
+  $("rList").innerHTML=PROPS.map((p,i)=>{ const link=ORIG+"/p/"+p.id;
+    return '<div class="it"><div class="t"><b>'+esc(p.cliente)+' — '+esc(p.titulo||p.servicio)+'<span class="st '+p.estado+'">'+esc(p.estado)+'</span></b><span>'+esc(p.precio)+' · creada '+fechaC(p.creada)+(p.vista?' · vista '+fechaC(p.vista):'')+(p.acepto?' · aceptó '+esc(p.acepto.nombre)+' el '+fechaC(p.acepto.t):'')+'</span></div><div class="acts">'+
+    '<button class="btn2" onclick="copiar(\''+link+'\')">Copiar link</button>'+(p.contacto?'<a class="btn2" target="_blank" href="'+waTo(p.contacto,"Hola "+p.cliente+", aquí está la propuesta: "+link)+'">WhatsApp</a>':'')+
+    '<a class="btn2" target="_blank" href="'+link+'">Ver</a><button class="btn2" onclick="editR('+i+')">Editar</button>'+(p.estado==="aceptada"?'<button class="btn" onclick="aProy('+i+')">Crear proyecto</button>':'')+
+    '<button class="btn2" onclick="delR(\''+p.id+'\')">Borrar</button></div></div>'; }).join(""); }
+function editR(i){ const p=PROPS[i]; RF.forEach(k=>{ const v=p[k]; $("r_"+k).value=Array.isArray(v)?v.join("\n"):(v==null?"":v); }); $("r_serv").value=PLANT[p.servicio]?p.servicio:""; $("rTit").textContent="EDITAR PROPUESTA"; window.scrollTo({top:0,behavior:"smooth"}); }
+function clearR(){ RF.forEach(k=>$("r_"+k).value=""); $("r_anticipo").value=50; $("r_serv").value=""; $("rTit").textContent="NUEVA PROPUESTA"; $("rLink").textContent=""; }
+async function saveR(){ const g={servicio:$("r_serv").value}; RF.forEach(k=>g[k]=$("r_"+k).value);
+  if(!g.cliente.trim()){toast("Falta el cliente");return;}
+  const o=await api("/api/prop",{guardar:g}); if(!o.ok){toast(o.error||"Error");return;}
+  $("r_id").value=o.prop.id; $("rTit").textContent="EDITAR PROPUESTA"; const link=ORIG+"/p/"+o.prop.id;
+  $("rLink").innerHTML='Listo: <a href="'+link+'" target="_blank" style="color:var(--green)">'+link+'</a>'; copiar(link); loadR(); }
+async function delR(id){ if(!confirm("¿Borrar esta propuesta? El link deja de funcionar.")) return; await api("/api/prop",{borrar:id}); loadR(); }
+function aProy(i){ const p=PROPS[i]; clearJ(); $("j_cliente").value=p.cliente; $("j_proyecto").value=p.titulo||p.servicio||""; $("j_contacto").value=p.contacto||""; $("j_total").value=p.precio||""; $("j_pago").value=p.pago||""; $("j_prop").value=p.id;
+  $("j_fases").value=(p.cronograma||[]).map(x=>x).join("\n"); tab("j"); }
+/* proyectos */
+async function loadJ(){ try{ PROYS=await api("/api/proy"); if(PROYS.error){toast(PROYS.error);PROYS=[];} }catch(e){ toast("No se pudieron cargar"); } renderJ(); renderE(); }
+function renderJ(){ $("jEmpty").style.display=PROYS.length?"none":"block";
+  $("jList").innerHTML=PROYS.map((p,i)=>{ const link=ORIG+"/c/"+p.t, nc=p.entregas.reduce((a,e)=>a+e.comentarios.length,0), fh=p.fases.filter(f=>f.hecho).length;
+    return '<div class="it"><div class="t"><b>'+esc(p.cliente)+' — '+esc(p.proyecto)+'</b><span>'+fh+'/'+p.fases.length+' fases · '+p.entregas.length+' entregas · '+nc+' comentarios'+(p.total?' · pagado '+esc(p.pagado||0)+' de '+esc(p.total):'')+'</span>'+
+    p.entregas.map(e=>e.comentarios.length?'<span>'+esc(e.titulo)+': '+e.comentarios.map(c=>Math.floor(c.s/60)+':'+String(c.s%60).padStart(2,"0")+' '+esc(c.txt)).join(' · ')+'</span>':'').join('')+'</div><div class="acts">'+
+    '<button class="btn2" onclick="copiar(\''+link+'\')">Copiar link</button>'+(p.contacto?'<a class="btn2" target="_blank" href="'+waTo(p.contacto,"Hola "+p.cliente+", aquí puedes seguir tu proyecto: "+link)+'">WhatsApp</a>':'')+
+    '<a class="btn2" target="_blank" href="'+link+'">Ver</a><button class="btn2" onclick="editJ('+i+')">Editar</button><button class="btn2" onclick="delJ(\''+p.t+'\')">Borrar</button></div></div>'; }).join(""); }
+function renderE(){ $("jEnt").innerHTML=EROWS.map((e,i)=>'<div class="erow"><input placeholder="Título (Corte 1)" value="'+esc(e.titulo)+'" oninput="EROWS['+i+'].titulo=this.value"><input placeholder="Link de YouTube, Drive o .mp4" value="'+esc(e.link||(e.yt?"https://youtu.be/"+e.yt:""))+'" oninput="EROWS['+i+'].link=this.value;EROWS['+i+'].yt=\'\'"><input placeholder="Nota (opcional)" value="'+esc(e.nota)+'" oninput="EROWS['+i+'].nota=this.value"><button class="btn2" onclick="EROWS.splice('+i+',1);renderE()">Quitar</button></div>').join(""); }
+function addE(){ EROWS.push({titulo:"",link:"",nota:""}); renderE(); }
+const JF=["t","prop","cliente","proyecto","contacto","mensaje","total","pagado","pago","notas"];
+function editJ(i){ const p=PROYS[i]; JF.forEach(k=>$("j_"+k).value=p[k]||""); $("j_fases").value=p.fases.map(f=>f.n+(f.fecha?" | "+f.fecha:"")+(f.hecho?(f.fecha?"":" | ")+" | listo":"")).join("\n");
+  EROWS=p.entregas.map(e=>({id:e.id,titulo:e.titulo,link:e.link||(e.yt?"https://youtu.be/"+e.yt:""),nota:e.nota,fecha:e.fecha})); renderE(); $("jTit").textContent="EDITAR PROYECTO"; window.scrollTo({top:0,behavior:"smooth"}); }
+function clearJ(){ JF.forEach(k=>$("j_"+k).value=""); $("j_fases").value=""; EROWS=[]; renderE(); $("jTit").textContent="NUEVO PROYECTO"; $("jLink").textContent=""; }
+async function saveJ(){ const g={}; JF.forEach(k=>g[k]=$("j_"+k).value);
+  g.fases=$("j_fases").value.split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(a=>a[0]).map(a=>({n:a[0],fecha:/^\d{4}-\d{2}-\d{2}$/.test(a[1]||"")?a[1]:"",hecho:a.slice(1).some(x=>/^(listo|hecho|ok|x)$/i.test(x))}));
+  g.entregas=EROWS.filter(e=>e.titulo&&e.link);
+  if(!g.cliente.trim()){toast("Falta el cliente");return;}
+  const o=await api("/api/proy",{guardar:g}); if(!o.ok){toast(o.error||"Error");return;}
+  if(g.entregas.length>o.proy.entregas.length) toast("Alguna entrega no tiene un link válido (debe empezar por https://)");
+  $("j_t").value=o.proy.t; EROWS=o.proy.entregas.map(e=>({id:e.id,titulo:e.titulo,link:e.link||(e.yt?"https://youtu.be/"+e.yt:""),nota:e.nota,fecha:e.fecha})); renderE();
+  $("jTit").textContent="EDITAR PROYECTO"; const link=ORIG+"/c/"+o.proy.t; $("jLink").innerHTML='Listo: <a href="'+link+'" target="_blank" style="color:var(--green)">'+link+'</a>'; loadJ(); }
+async function delJ(t){ if(!confirm("¿Borrar este proyecto y sus comentarios? El link deja de funcionar.")) return; await api("/api/proy",{borrar:t}); loadJ(); }
+/* agenda */
+async function loadA(){ try{ const o=await api("/api/agenda?panel=1"); if(o.error){toast(o.error);return;} AG=o.cfg; SOL=o.solicitudes||[]; }catch(e){ toast("No se pudo cargar la agenda"); }
+  $("a_ant").value=AG.anticipo||""; $("a_txt").value=AG.texto||""; renderA(); }
+function renderA(){ const hoy=new Date().toISOString().slice(0,10);
+  const all=[...AG.ocupadas.map(d=>[d,"ocupadas"]),...AG.bloqueadas.map(d=>[d,"bloqueadas"])].filter(x=>x[0]>=hoy).sort();
+  $("aChips").innerHTML=all.length?all.map(([d,k])=>'<span class="chip'+(k==="ocupadas"?' oc':'')+'">'+fechaC(d)+(k==="ocupadas"?' · ocupada':' · bloqueada')+'<button onclick="quita(\''+k+'\',\''+d+'\')" aria-label="Quitar">×</button></span>').join(""):'<span class="sub">No hay fechas ocupadas ni bloqueadas.</span>';
+  $("aEmpty").style.display=SOL.length?"none":"block";
+  $("aList").innerHTML=SOL.map(r=>{ const oc=AG.ocupadas.includes(r.fecha);
+    return '<div class="it"><div class="t"><b>'+fechaC(r.fecha)+' — '+esc(r.nombre)+(oc?'<span class="st aceptada">confirmada</span>':'')+'</b><span>'+esc(r.servicio)+' · '+esc(r.contacto)+(r.detalle?' · '+esc(r.detalle):'')+' · pidió '+fechaC(r.t)+'</span></div><div class="acts">'+
+    (oc?'':'<button class="btn" onclick="confirma(\''+r.fecha+'\')">Confirmar fecha</button>')+'<a class="btn2" target="_blank" href="'+waTo(r.contacto,"Hola "+r.nombre+", te escribo por la fecha del "+fechaC(r.fecha)+".")+'">WhatsApp</a><button class="btn2" onclick="delA(\''+r.key+'\')">Borrar</button></div></div>'; }).join(""); }
+function marca(k){ const d=$("a_f").value; if(!d){toast("Elige una fecha");return;} if(!AG[k].includes(d)) AG[k].push(d); renderA(); toast("Falta guardar"); }
+function quita(k,d){ AG[k]=AG[k].filter(x=>x!==d); renderA(); toast("Falta guardar"); }
+async function confirma(d){ if(!AG.ocupadas.includes(d)) AG.ocupadas.push(d); await saveA(); }
+async function saveA(){ const o=await api("/api/agenda",{config:{ocupadas:AG.ocupadas,bloqueadas:AG.bloqueadas,anticipo:$("a_ant").value.trim(),texto:$("a_txt").value.trim()}});
+  if(!o.ok){toast(o.error||"Error");return;} AG=o.cfg; toast("Agenda guardada ✓"); renderA(); }
+async function delA(k){ if(!confirm("¿Borrar esta solicitud?")) return; await api("/api/agenda",{borrar:k}); loadA(); }
 </script>
 </body></html>

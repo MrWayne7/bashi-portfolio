@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>try{var _t=localStorage.getItem("bashi-theme");if(_t)document.documentElement.setAttribute("data-theme",_t);}catch(e){}</script>
+<title>Tu proyecto · BASHI</title>
+<meta name="description" content="Portal de clientes de BASHI.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://studiobashi.com/c/">
+<meta property="og:url" content="https://studiobashi.com/c/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BASHI">
+<meta property="og:locale" content="es_CO">
+<meta property="og:title" content="Tu proyecto · BASHI">
+<meta property="og:description" content="Portal de clientes de BASHI.">
+<meta property="og:image" content="https://studiobashi.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%23050505%22/><text x=%2216%22 y=%2222%22 font-family=%22Arial%22 font-weight=%22700%22 font-size=%2218%22 fill=%22%2300ff66%22 text-anchor=%22middle%22>B</text></svg>">
+<link rel="preload" href="/fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/space-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://i.ytimg.com" crossorigin>
+<link rel="stylesheet" href="/assets/sub.css?v=33">
+
+</head>
+<style>
+.app{max-width:900px;margin:0 auto;padding:clamp(20px,5vw,60px) var(--pad) 90px}
+.apph{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:clamp(28px,6vw,60px)}
+.apph .k{font-family:var(--mono);font-size:13px;color:var(--dim);text-align:right}
+.app h1{font-size:clamp(36px,7vw,76px);line-height:1;letter-spacing:-.01em}
+.app h1 span{color:var(--green)}
+.app h2{font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:400;margin:clamp(30px,5vw,46px) 0 12px}
+.app .lead{color:var(--dim-2);font-size:clamp(17px,1.7vw,20px);max-width:62ch;margin-top:16px;white-space:pre-line}
+.app ul.l{list-style:none}.app ul.l li{padding:11px 0;border-top:1px solid var(--line)}
+.app ul.l li::before{content:"→ ";color:var(--green)}
+.price{display:grid;grid-template-columns:1fr auto;gap:8px 20px;border:1px solid var(--line);background:var(--bg-2);padding:clamp(18px,3vw,30px);align-items:baseline}
+.price .big{font-size:clamp(32px,5vw,52px);font-weight:700;line-height:1}
+.price span{color:var(--dim)}
+.estado{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--green);color:var(--green-ink);padding:4px 10px}
+.ok{border:1px solid var(--green);padding:20px;margin-top:18px}
+.fases{list-style:none;counter-reset:f}
+.fases li{position:relative;padding:0 0 22px 34px;border-left:1px solid var(--line);margin-left:9px}
+.fases li:last-child{border-left-color:transparent}
+.fases li::before{content:"";position:absolute;left:-10px;top:3px;width:18px;height:18px;border-radius:50%;border:1px solid var(--line);background:var(--bg)}
+.fases li.h::before{background:var(--green);border-color:var(--green)}
+.fases li.a::before{border-color:var(--green);box-shadow:0 0 0 4px rgba(0,255,102,.15)}
+.fases li b{display:block}.fases li span{font-family:var(--mono);font-size:13px;color:var(--dim)}
+.ent{border:1px solid var(--line);background:var(--bg-2);margin-bottom:22px}
+.ent .pl{aspect-ratio:16/9;background:#000;position:relative}.ent .pl>*{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ent .in{padding:16px clamp(14px,3vw,24px) 20px}
+.ent h3{font-size:20px}.ent .m{font-family:var(--mono);font-size:13px;color:var(--dim)}
+.coms{list-style:none;margin:14px 0}.coms li{padding:9px 0;border-top:1px solid var(--line);font-size:15px}
+.coms button{font-family:var(--mono);color:var(--green-ink);margin-right:8px}
+.coms small{color:var(--dim);margin-left:6px}
+.cform{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.cform .tm{font-family:var(--mono);border:1px solid var(--line);padding:0 12px;display:flex;align-items:center;min-width:76px;justify-content:center}
+.cform input{flex:1;min-width:180px;background:var(--bg);border:1px solid var(--line);color:var(--ink);font:inherit;font-size:16px;padding:11px 12px}
+.pays{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.pays div{border:1px solid var(--line);padding:14px}.pays b{display:block;font-size:22px}.pays span{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.bar2{height:6px;background:var(--line);margin-top:12px}.bar2 i{display:block;height:100%;background:var(--green)}
+.err404{padding:20vh 0;text-align:center;color:var(--dim)}
+@media (max-width:600px){.pays{grid-template-columns:1fr}.price{grid-template-columns:1fr}}
+@media print{.noprint,.wafab{display:none!important}body{background:#fff;color:#111}.price,.ent{background:#fff}}
+</style>
+<body><main class="app" id="app">
+<div class="apph"><a class="wm" href="/" aria-label="BASHI">BASHI<span aria-hidden="true">_</span></a><div class="k" id="k">Portal de clientes</div></div>
+<div id="c"><p class="err404">Cargando…</p></div>
+</main>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)},esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+var t=(location.pathname.split('/')[2]||new URLSearchParams(location.search).get('t')||'').replace(/[^a-z0-9]/g,'');
+var fmt=function(d){return d?new Date(d+(d.length===10?'T12:00':'')).toLocaleDateString('es-CO',{day:'numeric',month:'short'}):''};
+var mmss=function(s){s=Math.round(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+var P=null,PL={},quien='';try{quien=localStorage.getItem('bashi-quien')||''}catch(e){}
+function tiempo(id){var p=PL[id];if(!p)return 0;try{return p.getCurrentTime?p.getCurrentTime():(p.currentTime||0)}catch(e){return 0}}
+function ir(id,s){var p=PL[id];if(!p)return;try{if(p.seekTo){p.seekTo(s,true);p.playVideo()}else{p.currentTime=s;p.play()}}catch(e){}}
+function pinta(){
+  var p=P;document.title=p.proyecto+' · BASHI';
+  var act=-1;for(var i=0;i<p.fases.length;i++)if(!p.fases[i].hecho){act=i;break}
+  var h='<p class="estado">'+esc(p.cliente)+'</p><h1 style="margin-top:18px">'+esc(p.proyecto||'Tu proyecto')+'<span>_</span></h1>'+(p.mensaje?'<p class="lead">'+esc(p.mensaje)+'</p>':'');
+  if(p.fases.length)h+='<h2>En qué vamos</h2><ol class="fases">'+p.fases.map(function(f,i){return '<li class="'+(f.hecho?'h':(i===act?'a':''))+'"><b>'+esc(f.n)+'</b><span>'+(f.hecho?'Listo':(i===act?'En curso':'Pendiente'))+(f.fecha?' · '+fmt(f.fecha):'')+'</span></li>'}).join('')+'</ol>';
+  h+='<h2>Entregas</h2>';
+  if(!p.entregas.length)h+='<p style="color:var(--dim-2)">Aquí van a aparecer los videos y fotos para que los revises y comentes.</p>';
+  p.entregas.slice().reverse().forEach(function(e){
+    var cs=e.comentarios.slice().sort(function(a,b){return a.s-b.s});
+    var vid=e.yt||(/\.(mp4|mov|webm)(\?|$)/i.test(e.link));
+    h+='<article class="ent" id="e-'+e.id+'">'+(e.yt?'<div class="pl"><div id="pl-'+e.id+'"></div></div>':(vid?'<div class="pl"><video id="pl-'+e.id+'" src="'+esc(e.link)+'" controls playsinline preload="metadata"></video></div>':''))+
+     '<div class="in"><h3>'+esc(e.titulo)+'</h3><p class="m">'+fmt(e.fecha)+(e.aprobada?' · Aprobada por '+esc(e.aprobada.quien):'')+'</p>'+(e.nota?'<p style="margin-top:8px;color:var(--dim-2)">'+esc(e.nota)+'</p>':'')+
+     (!vid?'<p style="margin-top:12px"><a class="btn ghost" href="'+esc(e.link)+'" target="_blank" rel="noopener">Abrir la entrega</a></p>':'')+
+     '<ul class="coms">'+cs.map(function(c){return '<li>'+(vid?'<button type="button" data-ir="'+e.id+'" data-s="'+c.s+'">'+mmss(c.s)+'</button>':'')+esc(c.txt)+'<small>'+esc(c.quien)+'</small></li>'}).join('')+'</ul>'+
+     '<form class="cform noprint" data-e="'+e.id+'">'+(vid?'<span class="tm" data-tm="'+e.id+'">0:00</span>':'')+'<input placeholder="'+(vid?'Comentario en este segundo':'Tu comentario')+'" maxlength="600"><button class="btn" type="submit">Comentar</button></form>'+
+     (e.aprobada?'':'<p class="noprint" style="margin-top:12px"><button class="btn ghost" type="button" data-ap="'+e.id+'">Aprobar esta entrega</button></p>')+'</div></article>';
+  });
+  if(p.total){
+    var n=function(x){return parseFloat(String(x||'').replace(/[^\d.,]/g,'').replace(/\.(?=\d{3})/g,'').replace(',','.'))||0},tot=n(p.total),pag=n(p.pagado),pc=tot?Math.min(100,Math.round(pag/tot*100)):0;
+    h+='<h2>Pagos</h2><div class="pays"><div><span>Total</span><b>'+esc(p.total)+'</b></div><div><span>Pagado</span><b>'+esc(p.pagado||'0')+'</b></div><div><span>Avance</span><b>'+pc+'%</b></div></div><div class="bar2"><i style="width:'+pc+'%"></i></div>'+
+     (p.pago&&pc<100?'<p style="margin-top:16px"><a class="btn" href="'+esc(p.pago)+'" target="_blank" rel="noopener">Pagar el saldo</a></p>':'');
+  }
+  h+='<p class="noprint" style="margin-top:44px;display:flex;gap:10px;flex-wrap:wrap"><a class="btn ghost" href="https://wa.me/573245026518?text='+encodeURIComponent('Hola BASHI, te escribo por el proyecto '+p.proyecto)+'" target="_blank" rel="noopener">Escribir por WhatsApp</a></p>'+
+   '<p style="margin-top:30px;color:var(--dim);font-size:13px">Este link es privado. No lo compartas fuera de tu equipo.</p>';
+  $('c').innerHTML=h;
+  montar();
+}
+function montar(){
+  PL={};
+  P.entregas.forEach(function(e){var el=$('pl-'+e.id);if(!el)return;if(e.yt){if(window.YT&&YT.Player)PL[e.id]=new YT.Player('pl-'+e.id,{videoId:e.yt,playerVars:{rel:0,modestbranding:1,playsinline:1}});}else PL[e.id]=el;});
+}
+window.onYouTubeIframeAPIReady=function(){if(P)montar()};
+setInterval(function(){document.querySelectorAll('[data-tm]').forEach(function(s){s.textContent=mmss(tiempo(s.dataset.tm))})},500);
+document.addEventListener('click',function(ev){
+  var b=ev.target.closest('[data-ir]');if(b){ir(b.dataset.ir,+b.dataset.s);return}
+  var a=ev.target.closest('[data-ap]');if(a){if(!quien)quien=prompt('¿Tu nombre?')||'';if(!quien)return;try{localStorage.setItem('bashi-quien',quien)}catch(e){}
+    envia({aprobar:{e:a.dataset.ap,quien:quien}});}
+});
+document.addEventListener('submit',function(ev){var f=ev.target.closest('.cform');if(!f)return;ev.preventDefault();
+  var txt=f.querySelector('input').value.trim();if(!txt)return;
+  if(!quien)quien=prompt('¿Tu nombre? (para saber quién comenta)')||P.cliente;try{localStorage.setItem('bashi-quien',quien)}catch(e){}
+  envia({comentario:{e:f.dataset.e,s:tiempo(f.dataset.e),txt:txt,quien:quien}});
+});
+function envia(b){var eid=(b.comentario||b.aprobar).e;fetch('/api/proy/'+t,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(b)}).then(function(r){return r.json()}).then(function(o){if(!o.proy){alert(o.error||'No se pudo');return}
+  P=o.proy;var e=P.entregas.filter(function(x){return x.id===eid})[0],art=$('e-'+eid);if(!e||!art){pinta();return}
+  var vid=!!(e.yt||/\.(mp4|mov|webm)(\?|$)/i.test(e.link)),cs=e.comentarios.slice().sort(function(a,b){return a.s-b.s});
+  art.querySelector('.coms').innerHTML=cs.map(function(c){return '<li>'+(vid?'<button type="button" data-ir="'+e.id+'" data-s="'+c.s+'">'+mmss(c.s)+'</button>':'')+esc(c.txt)+'<small>'+esc(c.quien)+'</small></li>'}).join('');
+  var f=art.querySelector('.cform input');if(f)f.value='';
+  if(e.aprobada){var ab=art.querySelector('[data-ap]');if(ab)ab.parentNode.remove();art.querySelector('.m').textContent=fmt(e.fecha)+' · Aprobada por '+e.aprobada.quien;}
+}).catch(function(){alert('No se pudo enviar')})}
+if(!t){$('c').innerHTML='<p class="err404">Falta el código del proyecto.</p>';return;}
+fetch('/api/proy/'+t,{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o.error)throw 0;P=o;pinta();
+  if(P.entregas.some(function(e){return e.yt})){var s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);}
+}).catch(function(){$('c').innerHTML='<p class="err404">No encontré este proyecto. Revisa el link o escríbeme por WhatsApp.</p>'});
+})();
+</script>
+</body></html>
