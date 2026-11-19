@@ -471,6 +471,7 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 .prow.rec{background:linear-gradient(90deg,rgba(0,255,102,.06),transparent);margin-left:-10px;margin-right:-10px;padding-left:10px;padding-right:10px;border-radius:5px}
 .recbadge{display:inline-block;font-size:9px;letter-spacing:1px;color:var(--green);border:1px solid var(--green-dim);border-radius:10px;padding:1px 8px;margin-left:8px;text-transform:uppercase;vertical-align:middle;white-space:nowrap}
 
+/* ===== v32 (BASHI-V32): vista animada del portafolio web, ciudades, guías y cómo trabajo ===== */
 /* ===== v31 (BASHI-V31): testimonios en portada ===== */
 .ptst{margin-top:28px}
 .ptst .tlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
@@ -494,9 +495,24 @@ body.scrolled .precios-pin{opacity:1;transform:translateY(0);pointer-events:auto
 @media(max-width:760px){.webgrid{grid-template-columns:1fr}}
 .webcard{border:1px solid var(--line);background:var(--bg-2);overflow:hidden;transition:border-color .25s ease,transform .25s ease}
 .webcard:hover{border-color:var(--green-dim);transform:translateY(-3px)}
-.webshot{display:block;aspect-ratio:16/10;overflow:hidden;background:#000}
-.webshot img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .55s ease}
-.webcard:hover .webshot img{transform:scale(1.04)}
+/* v32 vista animada: ventana de navegador que recorre el sitio */
+.webshot{display:block;position:relative;background:#0b0d0b;text-decoration:none}
+.wbar{display:flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-bottom:1px solid var(--line);background:#0d100d}
+.wbar i{width:9px;height:9px;border-radius:50%;background:#2a2f2a;flex:none}
+.webcard:hover .wbar i:nth-child(1),.webcard.vivo .wbar i:nth-child(1){background:#ff5f57}
+.webcard:hover .wbar i:nth-child(2),.webcard.vivo .wbar i:nth-child(2){background:#febc2e}
+.webcard:hover .wbar i:nth-child(3),.webcard.vivo .wbar i:nth-child(3){background:#28c840}
+.wurl{flex:1;margin-left:8px;height:18px;border-radius:9px;background:#151915;font-family:var(--mono);font-size:10px;letter-spacing:.5px;color:var(--dim);display:flex;align-items:center;justify-content:center;gap:6px;overflow:hidden;white-space:nowrap}
+.wurl b{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:wlive 1.6s ease-in-out infinite}
+@keyframes wlive{50%{opacity:.25}}
+.wview{position:relative;aspect-ratio:16/10;overflow:hidden;background:#000}
+.wview img{position:absolute;left:0;top:0;width:100%;height:auto;min-height:100%;object-fit:cover;object-position:top center;transform:translateY(0);transition:transform 1.2s cubic-bezier(.3,.1,.2,1);will-change:transform}
+.webcard:hover .wview img,.webcard.vivo .wview img{transition:transform var(--wdur,9s) cubic-bezier(.45,.05,.4,1);transform:translateY(var(--wmax,0px))}
+.wview::after{content:"";position:absolute;left:0;right:0;bottom:0;height:28%;background:linear-gradient(transparent,rgba(5,5,5,.55));pointer-events:none;transition:opacity .4s}
+.webcard:hover .wview::after,.webcard.vivo .wview::after{opacity:0}
+.wplay{position:absolute;right:12px;bottom:12px;z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink);background:rgba(5,5,5,.72);border:1px solid var(--line);padding:6px 9px;transition:opacity .3s}
+.webcard:hover .wplay,.webcard.vivo .wplay{opacity:0}
+@media (prefers-reduced-motion:reduce){.webcard:hover .wview img,.webcard.vivo .wview img{transform:none}}
 .webmeta{padding:18px 20px 22px}
 .webmeta .wtag{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--green)}
 .webmeta h3{font-family:var(--disp);color:var(--ink);font-size:18px;margin:6px 0 8px;font-weight:500}
@@ -662,7 +678,10 @@ a.mitem{display:block;text-decoration:none}
   <nav class="fnav" aria-label="Sectores">
     <a href="/servicios/">Para</a>: <a href="/para/artistas/">Artistas</a> &middot; <a href="/para/belleza/">Belleza y barberías</a> &middot; <a href="/para/restaurantes-y-bares/">Restaurantes y bares</a> &middot; <a href="/para/tecnologia-y-producto/">Tecnología y producto</a> &middot; <a href="/para/salud/">Clínicas y salud</a> &middot; <a href="/fusagasuga/">Fusagasugá</a>
   </nav>
-  <div class="fcopy">&copy; <span id="yr"></span> BASHI &middot; <a href="/sobre-mi/">Sobre mí</a> &middot; <a href="/reel/">Reel</a> &middot; <a href="/preguntas/">Preguntas</a> &middot; <a href="/recursos/checklist-videoclip/">Checklist gratis</a> &middot; <a href="/en/" hreflang="en">English</a> &middot; <a href="/contacto/">Contacto</a> &middot; <a href="/creditos/">Créditos</a> &middot; <a href="/privacidad/">Privacidad</a></div>
+  <nav class="fnav" aria-label="Dónde trabajo">
+    <a href="/donde-trabajo/">Dónde trabajo</a>: <a href="/bogota/">Bogotá</a> &middot; <a href="/chia-cajica-zipaquira/">Chía, Cajicá y Zipaquirá</a> &middot; <a href="/girardot-melgar/">Girardot y Melgar</a> &middot; <a href="/la-vega-villeta/">La Vega y Villeta</a> &middot; <a href="/villavicencio/">Villavicencio</a>
+  </nav>
+  <div class="fcopy">&copy; <span id="yr"></span> BASHI &middot; <a href="/sobre-mi/">Sobre mí</a> &middot; <a href="/reel/">Reel</a> &middot; <a href="/como-trabajo/">Cómo trabajo</a> &middot; <a href="/guias/">Guías</a> &middot; <a href="/preguntas/">Preguntas</a> &middot; <a href="/recursos/checklist-videoclip/">Checklist gratis</a> &middot; <a href="/en/" hreflang="en">English</a> &middot; <a href="/contacto/">Contacto</a> &middot; <a href="/creditos/">Créditos</a> &middot; <a href="/privacidad/">Privacidad</a></div>
   <div class="flinks">
     <a href="https://www.instagram.com/sebxsco/" target="_blank" rel="noopener">Instagram</a> &middot;
     <a href="https://wa.me/573245026518?text=Hola%20Bashi" target="_blank" rel="noopener">WhatsApp</a> &middot;
@@ -1319,7 +1338,10 @@ function renderWeb(){
   const app=document.getElementById("app");
   const cards=WEBSITES.map(w0=>
     '<article class="webcard">'+
-      '<a class="webshot" href="'+w0.url+'" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="https://image.thum.io/get/width/1000/crop/1250/noanimate/'+w0.url+'" alt="'+w0.name+'"></a>'+
+      '<a class="webshot" href="'+w0.url+'" target="_blank" rel="noopener" aria-label="'+w0.name+'">'+
+        '<div class="wbar" aria-hidden="true"><i></i><i></i><i></i><span class="wurl"><b></b>'+w0.url.replace(/^https?:\/\//,'')+'</span></div>'+
+        '<div class="wview"><img loading="lazy" decoding="async" src="https://image.thum.io/get/width/900/crop/2400/noanimate/'+w0.url+'" alt="'+w0.name+'"><span class="wplay">'+L('Recorrer sitio','Scroll the site')+'</span></div>'+
+      '</a>'+
       '<div class="webmeta"><span class="wtag">'+L(w0.tag,w0.tagEn||w0.tag)+'</span>'+
         '<h3>'+w0.name+'</h3><p>'+L(w0.desc,w0.descEn||w0.desc)+'</p>'+
         '<a class="weblink" href="'+w0.url+'" target="_blank" rel="noopener">'+L('Ver sitio en vivo →','View live site →')+'</a></div>'+
@@ -1329,6 +1351,29 @@ function renderWeb(){
     '<p class="webintro">'+L('Páginas rápidas, a medida y con hosting incluido. Cada proyecto, pensado para que el cliente gane presencia y clientes.','Fast, custom-built sites with hosting included. Each one designed so the client gains presence and customers.')+'</p>'+
     '<div class="webgrid">'+cards+'</div></section>';
   if(window.gsap) gsap.from("#app .webcard",{opacity:0,y:24,duration:.5,stagger:.08,ease:"power2.out",overwrite:true});
+  webPreview();
+}
+function webPreview(){
+  const cards=[...document.querySelectorAll("#app .webcard")];
+  const medir=function(c){
+    const v=c.querySelector(".wview"), im=v&&v.querySelector("img");
+    if(!im||!im.naturalWidth) return;
+    const alto=v.clientWidth*im.naturalHeight/im.naturalWidth, max=Math.max(0,alto-v.clientHeight);
+    c.style.setProperty("--wmax",(-max)+"px");
+    c.style.setProperty("--wdur",Math.min(14,Math.max(4,max/120)).toFixed(1)+"s");
+  };
+  cards.forEach(function(c){
+    const im=c.querySelector(".wview img");
+    if(im){ if(im.complete) medir(c); else im.addEventListener("load",function(){medir(c);}); }
+  });
+  window.addEventListener("resize",function(){cards.forEach(medir);},{passive:true});
+  const tactil=window.matchMedia("(hover:none)").matches;
+  if(tactil && "IntersectionObserver" in window){
+    const io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ e.target.classList.toggle("vivo",e.isIntersecting&&e.intersectionRatio>.6); });
+    },{threshold:[0,.6,1]});
+    cards.forEach(function(c){io.observe(c);});
+  }
 }
 function openWeb(){
   state.view="web"; state.rubro=null; state.tipo=null; state.client=null;

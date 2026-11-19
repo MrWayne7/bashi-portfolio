@@ -42,3 +42,9 @@
 
 /propuestas/*
   X-Robots-Tag: noindex, nofollow
+
+/lab
+  X-Robots-Tag: noindex
+
+/lab/*
+  X-Robots-Tag: noindex
