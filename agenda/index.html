@@ -9,7 +9,9 @@
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://studiobashi.com/agenda/">
 <meta property="og:url" content="https://studiobashi.com/agenda/">
-
+<link rel="alternate" hreflang="es" href="https://studiobashi.com/agenda/">
+<link rel="alternate" hreflang="en" href="https://studiobashi.com/en/schedule/">
+<link rel="alternate" hreflang="x-default" href="https://studiobashi.com/agenda/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BASHI">
 <meta property="og:locale" content="es_CO">
@@ -24,7 +26,7 @@
 <link rel="preload" href="/fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/space-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
-<link rel="stylesheet" href="/assets/sub.css?v=33">
+<link rel="stylesheet" href="/assets/sub.css?v=34">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "BASHI", "item": "https://studiobashi.com/"}, {"@type": "ListItem", "position": 2, "name": "Agenda", "item": "https://studiobashi.com/agenda/"}]}</script>
 </head>
 <style>
@@ -79,7 +81,7 @@
 <header class="top"><div class="wrap">
 <a class="wm" href="/" aria-label="BASHI">BASHI<span aria-hidden="true">_</span></a>
 <nav class="nav" aria-label="Principal"><a href="/work/">Trabajo</a><a href="/servicios/">Servicios</a><a href="/sobre-mi/">Sobre mí</a><a href="/#prices">Precios</a><a href="/contacto/">Contacto</a></nav>
-<a class="lang" href="/en/" hreflang="en" lang="en" aria-label="English">EN</a>
+<a class="lang" href="/en/schedule/" hreflang="en" lang="en" aria-label="English">EN</a>
 <a class="btn sm cta" href="https://wa.me/573245026518?text=Hola%20BASHI%2C%20quiero%20apartar%20una%20fecha." target="_blank" rel="noopener">Escribir por WhatsApp</a>
 </div></header>
 <main id="contenido">
@@ -104,41 +106,42 @@
 </div></section>
 <script>
 (function(){
+var U={"loc": "es-CO", "dias": "LMMJVSD", "libre": "Libre", "tuya": "Tu fecha", "oc": "Ocupada", "fecha": "Fecha:", "elige": "elige un día en el calendario", "que": "¿Qué quieres grabar?", "nom": "Nombre", "det": "Cuéntame un poco (lugar, horario, idea)", "btn": "Solicitar esta fecha", "prev": "Mes anterior", "next": "Mes siguiente", "e_dia": "Elige un día en el calendario.", "e_nom": "Escribe tu nombre y tu WhatsApp.", "e_ok": "Marca la autorización para continuar.", "env": "Enviando…", "e_net": "No se pudo enviar. Escríbeme por WhatsApp.", "listo": "Listo: solicitaste el ", "ant1": "La fecha queda tuya cuando pagas el anticipo.", "ant0": "Te escribo por WhatsApp para confirmarla y enviarte el link del anticipo.", "pagar": "Pagar el anticipo", "avisar": "Avisar por WhatsApp", "ocup": ", ocupada", "wam": "Hola BASHI, solicité el {f} para {s}. Soy {n}."};
 var $=function(i){return document.getElementById(i)},OC=[],ANT='',sel='',hoy=new Date();hoy.setHours(0,0,0,0);
 var cur=new Date(hoy.getFullYear(),hoy.getMonth(),1),max=new Date(hoy.getFullYear(),hoy.getMonth()+6,1);
 var iso=function(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 function pinta(){
-  $('mes').textContent=cur.toLocaleDateString('es-CO',{month:'long',year:'numeric'});
+  $('mes').textContent=cur.toLocaleDateString(U.loc,{month:'long',year:'numeric'});
   $('prev').disabled=cur<=new Date(hoy.getFullYear(),hoy.getMonth(),1);$('next').disabled=cur>=max;
-  var h='LMMJVSD'.split('').map(function(d){return '<span class="dw">'+d+'</span>'}).join('');
+  var h=U.dias.split('').map(function(d){return '<span class="dw">'+d+'</span>'}).join('');
   var first=(new Date(cur.getFullYear(),cur.getMonth(),1).getDay()+6)%7,n=new Date(cur.getFullYear(),cur.getMonth()+1,0).getDate();
   for(var i=0;i<first;i++)h+='<span></span>';
   for(var d=1;d<=n;d++){var f=new Date(cur.getFullYear(),cur.getMonth(),d),k=iso(f),oc=OC.indexOf(k)>=0,pas=f<hoy;
-    h+='<button type="button" class="d'+(oc?' oc':'')+'" data-f="'+k+'"'+(oc||pas?' disabled':'')+' aria-pressed="'+(k===sel)+'" aria-label="'+f.toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long'})+(oc?', ocupada':'')+'">'+d+'</button>';}
+    h+='<button type="button" class="d'+(oc?' oc':'')+'" data-f="'+k+'"'+(oc||pas?' disabled':'')+' aria-pressed="'+(k===sel)+'" aria-label="'+f.toLocaleDateString(U.loc,{weekday:'long',day:'numeric',month:'long'})+(oc?U.ocup:'')+'">'+d+'</button>';}
   $('dias').innerHTML=h;
 }
 $('dias').addEventListener('click',function(e){var b=e.target.closest('.d');if(!b||b.disabled)return;sel=b.dataset.f;
-  $('fsel').textContent=new Date(sel+'T12:00').toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long',year:'numeric'});pinta();});
+  $('fsel').textContent=new Date(sel+'T12:00').toLocaleDateString(U.loc,{weekday:'long',day:'numeric',month:'long',year:'numeric'});pinta();});
 $('prev').onclick=function(){cur=new Date(cur.getFullYear(),cur.getMonth()-1,1);pinta()};
 $('next').onclick=function(){cur=new Date(cur.getFullYear(),cur.getMonth()+1,1);pinta()};
-fetch('/api/agenda',{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){OC=o.ocupadas||[];ANT=o.anticipo||'';if(o.texto)$('atexto').textContent=o.texto;pinta();}).catch(pinta);
+fetch('/api/agenda',{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){OC=o.ocupadas||[];ANT=o.anticipo||'';if(o.texto&&U.loc==='es-CO')$('atexto').textContent=o.texto;pinta();}).catch(pinta);
 pinta();
-$('res').addEventListener('submit',function(e){e.preventDefault();var m=this.querySelector('.msg'),f=this;
+$('res').addEventListener('submit',function(e){e.preventDefault();var m=this.querySelector('.msg');
   var n=$('r-n').value.trim(),c=$('r-c').value.trim();
-  if(!sel){m.className='msg err';m.textContent='Elige un día en el calendario.';return;}
-  if(!n||!c){m.className='msg err';m.textContent='Escribe tu nombre y tu WhatsApp.';return;}
-  if(!$('r-ok').checked){m.className='msg err';m.textContent='Marca la autorización para continuar.';return;}
-  m.className='msg';m.textContent='Enviando…';
+  if(!sel){m.className='msg err';m.textContent=U.e_dia;return;}
+  if(!n||!c){m.className='msg err';m.textContent=U.e_nom;return;}
+  if(!$('r-ok').checked){m.className='msg err';m.textContent=U.e_ok;return;}
+  m.className='msg';m.textContent=U.env;
   fetch('/api/agenda',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({web:$('r-w').value,solicitud:{fecha:sel,nombre:n,contacto:c,servicio:$('r-s').value,detalle:$('r-d').value.trim()}})})
   .then(function(r){return r.json().then(function(o){return [r.ok,o]})}).then(function(x){
-    if(!x[0]){m.className='msg err';m.textContent=x[1].error||'No se pudo enviar.';return;}
+    if(!x[0]){m.className='msg err';m.textContent=x[1].error||U.e_net;return;}
     var ant=x[1].anticipo||ANT,fs=$('fsel').textContent;
-    var wa='https://wa.me/573245026518?text='+encodeURIComponent('Hola BASHI, solicité el '+fs+' para '+$('r-s').value+'. Soy '+n+'.');
+    var wa='https://wa.me/573245026518?text='+encodeURIComponent(U.wam.replace('{f}',fs).replace('{s}',$('r-s').value).replace('{n}',n));
     m.textContent='';$('listo').hidden=false;
-    $('listo').innerHTML='<p style="color:var(--green-ink);font-family:var(--mono)">Listo: solicitaste el '+fs+'.</p><p style="margin:8px 0 14px">'+(ant?'La fecha queda tuya cuando pagas el anticipo.':'Te escribo por WhatsApp para confirmarla y enviarte el link del anticipo.')+'</p>'+
-      '<p style="display:flex;gap:10px;flex-wrap:wrap">'+(ant?'<a class="btn" href="'+ant+'" target="_blank" rel="noopener">Pagar el anticipo</a>':'')+'<a class="btn'+(ant?' ghost':'')+'" href="'+wa+'" target="_blank" rel="noopener">Avisar por WhatsApp</a></p>';
+    $('listo').innerHTML='<p style="color:var(--green-ink);font-family:var(--mono)">'+U.listo+fs+'.</p><p style="margin:8px 0 14px">'+(ant?U.ant1:U.ant0)+'</p>'+
+      '<p style="display:flex;gap:10px;flex-wrap:wrap">'+(ant?'<a class="btn" href="'+ant+'" target="_blank" rel="noopener">'+U.pagar+'</a>':'')+'<a class="btn'+(ant?' ghost':'')+'" href="'+wa+'" target="_blank" rel="noopener">'+U.avisar+'</a></p>';
     window.bashiTrack&&window.bashiTrack('agenda');
-  }).catch(function(){m.className='msg err';m.textContent='No se pudo enviar. Escríbeme por WhatsApp.';});
+  }).catch(function(){m.className='msg err';m.textContent=U.e_net;});
 });
 })();
 </script>
@@ -147,11 +150,11 @@ $('res').addEventListener('submit',function(e){e.preventDefault();var m=this.que
 <footer class="foot"><div class="wrap">
 <div class="fcols f6">
 <div><a class="wm" href="/">BASHI<span aria-hidden="true">_</span></a><p style="margin-top:12px">Director, editor y fotógrafo. Presencial en Bogotá y alrededores; remoto en Colombia, República Dominicana y Estados Unidos.</p></div>
-<div><h3>Servicios</h3><a href="/servicios/videoclips/">Videoclips</a><a href="/servicios/comerciales/">Reels y comerciales</a><a href="/servicios/fotografia/">Fotografía</a><a href="/servicios/bodas/">Bodas</a><a href="/servicios/paginas-web/">Páginas web</a></div><div><h3>Para</h3><a href="/para/artistas/">Artistas y música</a><a href="/para/belleza/">Belleza y barberías</a><a href="/para/restaurantes-y-bares/">Restaurantes y bares</a><a href="/para/tecnologia-y-producto/">Tecnología y producto</a><a href="/para/salud/">Clínicas y salud</a><a href="/como-trabajo/">Cómo trabajo</a><a href="/guias/">Guías</a></div><div><h3>Dónde</h3><a href="/bogota/">Bogotá</a><a href="/chia-cajica-zipaquira/">Chía y la Sabana</a><a href="/girardot-melgar/">Girardot y Melgar</a><a href="/la-vega-villeta/">La Vega y Villeta</a><a href="/villavicencio/">Villavicencio</a><a href="/fusagasuga/">Fusagasugá</a><a href="/donde-trabajo/">Todas las zonas</a></div><div><h3>Trabajo</h3><a href="/work/north-west/">North West</a><a href="/work/asian-doll/">Asian Doll</a><a href="/work/santa-mykah/">Santa Mykah</a><a href="/work/essene/">Essene</a><a href="/work/adonys-x/">Adonys X</a><a href="/work/rich-miliano/">Rich Miliano</a><a href="/work/">Todo el trabajo</a><a href="/reel/">Reel</a></div><div><h3>Contacto</h3><a href="https://wa.me/573245026518?text=Hola%20BASHI%2C%20quiero%20apartar%20una%20fecha." target="_blank" rel="noopener">WhatsApp +57 324 502 6518</a><a href="https://www.instagram.com/sebxsco/" target="_blank" rel="noopener">Instagram @sebxsco</a><a href="mailto:hola@studiobashi.com">hola@studiobashi.com</a><a href="/contacto/">Formulario</a><a href="/agenda/">Agenda tu fecha</a><a href="/tratamiento/">Arma tu tratamiento</a><a href="/sesiones/">Sesiones 2600</a><a href="/sobre-mi/">Sobre mí</a><a href="/preguntas/">Preguntas</a><a href="/recursos/checklist-videoclip/">Checklist gratis</a></div>
+<div><h3>Servicios</h3><a href="/servicios/videoclips/">Videoclips</a><a href="/servicios/comerciales/">Reels y comerciales</a><a href="/servicios/fotografia/">Fotografía</a><a href="/servicios/bodas/">Bodas</a><a href="/servicios/paginas-web/">Páginas web</a></div><div><h3>Para</h3><a href="/para/artistas/">Artistas y música</a><a href="/para/belleza/">Belleza y barberías</a><a href="/para/restaurantes-y-bares/">Restaurantes y bares</a><a href="/para/tecnologia-y-producto/">Tecnología y producto</a><a href="/para/salud/">Clínicas y salud</a><a href="/como-trabajo/">Cómo trabajo</a><a href="/guias/">Guías</a></div><div><h3>Dónde</h3><a href="/bogota/">Bogotá</a><a href="/chia-cajica-zipaquira/">Chía y la Sabana</a><a href="/girardot-melgar/">Girardot y Melgar</a><a href="/la-vega-villeta/">La Vega y Villeta</a><a href="/villavicencio/">Villavicencio</a><a href="/fusagasuga/">Fusagasugá</a><a href="/donde-trabajo/">Todas las zonas</a></div><div><h3>Trabajo</h3><a href="/work/north-west/">North West</a><a href="/work/asian-doll/">Asian Doll</a><a href="/work/santa-mykah/">Santa Mykah</a><a href="/work/essene/">Essene</a><a href="/work/adonys-x/">Adonys X</a><a href="/work/rich-miliano/">Rich Miliano</a><a href="/work/">Todo el trabajo</a><a href="/reel/">Reel</a></div><div><h3>Contacto</h3><a href="https://wa.me/573245026518?text=Hola%20BASHI%2C%20quiero%20apartar%20una%20fecha." target="_blank" rel="noopener">WhatsApp +57 324 502 6518</a><a href="https://www.instagram.com/sebxsco/" target="_blank" rel="noopener">Instagram @sebxsco</a><a href="mailto:hola@studiobashi.com">hola@studiobashi.com</a><a href="/contacto/">Formulario</a><a href="/agenda/">Agenda tu fecha</a><a href="/tratamiento/">Arma tu tratamiento</a><a href="/sesiones/">Sesiones 2600</a><a href="/herramientas/zonas-seguras/">Zonas seguras para reels</a><a href="/sobre-mi/">Sobre mí</a><a href="/preguntas/">Preguntas</a><a href="/recursos/checklist-videoclip/">Checklist gratis</a></div>
 </div>
 <div class="fbase"><span>© 2026 BASHI · Bogotá, Colombia</span><span><a href="/en/" hreflang="en">English</a> · <a href="/creditos/">Créditos</a> · <a href="/privacidad/">Privacidad</a></span></div>
 </div></footer>
 <a class="wafab" href="https://wa.me/573245026518?text=Hola%20BASHI%2C%20quiero%20apartar%20una%20fecha." target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2 7.8L.5 31.5l7.9-2.1c2.3 1.2 4.9 1.9 7.6 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.3c-2.4 0-4.7-.6-6.7-1.8l-.5-.3-4.7 1.2 1.3-4.6-.3-.5c-1.3-2.1-2-4.5-2-7 0-7.2 5.9-13.1 13.1-13.1 3.5 0 6.8 1.4 9.3 3.9 2.5 2.5 3.9 5.8 3.9 9.3-.1 7.2-6 13-13.2 13zm7.2-9.8c-.4-.2-2.3-1.1-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.2 1.5-.2.2-.4.3-.8.1-.4-.2-1.7-.6-3.2-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8.2-.2.4-.4.5-.7.2-.2.2-.4.4-.6.1-.3 0-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.8-.6-.7-.9-.7h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9 0 1.7 1.2 3.3 1.4 3.6.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .8.8.3 1.6.2 2.2.1.7-.1 2.3-.9 2.6-1.8.3-.9.3-1.6.2-1.8-.1-.1-.3-.2-.7-.4z"/></svg></a>
-<script src="/assets/t.js?v=33" defer></script>
+<script src="/assets/t.js?v=34" defer></script>
 </body>
 </html>

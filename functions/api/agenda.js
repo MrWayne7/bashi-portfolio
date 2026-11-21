@@ -33,6 +33,6 @@ export async function onRequest({ request, env }) {
   if (cfg.ocupadas.includes(f) || cfg.bloqueadas.includes(f)) return json({ error: "Esa fecha ya no está disponible" }, 409);
   const r = { t: new Date().toISOString(), fecha: f, nombre, contacto, servicio: cut(s.servicio, 60), detalle: cut(s.detalle, 500) };
   await KV.put("res:" + r.t + ":" + Math.random().toString(36).slice(2, 6), JSON.stringify(r), { expirationTtl: 60 * 60 * 24 * 365 });
-  await aviso(KV, request, { nombre, contacto, servicio: "Solicitud de fecha · " + f, detalle: (r.servicio ? r.servicio + " · " : "") + r.detalle, origen: "/agenda/" });
+  await aviso(KV, request, { nombre, contacto, servicio: "Solicitud de fecha · " + f, detalle: (r.servicio ? r.servicio + " · " : "") + r.detalle, origen: "/agenda/", ref: cut(b.ref, 40).toLowerCase().replace(/[^a-z0-9-]/g, "") });
   return json({ ok: true, anticipo: cfg.anticipo });
 }

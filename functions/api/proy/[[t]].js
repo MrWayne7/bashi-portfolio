@@ -17,7 +17,7 @@ const limpiar = (p, prev) => {
                nota: cut(e.nota, 300), aprobada: old.aprobada || null, comentarios: (old.comentarios || []).concat([]).slice(0, 200) };
     }).filter(e => e.titulo && (e.yt || e.link)),
     total: cut(p.total, 40), pagado: cut(p.pagado, 40), pago: url(p.pago), notas: cut(p.notas, 600), mensaje: cut(p.mensaje, 400),
-    prop: cut(p.prop, 12)
+    prop: cut(p.prop, 12), lang: p.lang === "en" ? "en" : "es"
   };
 };
 const publico = p => { const o = JSON.parse(JSON.stringify(p)); delete o.notas; delete o.contacto; return o; };

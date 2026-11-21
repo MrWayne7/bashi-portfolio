@@ -24,7 +24,7 @@
 <link rel="preload" href="/fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/space-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
-<link rel="stylesheet" href="/assets/sub.css?v=33">
+<link rel="stylesheet" href="/assets/sub.css?v=34">
 
 </head>
 <style>
@@ -66,42 +66,44 @@
 @media print{.noprint,.wafab{display:none!important}body{background:#fff;color:#111}.price,.ent{background:#fff}}
 </style>
 <body><main class="app" id="app">
-<div class="apph"><a class="wm" href="/" aria-label="BASHI">BASHI<span aria-hidden="true">_</span></a><div class="k" id="k">Portal de clientes</div></div>
-<div id="c"><p class="err404">Cargando…</p></div>
+<div class="apph"><a class="wm" href="/" aria-label="BASHI">BASHI<span aria-hidden="true">_</span></a><div class="k" id="k"></div></div>
+<div id="c"><p class="err404">…</p></div>
 </main>
 <script>
 (function(){
+var TX={"es": {"loc": "es-CO", "n": "Propuesta N.º ", "acep": "Aceptada", "venc": "Vencida", "para": "Para ", "prop": "Propuesta", "hacer": "Qué vamos a hacer", "recibes": "Qué recibes", "tiempos": "Tiempos", "inv": "Inversión", "ant": "Anticipo del {p}% para apartar la fecha · el resto al entregar", "valida": "Válida hasta el ", "aceptadapor": "Propuesta aceptada por {n} el {f}. ¡Arrancamos!", "pagar": "Pagar el anticipo", "pasos": "Te escribo por WhatsApp con los siguientes pasos.", "arranc": "¿Arrancamos?", "tunom": "Escribe tu nombre para aceptar", "chk": "Acepto esta propuesta: el alcance, los tiempos y la inversión.", "btn": "Acepto la propuesta", "preg": "Tengo una pregunta", "pregm": "Hola BASHI, tengo una pregunta sobre la propuesta ", "vencio": "Esta propuesta venció. <a href=\"https://wa.me/573245026518\" target=\"_blank\" rel=\"noopener\">Escríbeme</a> y la actualizamos.", "pdf": "Guardar en PDF", "pie": "BASHI · Director, editor y fotógrafo · studiobashi.com · WhatsApp +57 324 502 6518", "e_nom": "Escribe tu nombre.", "e_chk": "Marca la casilla para aceptar.", "env": "Enviando…", "e_net": "No se pudo enviar.", "portal": "Portal de clientes", "tuproy": "Tu proyecto", "vamos": "En qué vamos", "listo": "Listo", "curso": "En curso", "pend": "Pendiente", "entregas": "Entregas", "vacio": "Aquí van a aparecer los videos y fotos para que los revises y comentes.", "aprobpor": "Aprobada por ", "abrir": "Abrir la entrega", "comseg": "Comentario en este segundo", "com": "Tu comentario", "comentar": "Comentar", "aprobar": "Aprobar esta entrega", "pagos": "Pagos", "total": "Total", "pagado": "Pagado", "avance": "Avance", "saldo": "Pagar el saldo", "escribir": "Escribir por WhatsApp", "escm": "Hola BASHI, te escribo por el proyecto ", "priv": "Este link es privado. No lo compartas fuera de tu equipo.", "quien": "¿Tu nombre? (para saber quién comenta)", "e_send": "No se pudo enviar"}, "en": {"loc": "en-US", "n": "Proposal No. ", "acep": "Accepted", "venc": "Expired", "para": "For ", "prop": "Proposal", "hacer": "What we'll do", "recibes": "What you get", "tiempos": "Timeline", "inv": "Investment", "ant": "{p}% deposit to lock the date · the rest on delivery", "valida": "Valid until ", "aceptadapor": "Proposal accepted by {n} on {f}. Let's go!", "pagar": "Pay the deposit", "pasos": "I'll message you on WhatsApp with the next steps.", "arranc": "Shall we start?", "tunom": "Type your name to accept", "chk": "I accept this proposal: the scope, timeline and investment.", "btn": "Accept the proposal", "preg": "I have a question", "pregm": "Hi BASHI, I have a question about proposal ", "vencio": "This proposal has expired. <a href=\"https://wa.me/573245026518\" target=\"_blank\" rel=\"noopener\">Message me</a> and I'll update it.", "pdf": "Save as PDF", "pie": "BASHI · Director, editor and photographer · studiobashi.com · WhatsApp +57 324 502 6518", "e_nom": "Type your name.", "e_chk": "Tick the box to accept.", "env": "Sending…", "e_net": "Couldn't send.", "portal": "Client portal", "tuproy": "Your project", "vamos": "Where we are", "listo": "Done", "curso": "In progress", "pend": "Pending", "entregas": "Deliverables", "vacio": "Videos and photos will show up here for you to review and comment on.", "aprobpor": "Approved by ", "abrir": "Open the deliverable", "comseg": "Comment at this second", "com": "Your comment", "comentar": "Comment", "aprobar": "Approve this deliverable", "pagos": "Payments", "total": "Total", "pagado": "Paid", "avance": "Progress", "saldo": "Pay the balance", "escribir": "Message on WhatsApp", "escm": "Hi BASHI, I'm writing about the project ", "priv": "This link is private. Don't share it outside your team.", "quien": "Your name? (so we know who's commenting)", "e_send": "Couldn't send"}},X=TX.es;
 var $=function(i){return document.getElementById(i)},esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
 var t=(location.pathname.split('/')[2]||new URLSearchParams(location.search).get('t')||'').replace(/[^a-z0-9]/g,'');
-var fmt=function(d){return d?new Date(d+(d.length===10?'T12:00':'')).toLocaleDateString('es-CO',{day:'numeric',month:'short'}):''};
+var fmt=function(d){return d?new Date(d+(d.length===10?'T12:00':'')).toLocaleDateString(X.loc,{day:'numeric',month:'short'}):''};
 var mmss=function(s){s=Math.round(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+var esVid=function(e){return !!(e.yt||/\.(mp4|mov|webm)(\?|$)/i.test(e.link))};
 var P=null,PL={},quien='';try{quien=localStorage.getItem('bashi-quien')||''}catch(e){}
 function tiempo(id){var p=PL[id];if(!p)return 0;try{return p.getCurrentTime?p.getCurrentTime():(p.currentTime||0)}catch(e){return 0}}
 function ir(id,s){var p=PL[id];if(!p)return;try{if(p.seekTo){p.seekTo(s,true);p.playVideo()}else{p.currentTime=s;p.play()}}catch(e){}}
+function coms(e){var v=esVid(e);return e.comentarios.slice().sort(function(a,b){return a.s-b.s}).map(function(c){return '<li>'+(v?'<button type="button" data-ir="'+e.id+'" data-s="'+c.s+'">'+mmss(c.s)+'</button>':'')+esc(c.txt)+'<small>'+esc(c.quien)+'</small></li>'}).join('')}
 function pinta(){
-  var p=P;document.title=p.proyecto+' · BASHI';
+  var p=P;X=TX[p.lang]||TX.es;document.documentElement.lang=p.lang||'es';document.title=p.proyecto+' · BASHI';$('k').textContent=X.portal;
   var act=-1;for(var i=0;i<p.fases.length;i++)if(!p.fases[i].hecho){act=i;break}
-  var h='<p class="estado">'+esc(p.cliente)+'</p><h1 style="margin-top:18px">'+esc(p.proyecto||'Tu proyecto')+'<span>_</span></h1>'+(p.mensaje?'<p class="lead">'+esc(p.mensaje)+'</p>':'');
-  if(p.fases.length)h+='<h2>En qué vamos</h2><ol class="fases">'+p.fases.map(function(f,i){return '<li class="'+(f.hecho?'h':(i===act?'a':''))+'"><b>'+esc(f.n)+'</b><span>'+(f.hecho?'Listo':(i===act?'En curso':'Pendiente'))+(f.fecha?' · '+fmt(f.fecha):'')+'</span></li>'}).join('')+'</ol>';
-  h+='<h2>Entregas</h2>';
-  if(!p.entregas.length)h+='<p style="color:var(--dim-2)">Aquí van a aparecer los videos y fotos para que los revises y comentes.</p>';
+  var h='<p class="estado">'+esc(p.cliente)+'</p><h1 style="margin-top:18px">'+esc(p.proyecto||X.tuproy)+'<span>_</span></h1>'+(p.mensaje?'<p class="lead">'+esc(p.mensaje)+'</p>':'');
+  if(p.fases.length)h+='<h2>'+X.vamos+'</h2><ol class="fases">'+p.fases.map(function(f,i){return '<li class="'+(f.hecho?'h':(i===act?'a':''))+'"><b>'+esc(f.n)+'</b><span>'+(f.hecho?X.listo:(i===act?X.curso:X.pend))+(f.fecha?' · '+fmt(f.fecha):'')+'</span></li>'}).join('')+'</ol>';
+  h+='<h2>'+X.entregas+'</h2>';
+  if(!p.entregas.length)h+='<p style="color:var(--dim-2)">'+X.vacio+'</p>';
   p.entregas.slice().reverse().forEach(function(e){
-    var cs=e.comentarios.slice().sort(function(a,b){return a.s-b.s});
-    var vid=e.yt||(/\.(mp4|mov|webm)(\?|$)/i.test(e.link));
+    var vid=esVid(e);
     h+='<article class="ent" id="e-'+e.id+'">'+(e.yt?'<div class="pl"><div id="pl-'+e.id+'"></div></div>':(vid?'<div class="pl"><video id="pl-'+e.id+'" src="'+esc(e.link)+'" controls playsinline preload="metadata"></video></div>':''))+
-     '<div class="in"><h3>'+esc(e.titulo)+'</h3><p class="m">'+fmt(e.fecha)+(e.aprobada?' · Aprobada por '+esc(e.aprobada.quien):'')+'</p>'+(e.nota?'<p style="margin-top:8px;color:var(--dim-2)">'+esc(e.nota)+'</p>':'')+
-     (!vid?'<p style="margin-top:12px"><a class="btn ghost" href="'+esc(e.link)+'" target="_blank" rel="noopener">Abrir la entrega</a></p>':'')+
-     '<ul class="coms">'+cs.map(function(c){return '<li>'+(vid?'<button type="button" data-ir="'+e.id+'" data-s="'+c.s+'">'+mmss(c.s)+'</button>':'')+esc(c.txt)+'<small>'+esc(c.quien)+'</small></li>'}).join('')+'</ul>'+
-     '<form class="cform noprint" data-e="'+e.id+'">'+(vid?'<span class="tm" data-tm="'+e.id+'">0:00</span>':'')+'<input placeholder="'+(vid?'Comentario en este segundo':'Tu comentario')+'" maxlength="600"><button class="btn" type="submit">Comentar</button></form>'+
-     (e.aprobada?'':'<p class="noprint" style="margin-top:12px"><button class="btn ghost" type="button" data-ap="'+e.id+'">Aprobar esta entrega</button></p>')+'</div></article>';
+     '<div class="in"><h3>'+esc(e.titulo)+'</h3><p class="m">'+fmt(e.fecha)+(e.aprobada?' · '+X.aprobpor+esc(e.aprobada.quien):'')+'</p>'+(e.nota?'<p style="margin-top:8px;color:var(--dim-2)">'+esc(e.nota)+'</p>':'')+
+     (!vid?'<p style="margin-top:12px"><a class="btn ghost" href="'+esc(e.link)+'" target="_blank" rel="noopener">'+X.abrir+'</a></p>':'')+
+     '<ul class="coms">'+coms(e)+'</ul>'+
+     '<form class="cform noprint" data-e="'+e.id+'">'+(vid?'<span class="tm" data-tm="'+e.id+'">0:00</span>':'')+'<input placeholder="'+(vid?X.comseg:X.com)+'" maxlength="600"><button class="btn" type="submit">'+X.comentar+'</button></form>'+
+     (e.aprobada?'':'<p class="noprint" style="margin-top:12px"><button class="btn ghost" type="button" data-ap="'+e.id+'">'+X.aprobar+'</button></p>')+'</div></article>';
   });
   if(p.total){
     var n=function(x){return parseFloat(String(x||'').replace(/[^\d.,]/g,'').replace(/\.(?=\d{3})/g,'').replace(',','.'))||0},tot=n(p.total),pag=n(p.pagado),pc=tot?Math.min(100,Math.round(pag/tot*100)):0;
-    h+='<h2>Pagos</h2><div class="pays"><div><span>Total</span><b>'+esc(p.total)+'</b></div><div><span>Pagado</span><b>'+esc(p.pagado||'0')+'</b></div><div><span>Avance</span><b>'+pc+'%</b></div></div><div class="bar2"><i style="width:'+pc+'%"></i></div>'+
-     (p.pago&&pc<100?'<p style="margin-top:16px"><a class="btn" href="'+esc(p.pago)+'" target="_blank" rel="noopener">Pagar el saldo</a></p>':'');
+    h+='<h2>'+X.pagos+'</h2><div class="pays"><div><span>'+X.total+'</span><b>'+esc(p.total)+'</b></div><div><span>'+X.pagado+'</span><b>'+esc(p.pagado||'0')+'</b></div><div><span>'+X.avance+'</span><b>'+pc+'%</b></div></div><div class="bar2"><i style="width:'+pc+'%"></i></div>'+
+     (p.pago&&pc<100?'<p style="margin-top:16px"><a class="btn" href="'+esc(p.pago)+'" target="_blank" rel="noopener">'+X.saldo+'</a></p>':'');
   }
-  h+='<p class="noprint" style="margin-top:44px;display:flex;gap:10px;flex-wrap:wrap"><a class="btn ghost" href="https://wa.me/573245026518?text='+encodeURIComponent('Hola BASHI, te escribo por el proyecto '+p.proyecto)+'" target="_blank" rel="noopener">Escribir por WhatsApp</a></p>'+
-   '<p style="margin-top:30px;color:var(--dim);font-size:13px">Este link es privado. No lo compartas fuera de tu equipo.</p>';
+  h+='<p class="noprint" style="margin-top:44px;display:flex;gap:10px;flex-wrap:wrap"><a class="btn ghost" href="https://wa.me/573245026518?text='+encodeURIComponent(X.escm+p.proyecto)+'" target="_blank" rel="noopener">'+X.escribir+'</a></p>'+
+   '<p style="margin-top:30px;color:var(--dim);font-size:13px">'+X.priv+'</p>';
   $('c').innerHTML=h;
   montar();
 }
@@ -113,25 +115,25 @@ window.onYouTubeIframeAPIReady=function(){if(P)montar()};
 setInterval(function(){document.querySelectorAll('[data-tm]').forEach(function(s){s.textContent=mmss(tiempo(s.dataset.tm))})},500);
 document.addEventListener('click',function(ev){
   var b=ev.target.closest('[data-ir]');if(b){ir(b.dataset.ir,+b.dataset.s);return}
-  var a=ev.target.closest('[data-ap]');if(a){if(!quien)quien=prompt('¿Tu nombre?')||'';if(!quien)return;try{localStorage.setItem('bashi-quien',quien)}catch(e){}
+  var a=ev.target.closest('[data-ap]');if(a){if(!quien)quien=prompt(X.quien)||'';if(!quien)return;try{localStorage.setItem('bashi-quien',quien)}catch(e){}
     envia({aprobar:{e:a.dataset.ap,quien:quien}});}
 });
 document.addEventListener('submit',function(ev){var f=ev.target.closest('.cform');if(!f)return;ev.preventDefault();
   var txt=f.querySelector('input').value.trim();if(!txt)return;
-  if(!quien)quien=prompt('¿Tu nombre? (para saber quién comenta)')||P.cliente;try{localStorage.setItem('bashi-quien',quien)}catch(e){}
+  if(!quien)quien=prompt(X.quien)||P.cliente;try{localStorage.setItem('bashi-quien',quien)}catch(e){}
   envia({comentario:{e:f.dataset.e,s:tiempo(f.dataset.e),txt:txt,quien:quien}});
 });
-function envia(b){var eid=(b.comentario||b.aprobar).e;fetch('/api/proy/'+t,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(b)}).then(function(r){return r.json()}).then(function(o){if(!o.proy){alert(o.error||'No se pudo');return}
+function envia(b){var eid=(b.comentario||b.aprobar).e;fetch('/api/proy/'+t,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(b)}).then(function(r){return r.json()}).then(function(o){if(!o.proy){alert(o.error||X.e_send);return}
   P=o.proy;var e=P.entregas.filter(function(x){return x.id===eid})[0],art=$('e-'+eid);if(!e||!art){pinta();return}
-  var vid=!!(e.yt||/\.(mp4|mov|webm)(\?|$)/i.test(e.link)),cs=e.comentarios.slice().sort(function(a,b){return a.s-b.s});
-  art.querySelector('.coms').innerHTML=cs.map(function(c){return '<li>'+(vid?'<button type="button" data-ir="'+e.id+'" data-s="'+c.s+'">'+mmss(c.s)+'</button>':'')+esc(c.txt)+'<small>'+esc(c.quien)+'</small></li>'}).join('');
+  art.querySelector('.coms').innerHTML=coms(e);
   var f=art.querySelector('.cform input');if(f)f.value='';
-  if(e.aprobada){var ab=art.querySelector('[data-ap]');if(ab)ab.parentNode.remove();art.querySelector('.m').textContent=fmt(e.fecha)+' · Aprobada por '+e.aprobada.quien;}
-}).catch(function(){alert('No se pudo enviar')})}
-if(!t){$('c').innerHTML='<p class="err404">Falta el código del proyecto.</p>';return;}
+  if(e.aprobada){var ab=art.querySelector('[data-ap]');if(ab)ab.parentNode.remove();art.querySelector('.m').textContent=fmt(e.fecha)+' · '+X.aprobpor+e.aprobada.quien;}
+}).catch(function(){alert(X.e_send)})}
+var nf='<p class="err404">No encontré este proyecto. Revisa el link o escríbeme por WhatsApp.<br>Project not found. Check the link or message me on WhatsApp.</p>';
+if(!t){$('c').innerHTML=nf;return;}
 fetch('/api/proy/'+t,{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o.error)throw 0;P=o;pinta();
   if(P.entregas.some(function(e){return e.yt})){var s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);}
-}).catch(function(){$('c').innerHTML='<p class="err404">No encontré este proyecto. Revisa el link o escríbeme por WhatsApp.</p>'});
+}).catch(function(){$('c').innerHTML=nf});
 })();
 </script>
 </body></html>

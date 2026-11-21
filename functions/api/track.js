@@ -1,6 +1,6 @@
 /* /api/track — cuenta clics de contacto (WhatsApp, Instagram, correo, llamada) por página y por mes.
    Sin cookies y sin guardar IP. Usa el KV BASHI_KV. */
-const EV = ["whatsapp", "instagram", "email", "llamada", "bio", "qr", "descarga"];
+const EV = ["whatsapp", "instagram", "email", "llamada", "bio", "qr", "descarga", "referido", "tratamiento", "sesiones", "agenda", "zonas"];
 export async function onRequestPost({ request, env }) {
   const KV = env.BASHI_KV;
   if (!KV) return new Response(null, { status: 204 });

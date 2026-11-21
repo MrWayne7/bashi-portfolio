@@ -167,6 +167,14 @@ a.btn2{display:inline-block;text-decoration:none;font-family:"Share Tech Mono",m
       <div id="clickSum" style="margin-top:14px"></div>
       <div id="clickList"></div>
     </div>
+    <div class="card">
+      <b class="mono g">REFERIDOS</b>
+      <p class="sub">Dale a cada cliente o amigo su link. Cuando alguien entra por ahí, lo ves aquí: visitas, mensajes por WhatsApp y contactos que llegaron por esa persona.</p>
+      <div class="row"><div><label>Nombre de quien recomienda</label><input id="f_nombre" placeholder="Santa Mykah"></div><div><label>Su WhatsApp</label><input id="f_contacto"></div></div>
+      <div class="row"><div><label>Premio para quien recomienda (interno)</label><input id="f_premio" placeholder="10% en su próximo proyecto"></div><div><label>Beneficio para el nuevo cliente (se muestra en la web)</label><input id="f_beneficio" placeholder="Opcional: 5% en tu primer proyecto"></div></div>
+      <div style="margin-top:14px"><button class="btn" onclick="saveF()">Crear link</button></div>
+      <div id="fList" style="margin-top:10px"></div><p id="fEmpty" class="sub">Todavía no hay links de referido.</p>
+    </div>
   </div>
   <div id="panelT" class="hide">
     <div class="card">
@@ -196,6 +204,8 @@ a.btn2{display:inline-block;text-decoration:none;font-family:"Share Tech Mono",m
 
   <!-- ===== v33 PROPUESTAS ===== -->
   <div id="panelR" class="hide">
+    <div class="card" id="segCard" style="border-color:#e3b23c55"><b class="mono" style="color:#e3b23c">SEGUIMIENTO</b>
+      <p class="sub">Propuestas sin respuesta. Escríbele con el mensaje listo y márcala: vuelve a aparecer en 3 días si sigue sin aceptar.</p><div id="segList"></div><p id="segEmpty" class="sub">Nada pendiente. 🙌</p></div>
     <div class="card">
       <b class="mono g" id="rTit">NUEVA PROPUESTA</b>
       <p class="sub">Llénala y te doy un link para mandarle al cliente. Cuando la acepte, te aparece aquí y en Clientes.</p>
@@ -206,6 +216,7 @@ a.btn2{display:inline-block;text-decoration:none;font-family:"Share Tech Mono",m
       <label>Qué vamos a hacer (una por línea)</label><textarea id="r_alcance"></textarea>
       <label>Qué recibe (una por línea)</label><textarea id="r_entregables"></textarea>
       <label>Tiempos (una por línea)</label><textarea id="r_cronograma"></textarea>
+      <div class="row"><div><label>Idioma de la propuesta</label><select id="r_lang"><option value="es">Español</option><option value="en">English</option></select></div></div>
       <div class="row"><div><label>Inversión</label><input id="r_precio" placeholder="$ 2.400.000 COP"></div><div><label>Anticipo %</label><input id="r_anticipo" type="number" min="0" max="100" value="50"></div><div><label>Válida hasta</label><input id="r_valida" type="date"></div></div>
       <label>Link de pago del anticipo (https://, opcional)</label><input id="r_pago" placeholder="Bold, Wompi o Mercado Pago">
       <label>Notas internas (el cliente no las ve)</label><input id="r_notas">
@@ -222,6 +233,7 @@ a.btn2{display:inline-block;text-decoration:none;font-family:"Share Tech Mono",m
       <p class="sub">Cada proyecto tiene un link privado para el cliente: ve en qué vas, revisa las entregas, comenta en el segundo exacto y ve sus pagos.</p>
       <input type="hidden" id="j_t"><input type="hidden" id="j_prop">
       <div class="row"><div><label>Cliente</label><input id="j_cliente"></div><div><label>Proyecto</label><input id="j_proyecto" placeholder="Videoclip «Nombre»"></div><div><label>WhatsApp</label><input id="j_contacto"></div></div>
+      <div class="row"><div><label>Idioma del portal</label><select id="j_lang"><option value="es">Español</option><option value="en">English</option></select></div></div>
       <label>Mensaje para el cliente (opcional)</label><input id="j_mensaje" placeholder="¡Ya arrancamos! Aquí vas a ver todo el avance.">
       <label>Fases · una por línea: nombre | fecha | listo</label><textarea id="j_fases" placeholder="Preproducción | 2026-12-01 | listo&#10;Rodaje | 2026-12-06&#10;Edición | 2026-12-13&#10;Entrega final | 2026-12-20"></textarea>
       <label>Entregas · YouTube (oculto), link de Drive o video .mp4</label><div id="jEnt"></div>
@@ -284,7 +296,7 @@ const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",
 async function loadStats(){
   try{ const r=await fetch("/api/stats",{headers:{"x-admin-pass":PASS},cache:"no-store"}); STATS=await r.json(); if(STATS.error){toast(STATS.error);return;} }
   catch(e){ toast("No se pudieron cargar las estadísticas"); return; }
-  renderLeads();
+  renderLeads(); loadF();
   const meses=[...new Set((STATS.clicks||[]).map(c=>c.mes))].sort().reverse();
   const now=new Date().toISOString().slice(0,7); if(!meses.includes(now)) meses.unshift(now);
   $("mesSel").innerHTML=meses.map(m=>'<option>'+m+'</option>').join("");
@@ -295,7 +307,7 @@ function renderLeads(){
   box.innerHTML=L.map(l=>{
     const wa=(l.contacto||"").replace(/[^0-9]/g,"");
     return '<div class="vid" style="align-items:flex-start"><div class="t"><b>'+esc(l.nombre)+' <span class="tag">'+esc(l.servicio||"")+'</span></b>'+
-      '<span>'+esc(new Date(l.t).toLocaleString("es-CO"))+' · '+esc(l.contacto||"sin contacto")+' · desde '+esc(l.origen||"")+(l.pais?' · '+esc(l.pais):'')+'</span>'+
+      '<span>'+esc(new Date(l.t).toLocaleString("es-CO"))+' · '+esc(l.contacto||"sin contacto")+' · desde '+esc(l.origen||"")+(l.pais?' · '+esc(l.pais):'')+(l.ref?' · <b style="color:var(--green)">referido: '+esc(l.ref)+'</b>':'')+'</span>'+
       (l.detalle?'<span style="display:block;margin-top:6px;color:var(--ink);white-space:normal">'+esc(l.detalle)+'</span>':'')+'</div>'+
       (wa.length>=8?'<a class="btn2" style="padding:9px 12px;text-decoration:none" target="_blank" href="https://wa.me/'+wa+'">Escribir</a>':'')+
       '<button class="btn2" data-k="'+esc(l.key)+'">Borrar</button></div>';
@@ -339,6 +351,7 @@ async function enter(){
     REGIONS=(pr.regions&&typeof pr.regions==="object")?pr.regions:JSON.parse(JSON.stringify(DEF_REGIONS));
     $("login").classList.add("hide"); $("app").classList.remove("hide");
     renderAdded(); renderBase(); renderPrices(); renderRegions();
+    api("/api/prop").then(L=>{ if(Array.isArray(L)){ PROPS=L; renderSeg(); } }).catch(()=>{});
   }catch(e){ $("loginerr").textContent="No se pudo cargar. Revisa tu conexión."; }
 }
 
@@ -421,23 +434,23 @@ const PLANT={
 function plantilla(){ const p=PLANT[$("r_serv").value]; if(!p) return; ["alcance","entregables","cronograma"].forEach(k=>{ if(!$("r_"+k).value.trim()) $("r_"+k).value=p[k]; }); if(!$("r_titulo").value.trim()) $("r_titulo").value=$("r_serv").value; }
 $("r_serv").innerHTML='<option value="">Elegir…</option>'+Object.keys(PLANT).map(k=>'<option>'+k+'</option>').join("")+'<option>Otro</option>';
 let PROPS=[], PROYS=[], AG={ocupadas:[],bloqueadas:[],anticipo:"",texto:""}, SOL=[], EROWS=[];
-const RF=["id","cliente","contacto","titulo","intro","alcance","entregables","cronograma","precio","anticipo","valida","pago","notas"];
+const RF=["id","cliente","contacto","titulo","intro","alcance","entregables","cronograma","precio","anticipo","valida","pago","notas","lang"];
 async function loadR(){ try{ PROPS=await api("/api/prop"); if(PROPS.error){toast(PROPS.error);PROPS=[];} }catch(e){ toast("No se pudieron cargar"); } renderR(); }
-function renderR(){ $("rEmpty").style.display=PROPS.length?"none":"block";
+function renderR(){ renderSeg(); $("rEmpty").style.display=PROPS.length?"none":"block";
   $("rList").innerHTML=PROPS.map((p,i)=>{ const link=ORIG+"/p/"+p.id;
-    return '<div class="it"><div class="t"><b>'+esc(p.cliente)+' — '+esc(p.titulo||p.servicio)+'<span class="st '+p.estado+'">'+esc(p.estado)+'</span></b><span>'+esc(p.precio)+' · creada '+fechaC(p.creada)+(p.vista?' · vista '+fechaC(p.vista):'')+(p.acepto?' · aceptó '+esc(p.acepto.nombre)+' el '+fechaC(p.acepto.t):'')+'</span></div><div class="acts">'+
+    return '<div class="it"><div class="t"><b>'+esc(p.cliente)+' — '+esc(p.titulo||p.servicio)+'<span class="st '+p.estado+'">'+esc(p.estado)+'</span></b><span>'+esc(p.precio)+' · creada '+fechaC(p.creada)+(p.vista?' · abierta '+(p.vistas||1)+(p.vistas>1?' veces':' vez')+', la última '+fechaC(p.ultima||p.vista):'')+(p.acepto?' · aceptó '+esc(p.acepto.nombre)+' el '+fechaC(p.acepto.t):'')+'</span></div><div class="acts">'+
     '<button class="btn2" onclick="copiar(\''+link+'\')">Copiar link</button>'+(p.contacto?'<a class="btn2" target="_blank" href="'+waTo(p.contacto,"Hola "+p.cliente+", aquí está la propuesta: "+link)+'">WhatsApp</a>':'')+
     '<a class="btn2" target="_blank" href="'+link+'">Ver</a><button class="btn2" onclick="editR('+i+')">Editar</button>'+(p.estado==="aceptada"?'<button class="btn" onclick="aProy('+i+')">Crear proyecto</button>':'')+
     '<button class="btn2" onclick="delR(\''+p.id+'\')">Borrar</button></div></div>'; }).join(""); }
 function editR(i){ const p=PROPS[i]; RF.forEach(k=>{ const v=p[k]; $("r_"+k).value=Array.isArray(v)?v.join("\n"):(v==null?"":v); }); $("r_serv").value=PLANT[p.servicio]?p.servicio:""; $("rTit").textContent="EDITAR PROPUESTA"; window.scrollTo({top:0,behavior:"smooth"}); }
-function clearR(){ RF.forEach(k=>$("r_"+k).value=""); $("r_anticipo").value=50; $("r_serv").value=""; $("rTit").textContent="NUEVA PROPUESTA"; $("rLink").textContent=""; }
+function clearR(){ RF.forEach(k=>$("r_"+k).value=""); $("r_anticipo").value=50; $("r_lang").value="es"; $("r_serv").value=""; $("rTit").textContent="NUEVA PROPUESTA"; $("rLink").textContent=""; }
 async function saveR(){ const g={servicio:$("r_serv").value}; RF.forEach(k=>g[k]=$("r_"+k).value);
   if(!g.cliente.trim()){toast("Falta el cliente");return;}
   const o=await api("/api/prop",{guardar:g}); if(!o.ok){toast(o.error||"Error");return;}
   $("r_id").value=o.prop.id; $("rTit").textContent="EDITAR PROPUESTA"; const link=ORIG+"/p/"+o.prop.id;
   $("rLink").innerHTML='Listo: <a href="'+link+'" target="_blank" style="color:var(--green)">'+link+'</a>'; copiar(link); loadR(); }
 async function delR(id){ if(!confirm("¿Borrar esta propuesta? El link deja de funcionar.")) return; await api("/api/prop",{borrar:id}); loadR(); }
-function aProy(i){ const p=PROPS[i]; clearJ(); $("j_cliente").value=p.cliente; $("j_proyecto").value=p.titulo||p.servicio||""; $("j_contacto").value=p.contacto||""; $("j_total").value=p.precio||""; $("j_pago").value=p.pago||""; $("j_prop").value=p.id;
+function aProy(i){ const p=PROPS[i]; clearJ(); $("j_cliente").value=p.cliente; $("j_proyecto").value=p.titulo||p.servicio||""; $("j_contacto").value=p.contacto||""; $("j_total").value=p.precio||""; $("j_pago").value=p.pago||""; $("j_prop").value=p.id; $("j_lang").value=p.lang||"es";
   $("j_fases").value=(p.cronograma||[]).map(x=>x).join("\n"); tab("j"); }
 /* proyectos */
 async function loadJ(){ try{ PROYS=await api("/api/proy"); if(PROYS.error){toast(PROYS.error);PROYS=[];} }catch(e){ toast("No se pudieron cargar"); } renderJ(); renderE(); }
@@ -449,10 +462,10 @@ function renderJ(){ $("jEmpty").style.display=PROYS.length?"none":"block";
     '<a class="btn2" target="_blank" href="'+link+'">Ver</a><button class="btn2" onclick="editJ('+i+')">Editar</button><button class="btn2" onclick="delJ(\''+p.t+'\')">Borrar</button></div></div>'; }).join(""); }
 function renderE(){ $("jEnt").innerHTML=EROWS.map((e,i)=>'<div class="erow"><input placeholder="Título (Corte 1)" value="'+esc(e.titulo)+'" oninput="EROWS['+i+'].titulo=this.value"><input placeholder="Link de YouTube, Drive o .mp4" value="'+esc(e.link||(e.yt?"https://youtu.be/"+e.yt:""))+'" oninput="EROWS['+i+'].link=this.value;EROWS['+i+'].yt=\'\'"><input placeholder="Nota (opcional)" value="'+esc(e.nota)+'" oninput="EROWS['+i+'].nota=this.value"><button class="btn2" onclick="EROWS.splice('+i+',1);renderE()">Quitar</button></div>').join(""); }
 function addE(){ EROWS.push({titulo:"",link:"",nota:""}); renderE(); }
-const JF=["t","prop","cliente","proyecto","contacto","mensaje","total","pagado","pago","notas"];
-function editJ(i){ const p=PROYS[i]; JF.forEach(k=>$("j_"+k).value=p[k]||""); $("j_fases").value=p.fases.map(f=>f.n+(f.fecha?" | "+f.fecha:"")+(f.hecho?(f.fecha?"":" | ")+" | listo":"")).join("\n");
+const JF=["t","prop","cliente","proyecto","contacto","mensaje","total","pagado","pago","notas","lang"];
+function editJ(i){ const p=PROYS[i]; JF.forEach(k=>$("j_"+k).value=p[k]||""); if(!p.lang) $("j_lang").value="es"; $("j_fases").value=p.fases.map(f=>f.n+(f.fecha?" | "+f.fecha:"")+(f.hecho?(f.fecha?"":" | ")+" | listo":"")).join("\n");
   EROWS=p.entregas.map(e=>({id:e.id,titulo:e.titulo,link:e.link||(e.yt?"https://youtu.be/"+e.yt:""),nota:e.nota,fecha:e.fecha})); renderE(); $("jTit").textContent="EDITAR PROYECTO"; window.scrollTo({top:0,behavior:"smooth"}); }
-function clearJ(){ JF.forEach(k=>$("j_"+k).value=""); $("j_fases").value=""; EROWS=[]; renderE(); $("jTit").textContent="NUEVO PROYECTO"; $("jLink").textContent=""; }
+function clearJ(){ JF.forEach(k=>$("j_"+k).value=""); $("j_lang").value="es"; $("j_fases").value=""; EROWS=[]; renderE(); $("jTit").textContent="NUEVO PROYECTO"; $("jLink").textContent=""; }
 async function saveJ(){ const g={}; JF.forEach(k=>g[k]=$("j_"+k).value);
   g.fases=$("j_fases").value.split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(a=>a[0]).map(a=>({n:a[0],fecha:/^\d{4}-\d{2}-\d{2}$/.test(a[1]||"")?a[1]:"",hecho:a.slice(1).some(x=>/^(listo|hecho|ok|x)$/i.test(x))}));
   g.entregas=EROWS.filter(e=>e.titulo&&e.link);
@@ -478,5 +491,36 @@ async function confirma(d){ if(!AG.ocupadas.includes(d)) AG.ocupadas.push(d); aw
 async function saveA(){ const o=await api("/api/agenda",{config:{ocupadas:AG.ocupadas,bloqueadas:AG.bloqueadas,anticipo:$("a_ant").value.trim(),texto:$("a_txt").value.trim()}});
   if(!o.ok){toast(o.error||"Error");return;} AG=o.cfg; toast("Agenda guardada ✓"); renderA(); }
 async function delA(k){ if(!confirm("¿Borrar esta solicitud?")) return; await api("/api/agenda",{borrar:k}); loadA(); }
+
+/* ===== v34: seguimiento, referidos ===== */
+const DIA=864e5, hace=d=>Math.floor((Date.now()-new Date(d).getTime())/DIA);
+function pendientes(){ const hoy=new Date().toISOString().slice(0,10);
+  return PROPS.filter(p=>p.estado!=="aceptada" && !(p.valida&&p.valida<hoy)).filter(p=>{
+    const ult=(p.segs||[]).slice(-1)[0]; if(ult&&hace(ult)<3) return false;
+    return p.vista ? hace(p.ultima||p.vista)>=2 : hace(p.creada)>=3; }); }
+function msgSeg(p){ const link=ORIG+"/p/"+p.id, en=p.lang==="en", n=(p.segs||[]).length;
+  if(en) return p.vista?("Hi "+p.cliente+"! Did you get a chance to look at the proposal? Happy to adjust anything: "+link):("Hi "+p.cliente+", just checking the proposal reached you: "+link);
+  if(!p.vista) return "Hola "+p.cliente+", te mandé la propuesta por aquí, ¿te llegó? "+link;
+  if(n>=1) return "Hola "+p.cliente+", ¿seguimos con el proyecto? Si el presupuesto o las fechas no cuadran, dime y lo ajustamos: "+link;
+  return "Hola "+p.cliente+", ¿alcanzaste a revisar la propuesta? Si quieres cambiar algo, lo ajustamos: "+link; }
+function renderSeg(){ const L=pendientes(); $("navR").textContent="Propuestas"+(L.length?" ("+L.length+")":""); $("segEmpty").style.display=L.length?"none":"block";
+  $("segList").innerHTML=L.map(p=>{ const i=PROPS.indexOf(p), caliente=(p.vistas||0)>=3;
+    return '<div class="it"><div class="t"><b>'+esc(p.cliente)+' — '+esc(p.titulo||p.servicio)+(caliente?'<span class="st aceptada">la abrió '+p.vistas+' veces</span>':'')+'</b><span>'+(p.vista?'Abierta hace '+hace(p.ultima||p.vista)+' días':'No la ha abierto · enviada hace '+hace(p.creada)+' días')+((p.segs||[]).length?' · '+p.segs.length+' seguimiento(s)':'')+'</span></div><div class="acts">'+
+    (p.contacto?'<a class="btn" target="_blank" href="'+waTo(p.contacto,msgSeg(p))+'" onclick="setTimeout(()=>segHecho(\''+p.id+'\'),400)">Escribir</a>':'<button class="btn2" onclick="copiar(msgSeg(PROPS['+i+']))">Copiar mensaje</button>')+
+    '<button class="btn2" onclick="segHecho(\''+p.id+'\')">Ya le escribí</button></div></div>'; }).join(""); }
+async function segHecho(id){ const o=await api("/api/prop",{seguimiento:id}); if(o.ok){ const k=PROPS.findIndex(x=>x.id===id); if(k>=0) PROPS[k]=o.prop; renderR(); toast("Seguimiento anotado"); } }
+let REFS=[];
+async function loadF(){ try{ REFS=await api("/api/ref"); if(REFS.error){REFS=[];} }catch(e){} renderF(); }
+function renderF(){ $("fEmpty").style.display=REFS.length?"none":"block";
+  const leads=(STATS&&STATS.leads)||[], clicks=(STATS&&STATS.clicks)||[];
+  $("fList").innerHTML=REFS.map(r=>{ const link=ORIG+"/r/"+r.c, L=leads.filter(l=>l.ref===r.c), wa=clicks.filter(c=>c.e==="referido"&&c.p==="/r/"+r.c).reduce((a,c)=>a+c.n,0);
+    return '<div class="it"><div class="t"><b>'+esc(r.nombre)+' <span class="tag">'+esc(r.c)+'</span></b><span>'+r.visitas+' visitas · '+wa+' WhatsApp · '+L.length+' contactos'+(r.premio?' · premio: '+esc(r.premio):'')+'</span>'+
+    (L.length?'<span>Llegaron: '+L.map(l=>esc(l.nombre)+' ('+esc(l.servicio||'')+')').join(', ')+'</span>':'')+'</div><div class="acts">'+
+    '<button class="btn2" onclick="copiar(\''+link+'\')">Copiar link</button>'+(r.contacto?'<a class="btn2" target="_blank" href="'+waTo(r.contacto,"Hola "+r.nombre.split(" ")[0]+"! Este es tu link para recomendarme: "+link+(r.premio?" — por cada persona que llegue y trabaje conmigo: "+r.premio:""))+'">Enviarle su link</a>':'')+
+    '<button class="btn2" onclick="delF(\''+r.c+'\')">Borrar</button></div></div>'; }).join(""); }
+async function saveF(){ const g={nombre:$("f_nombre").value,contacto:$("f_contacto").value,premio:$("f_premio").value,beneficio:$("f_beneficio").value};
+  if(!g.nombre.trim()){toast("Falta el nombre");return;} const o=await api("/api/ref",{guardar:g}); if(!o.ok){toast(o.error||"Error");return;}
+  ["f_nombre","f_contacto","f_premio","f_beneficio"].forEach(k=>$(k).value=""); copiar(ORIG+"/r/"+o.ref.c); loadF(); }
+async function delF(c){ if(!confirm("¿Borrar este link de referido?")) return; await api("/api/ref",{borrar:c}); loadF(); }
 </script>
 </body></html>

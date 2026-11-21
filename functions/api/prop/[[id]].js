@@ -10,9 +10,11 @@ const limpiar = (p, prev) => ({
   alcance: lines(p.alcance, 14), entregables: lines(p.entregables, 14), cronograma: lines(p.cronograma, 12),
   precio: cut(p.precio, 40), anticipo: Math.max(0, Math.min(100, parseInt(p.anticipo, 10) || 0)),
   pago: url(p.pago), valida: cut(p.valida, 10).replace(/[^\d-]/g, ""), notas: cut(p.notas, 500),
-  estado: prev ? prev.estado : "enviada", vista: prev ? prev.vista : null, acepto: prev ? prev.acepto : null
+  lang: p.lang === "en" ? "en" : "es",
+  estado: prev ? prev.estado : "enviada", vista: prev ? prev.vista : null, acepto: prev ? prev.acepto : null,
+  vistas: prev ? prev.vistas || 0 : 0, ultima: prev ? prev.ultima || null : null, segs: prev ? prev.segs || [] : []
 });
-const publica = p => { const o = Object.assign({}, p); delete o.contacto; delete o.notas; return o; };
+const publica = p => { const o = Object.assign({}, p); delete o.contacto; delete o.notas; delete o.segs; delete o.vistas; delete o.ultima; return o; };
 export async function onRequest({ request, env, params }) {
   const KV = env.BASHI_KV; if (!KV) return json({ error: "KV no configurado" }, 500);
   const id = (params.id || [])[0] || "";
@@ -25,6 +27,11 @@ export async function onRequest({ request, env, params }) {
     }
     const b = await body(request);
     if (typeof b.borrar === "string") { await KV.delete("prop:" + b.borrar.replace(/[^a-z0-9]/g, "")); return json({ ok: true }); }
+    if (typeof b.seguimiento === "string") {
+      const k = "prop:" + b.seguimiento.replace(/[^a-z0-9]/g, ""); let q = null; try { q = JSON.parse(await KV.get(k)); } catch (e) {}
+      if (!q) return json({ error: "No existe" }, 404);
+      q.segs = (q.segs || []).concat([new Date().toISOString()]).slice(-10); await KV.put(k, JSON.stringify(q)); return json({ ok: true, prop: q });
+    }
     if (b.guardar && typeof b.guardar === "object") {
       let prev = null; const gid = cut(b.guardar.id, 12).replace(/[^a-z0-9]/g, "");
       if (gid) { try { prev = JSON.parse(await KV.get("prop:" + gid)); } catch (e) {} }
@@ -39,7 +46,12 @@ export async function onRequest({ request, env, params }) {
   let p = null; try { p = JSON.parse(await KV.get(key)); } catch (e) {}
   if (!p) return json({ error: "No existe" }, 404);
   if (request.method === "GET") {
-    if (!p.vista && !isAdmin(request, env)) { p.vista = new Date().toISOString(); if (p.estado === "enviada") p.estado = "vista"; await KV.put(key, JSON.stringify(p)); }
+    if (!isAdmin(request, env)) {
+      const ahora = new Date().toISOString();
+      if (!p.vista) { p.vista = ahora; if (p.estado === "enviada") p.estado = "vista"; }
+      p.vistas = (p.vistas || 0) + 1; p.ultima = ahora;
+      await KV.put(key, JSON.stringify(p));
+    }
     return json(publica(p));
   }
   if (request.method === "POST") {

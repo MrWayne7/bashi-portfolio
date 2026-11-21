@@ -5,18 +5,73 @@
   /* ---- clics que importan: WhatsApp, Instagram, correo, llamada ---- */
   function send(url, data){
     try{
-      var body = JSON.stringify(data);
+      var body = conRef(url, JSON.stringify(data));
       if (navigator.sendBeacon && navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }))) return;
       fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: body, keepalive: true }).catch(function(){});
     }catch(e){}
   }
   function where(){ return location.pathname + (location.hash && location.pathname === '/' ? location.hash : ''); }
+
+  /* ---- referidos: /r/codigo llega con ?ref=. Se guarda 60 días en este navegador (sin cookies)
+     y se agrega a los formularios y al mensaje de WhatsApp. ---- */
+  var REF = null;
+  try{
+    var q = new URLSearchParams(location.search), rc = (q.get('ref') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 40);
+    if (rc){
+      REF = { c: rc, n: (q.get('de') || '').slice(0, 30), b: (q.get('b') || '').slice(0, 120), t: Date.now() };
+      localStorage.setItem('bashi-ref', JSON.stringify(REF));
+      ['ref', 'de', 'b'].forEach(function(k){ q.delete(k); });
+      history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash);
+      setTimeout(function(){ aviso(REF); }, 900);
+    } else {
+      REF = JSON.parse(localStorage.getItem('bashi-ref') || 'null');
+      if (REF && Date.now() - REF.t > 60 * 864e5){ REF = null; localStorage.removeItem('bashi-ref'); }
+    }
+  }catch(e){ REF = null; }
+  window.bashiRef = function(){ return REF ? REF.c : ''; };
+  function aviso(r){
+    var en = document.documentElement.lang === 'en', d = document.createElement('div');
+    d.setAttribute('role', 'status');
+    d.style.cssText = 'position:fixed;left:16px;bottom:16px;z-index:9999;max-width:340px;background:#0b0d0b;color:#e9e7df;border:1px solid #00ff66;padding:14px 40px 14px 16px;font:15px/1.45 "Space Grotesk",system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.6)';
+    d.innerHTML = '<b style="color:#00ff66">' + (en ? 'Welcome' : 'Bienvenido') + '</b><br>' + (r.n ? (en ? 'You were referred by ' : 'Vienes de parte de ') + esc0(r.n) + '. ' : '') +
+      (r.b ? esc0(r.b) : (en ? 'Mention it when you message me.' : 'Cuéntamelo cuando me escribas.')) +
+      '<button type="button" aria-label="Cerrar" style="position:absolute;right:8px;top:6px;background:none;border:0;color:#7d837d;font-size:20px;cursor:pointer">×</button>';
+    d.querySelector('button').onclick = function(){ d.remove(); };
+    document.body.appendChild(d); setTimeout(function(){ if (d.parentNode) d.remove(); }, 12000);
+  }
+  function esc0(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function conRef(url, body){
+    if (!REF || typeof body !== 'string' || !/\/api\/(lead|agenda)(\?|$)/.test(url)) return body;
+    try{ var o = JSON.parse(body); if (!o.ref) o.ref = REF.c; return JSON.stringify(o); }catch(e){ return body; }
+  }
+  if (window.fetch){
+    var f0 = window.fetch;
+    window.fetch = function(u, init){ try{ if (init && init.body) init.body = conRef(String(u && u.url || u), init.body); }catch(e){} return f0.apply(this, arguments); };
+  }
+  if (navigator.sendBeacon){
+    var b0 = navigator.sendBeacon.bind(navigator);
+    navigator.sendBeacon = function(u, data){
+      if (REF && /\/api\/lead/.test(u) && data && data.text){
+        data.text().then(function(t){ f0 ? f0(u, { method: 'POST', headers: { 'content-type': 'application/json' }, body: conRef(u, t), keepalive: true }).catch(function(){}) : b0(u, data); });
+        return true;
+      }
+      return b0(u, data);
+    };
+  }
   window.bashiTrack = function(ev){ send('/api/track', { e: ev, p: where() }); };
   document.addEventListener('click', function(e){
     var a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
     if (a.hasAttribute('data-t')){ send('/api/track', { e: 'bio', p: '/links/' + a.getAttribute('data-t') }); return; }
     var h = a.getAttribute('href') || '', ev = '';
     if (/wa\.me|whatsapp/.test(h)) ev = 'whatsapp';
+    if (ev === 'whatsapp' && REF && /wa\.me\//.test(h) && h.indexOf('ref:' + REF.c) < 0){
+      try{
+        var wu = new URL(a.href), tx = wu.searchParams.get('text') || '';
+        wu.searchParams.set('text', (tx ? tx + '\n\n' : '') + (REF.n ? 'Vengo de parte de ' + REF.n + ' ' : '') + '(ref:' + REF.c + ')');
+        a.href = wu.toString();
+      }catch(e){}
+      send('/api/track', { e: 'referido', p: '/r/' + REF.c });
+    }
     else if (/instagram\.com/.test(h)) ev = 'instagram';
     else if (/^mailto:/.test(h)) ev = 'email';
     else if (/^tel:/.test(h)) ev = 'llamada';

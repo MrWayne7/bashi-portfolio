@@ -91,7 +91,11 @@
   <url><loc>https://studiobashi.com/guias/como-preparar-tu-primer-videoclip/</loc><lastmod>2026-11-19</lastmod><priority>0.5</priority></url>
   <url><loc>https://studiobashi.com/guias/locaciones-en-bogota-para-grabar/</loc><lastmod>2026-11-19</lastmod><priority>0.5</priority></url>
   <url><loc>https://studiobashi.com/guias/que-incluye-un-video-de-boda/</loc><lastmod>2026-11-19</lastmod><priority>0.5</priority></url>
-  <url><loc>https://studiobashi.com/tratamiento/</loc><lastmod>2026-11-19</lastmod><priority>0.5</priority></url>
+  <url><loc>https://studiobashi.com/tratamiento/</loc><lastmod>2026-11-19</lastmod><priority>0.5</priority><xhtml:link rel="alternate" hreflang="es" href="https://studiobashi.com/tratamiento/"/><xhtml:link rel="alternate" hreflang="en" href="https://studiobashi.com/en/treatment/"/></url>
+  <url><loc>https://studiobashi.com/en/treatment/</loc><lastmod>2026-11-19</lastmod><priority>0.5</priority><xhtml:link rel="alternate" hreflang="es" href="https://studiobashi.com/tratamiento/"/><xhtml:link rel="alternate" hreflang="en" href="https://studiobashi.com/en/treatment/"/></url>
   <url><loc>https://studiobashi.com/sesiones/</loc><lastmod>2026-11-19</lastmod><priority>0.5</priority></url>
-  <url><loc>https://studiobashi.com/agenda/</loc><lastmod>2026-11-19</lastmod><priority>0.5</priority></url>
+  <url><loc>https://studiobashi.com/agenda/</loc><lastmod>2026-11-19</lastmod><priority>0.5</priority><xhtml:link rel="alternate" hreflang="es" href="https://studiobashi.com/agenda/"/><xhtml:link rel="alternate" hreflang="en" href="https://studiobashi.com/en/schedule/"/></url>
+  <url><loc>https://studiobashi.com/en/schedule/</loc><lastmod>2026-11-19</lastmod><priority>0.5</priority><xhtml:link rel="alternate" hreflang="es" href="https://studiobashi.com/agenda/"/><xhtml:link rel="alternate" hreflang="en" href="https://studiobashi.com/en/schedule/"/></url>
+  <url><loc>https://studiobashi.com/herramientas/zonas-seguras/</loc><lastmod>2026-11-19</lastmod><priority>0.5</priority><xhtml:link rel="alternate" hreflang="es" href="https://studiobashi.com/herramientas/zonas-seguras/"/><xhtml:link rel="alternate" hreflang="en" href="https://studiobashi.com/en/tools/safe-zones/"/></url>
+  <url><loc>https://studiobashi.com/en/tools/safe-zones/</loc><lastmod>2026-11-19</lastmod><priority>0.5</priority><xhtml:link rel="alternate" hreflang="es" href="https://studiobashi.com/herramientas/zonas-seguras/"/><xhtml:link rel="alternate" hreflang="en" href="https://studiobashi.com/en/tools/safe-zones/"/></url>
 </urlset>

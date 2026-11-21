@@ -12,7 +12,8 @@ export async function onRequestPost({ request, env }) {
   const lead = {
     t: new Date().toISOString(), nombre,
     contacto: cut(b.contacto, 80), servicio: cut(b.servicio, 60), rubro: cut(b.rubro, 60),
-    detalle: cut(b.detalle, 600), origen: cut(b.origen, 80), pais: request.headers.get("CF-IPCountry") || ""
+    detalle: cut(b.detalle, 600), origen: cut(b.origen, 80), pais: request.headers.get("CF-IPCountry") || "",
+    ref: cut(b.ref, 40).toLowerCase().replace(/[^a-z0-9-]/g, "")
   };
   const key = "lead:" + lead.t + ":" + Math.random().toString(36).slice(2, 7);
   await KV.put(key, JSON.stringify(lead), { expirationTtl: 60 * 60 * 24 * 365 });
